@@ -1,0 +1,10 @@
+<button
+  (click)="removeItem()"
+  [class]="config.buttonClass || 'btn btn-outline-danger btn-sm'"
+  type="button">
+  @if (config.buttonIcon) {
+    <i [class]="config.buttonIcon"></i>
+  }
+  {{ config.buttonText || 'Remove' }}
+  index:{{ myIndex }}
+</button>

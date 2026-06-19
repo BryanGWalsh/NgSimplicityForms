@@ -1,0 +1,25 @@
+@if (!!control) {
+  @if (textConfig.labelLocation === 'top') {
+    <div class="mb-2">
+      <label [class.text-danger]="!!errorMessage" class="form-label" for="{{id}}-top">{{ textConfig.label }}</label>
+      <input [class.border-danger]="!!errorMessage" [formControl]="control" class="form-control"
+             id="{{id}}-top" placeholder="{{textConfig.placeholder}}" type="{{textConfig.type}}" />
+      @if (errorMessage) {
+        <div class="invalid-feedback">{{ errorMessage }}</div>
+      }
+    </div>
+  }
+  @if (textConfig.labelLocation === 'left') {
+    <div class="row mb-2">
+      <label [class.text-danger]="!!errorMessage" class="col-sm-2 col-form-label"
+             for="{{id}}-left">{{ textConfig.label }}</label>
+      <div class="col-sm-10">
+        <input [class.border-danger]="!!errorMessage" [formControl]="control" class="form-control"
+               id="{{id}}-left" placeholder="{{textConfig.placeholder}}" type="{{textConfig.type}}" />
+      </div>
+      @if (errorMessage) {
+        <div class="invalid-feedback">{{ errorMessage }}</div>
+      }
+    </div>
+  }
+}

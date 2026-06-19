@@ -1,0 +1,10 @@
+@if (control) {
+  <div class="mb-3">
+    <mat-checkbox [formControl]="control">
+      {{ config.label }}
+    </mat-checkbox>
+    @if (errorMessage) {
+      <div class="mt-1 ms-4" style="font-size: 0.75rem; color: #f44336;">{{ errorMessage }}</div>
+    }
+  </div>
+}

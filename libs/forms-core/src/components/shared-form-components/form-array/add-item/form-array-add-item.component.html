@@ -1,0 +1,9 @@
+<button
+  (click)="addItem()"
+  [class]="config.buttonClass || 'btn btn-outline-primary'"
+  type="button">
+  @if (config.buttonIcon) {
+    <i [class]="config.buttonIcon"></i>
+  }
+  {{ config.buttonText || 'Add Item' }}
+</button>

@@ -1,0 +1,13 @@
+<div class="form-section">
+  <div class="form-section-title {{config.titleClass}}">{{ config.title }}</div>
+  @if (config.subtitle) {
+    <div class="form-section-subtitle {{config.subtitleClass}}">{{ config.subtitle }}</div>
+  }
+  @if (config.items.length) {
+    <div class="form-section-items">
+      @for (item of config.items; track item.uuid) {
+        <ng-container [ngs-form-item]="item"></ng-container>
+      }
+    </div>
+  }
+</div>

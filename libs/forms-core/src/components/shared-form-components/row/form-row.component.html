@@ -1,0 +1,7 @@
+<div class="{{config.containerClass}}">
+  @for(item of config.items; track item; let i = $index){
+    <div class="{{getIndividualRowDivClass(i)}}">
+      <ng-container [ngs-form-item]="item"></ng-container>
+    </div>
+  }
+</div>

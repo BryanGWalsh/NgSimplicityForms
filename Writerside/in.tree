@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE instance-profile
+        SYSTEM "https://resources.jetbrains.com/writerside/1.0/product-profile.dtd">
+
+<instance-profile id="in"
+                 name="ng Simplicity Dynamic Forms"
+                 start-page="starter.md">
+
+    <toc-element topic="starter.md"/>
+    <toc-element topic="Packages.md">
+        <toc-element topic="ng-simplicity-forms-material.md"/>
+        <toc-element topic="ng-simplicity-forms-core.md">
+            <toc-element topic="Core-Models.md">
+                <toc-element topic="Core-NgsFormsFormInputOption.md"/>
+            </toc-element>
+            <toc-element topic="Core-Services.md">
+                <toc-element topic="Core-NgsFormsItemRegistryService.md"/>
+                <toc-element topic="Core-NgsFormsService.md"/>
+            </toc-element>
+            <toc-element topic="Core-Form-Item-Components.md">
+                <toc-element topic="Core-Column.md"/>
+                <toc-element topic="Core-Form-Array.md"/>
+                <toc-element topic="Core-Form-Group.md"/>
+                <toc-element topic="Core-HTML-Content.md"/>
+                <toc-element topic="Core-Row.md"/>
+                <toc-element topic="Core-Text-Content.md"/>
+            </toc-element>
+            <toc-element topic="Base-Classes.md">
+                <toc-element topic="Core-Component-Base-Classes.md"/>
+                <toc-element topic="Core-Item-Configs.md">
+                    <toc-element topic="Core-NgsFormsFormItemConfigBase.md"/>
+                    <toc-element topic="Core-NgsFormsFormItemWithNameAndValidatorsConfigBase.md"/>
+                    <toc-element topic="Core-NgsFormsFormTextInputConfigBase.md">
+                    </toc-element>
+                    <toc-element topic="Core-NgsFormsFormInputConfigBase.md"/>
+                    <toc-element topic="Core-NgsFormsFormItemInputWithOptionsConfigBase.md"/>
+                </toc-element>
+            </toc-element>
+        </toc-element>
+        <toc-element topic="ng-simplicity-forms-bootstrap.md">
+            <toc-element topic="Bootstrap-Form-Item-Components.md">
+                <toc-element topic="Bootstrap-Checkbox.md"/>
+                <toc-element topic="Bootstrap-Form-Error.md"/>
+                <toc-element topic="Bootstrap-Input.md"/>
+                <toc-element topic="Bootstrap-Radio.md"/>
+                <toc-element topic="Bootstrap-Select.md"/>
+                <toc-element topic="Bootstrap-Text-Area.md"/>
+            </toc-element>
+        </toc-element>
+    </toc-element>
+</instance-profile>

@@ -1,0 +1,6 @@
+@for (formGroup of myFormArray.controls; track formGroup; let i = $index) {
+  <div [attr.data-index]="$index" [class]="config.containerClass || ''">
+    <ng-container [ngs-form-group]="castToFormGroup(formGroup)" [ngs-form-index]="i"
+                  [ngs-form-item]="config.templateItem"></ng-container>
+  </div>
+}

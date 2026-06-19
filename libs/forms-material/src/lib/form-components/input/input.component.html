@@ -1,0 +1,11 @@
+@if (control) {
+  <mat-form-field class="w-100 mb-2" appearance="outline">
+    @if (config.label) {
+      <mat-label>{{ config.label }}</mat-label>
+    }
+    <input matInput [formControl]="control" [placeholder]="config.placeholder || ''" [type]="config.type || 'text'" />
+    @if (errorMessage) {
+      <mat-error>{{ errorMessage }}</mat-error>
+    }
+  </mat-form-field>
+}

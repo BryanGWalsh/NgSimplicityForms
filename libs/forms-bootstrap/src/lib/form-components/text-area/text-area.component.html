@@ -1,0 +1,35 @@
+@if (control) {
+  @if (textAreaConfig.labelLocation === 'top' || !textAreaConfig.labelLocation) {
+    <div class="mb-3">
+      <label [class.text-danger]="!!errorMessage" class="form-label" for="{{id}}-top">{{ textAreaConfig.label }}</label>
+      <textarea [class.border-danger]="!!errorMessage"
+                [formControl]="control"
+                class="form-control {{textAreaConfig.inputCssClass}}"
+                id="{{id}}-top"
+                placeholder="{{textAreaConfig.placeholder}}"
+                style="height: 210px"></textarea>
+      @if (errorMessage) {
+        <div class="text-danger">{{ errorMessage }}</div>
+      }
+    </div>
+
+  } @else {
+    @if (textAreaConfig.labelLocation === 'left') {
+      <div class="mb-3 row">
+        <label [class.text-danger]="!!errorMessage" class="col-sm-2 col-form-label"
+               for="{{id}}-left">{{ textAreaConfig.label }}</label>
+        <div class="col-sm-10">
+        <textarea [class.border-danger]="!!errorMessage"
+                  [formControl]="control"
+                  class="form-control {{textAreaConfig.inputCssClass}}"
+                  id="{{id}}-left"
+                  placeholder="{{textAreaConfig.placeholder}}"
+                  style="height: 210px"></textarea>
+        </div>
+        @if (errorMessage) {
+          <div class="text-danger">{{ errorMessage }}</div>
+        }
+      </div>
+    }
+  }
+}

@@ -1,0 +1,10 @@
+@if (control) {
+  <div class="form-check">
+    <input [class.border-danger]="!!errorMessage" [formControl]="control" class="form-check-input" id="{{id}}"
+           type="checkbox">
+    <label [class.text-danger]="!!errorMessage" class="form-check-label" for="{{id}}">
+      {{ checkboxConfig.label }}
+    </label>
+  </div>
+}
+
