@@ -4,7 +4,6 @@
 [![Angular Support](https://img.shields.io/badge/Angular-20.x-red.svg)](#)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](#)
 
-> ⚠️ **WORK IN PROGRESS:** This library is currently under active development. It is rough around the edges and not yet recommended for production use.
 
 **NG-Simplicity Forms** is an ecosystem of Angular packages designed to dynamically generate forms from rich configuration schemas. Built from the ground up to support modern Angular design paradigms, the library focuses heavily on **Signals-based state management**, **OnPush change detection**, and full compatibility with **Zoneless** applications.
 
