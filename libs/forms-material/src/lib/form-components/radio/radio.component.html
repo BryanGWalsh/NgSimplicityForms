@@ -1,7 +1,7 @@
 @if (control) {
   <div class="ngs-material-radio-field mb-3">
     @if (radioConfig.label) {
-      <div class="ngs-material-radio-label" [class.text-danger]="!!errorMessage">
+      <div class="ngs-material-radio-label" [class.text-danger]="!!errorMessage" id="{{id}}-label">
         {{ radioConfig.label }}
       </div>
     }
@@ -9,6 +9,8 @@
       [formControl]="control"
       [class.ngs-material-radio-group-horizontal]="radioConfig.alignment === 'horizontal'"
       [class.ngs-material-radio-group-vertical]="radioConfig.alignment !== 'horizontal'"
+      [attr.aria-labelledby]="radioConfig.label ? id + '-label' : null"
+      [attr.aria-describedby]="errorMessage ? id + '-error' : null"
     >
       @for (option of options(); track option.id) {
         <mat-radio-button [disabled]="option.disabled" [value]="option.id">
@@ -17,7 +19,7 @@
       }
     </mat-radio-group>
     @if (errorMessage) {
-      <div class="ngs-material-control-error">{{ errorMessage }}</div>
+      <div class="ngs-material-control-error" id="{{id}}-error">{{ errorMessage }}</div>
     }
   </div>
 }

@@ -2,10 +2,17 @@
   @if (textConfig.labelLocation === 'top') {
     <div class="mb-2">
       <label [class.text-danger]="!!errorMessage" class="form-label" for="{{id}}-top">{{ textConfig.label }}</label>
-      <input [class.border-danger]="!!errorMessage" [formControl]="control" class="form-control"
-             id="{{id}}-top" placeholder="{{textConfig.placeholder}}" type="{{textConfig.type}}" />
+      <input [class.border-danger]="!!errorMessage" 
+             [formControl]="control" 
+             class="form-control"
+             id="{{id}}-top" 
+             [attr.aria-describedby]="errorMessage ? id + '-error' : null"
+             placeholder="{{textConfig.placeholder}}" 
+             type="{{textConfig.type}}" />
       @if (errorMessage) {
-        <div class="invalid-feedback">{{ errorMessage }}</div>
+        <div class="text-danger mt-1" id="{{id}}-error" style="font-size: 0.875rem;">
+          {{ errorMessage }}
+        </div>
       }
     </div>
   }
@@ -14,12 +21,19 @@
       <label [class.text-danger]="!!errorMessage" class="col-sm-2 col-form-label"
              for="{{id}}-left">{{ textConfig.label }}</label>
       <div class="col-sm-10">
-        <input [class.border-danger]="!!errorMessage" [formControl]="control" class="form-control"
-               id="{{id}}-left" placeholder="{{textConfig.placeholder}}" type="{{textConfig.type}}" />
+        <input [class.border-danger]="!!errorMessage" 
+               [formControl]="control" 
+               class="form-control"
+               id="{{id}}-left" 
+               [attr.aria-describedby]="errorMessage ? id + '-error' : null"
+               placeholder="{{textConfig.placeholder}}" 
+               type="{{textConfig.type}}" />
+        @if (errorMessage) {
+          <div class="text-danger mt-1" id="{{id}}-error" style="font-size: 0.875rem;">
+            {{ errorMessage }}
+          </div>
+        }
       </div>
-      @if (errorMessage) {
-        <div class="invalid-feedback">{{ errorMessage }}</div>
-      }
     </div>
   }
 }

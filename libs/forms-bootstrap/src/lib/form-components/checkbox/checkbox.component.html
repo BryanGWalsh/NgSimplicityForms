@@ -1,10 +1,19 @@
 @if (control) {
   <div class="form-check">
-    <input [class.border-danger]="!!errorMessage" [formControl]="control" class="form-check-input" id="{{id}}"
+    <input [class.border-danger]="!!errorMessage" 
+           [formControl]="control" 
+           class="form-check-input" 
+           id="{{id}}"
+           [attr.aria-describedby]="errorMessage ? id + '-error' : null"
            type="checkbox">
     <label [class.text-danger]="!!errorMessage" class="form-check-label" for="{{id}}">
       {{ checkboxConfig.label }}
     </label>
+    @if (errorMessage) {
+      <div class="text-danger mt-1" id="{{id}}-error" style="font-size: 0.875rem;">
+        {{ errorMessage }}
+      </div>
+    }
   </div>
 }
 

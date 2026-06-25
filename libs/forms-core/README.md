@@ -1,6 +1,10 @@
 # @ng-simplicity/forms-core
 
-The core engine package for **NG-Simplicity Forms**. This package manages form states, dynamic registry injection, component lifecycle bindings, and structural layout directives (Rows, Columns, Sections, Groups, Arrays).
+The core engine package for **NG-Simplicity Forms**. This package manages form states, dynamic registry injection, component lifecycle bindings, and structural layout directives (Rows, Columns, Sections, Groups, Arrays). It enables you to construct highly dynamic, complex forms where control properties (such as visibility, enabled/disabled state, select options, and validation rules) reactively adapt in real-time based on the current values inside the form. The engine is highly customizable, allowing you to develop and add your own custom form controls to the registry to be used in the form rendering.
+
+This core package is extended by styling integration packages that provide prebuilt themed form components:
+- **[@ng-simplicity/forms-bootstrap](../forms-bootstrap/README.md)**: Dynamic forms pre-styled with Bootstrap form fields and layouts.
+- **[@ng-simplicity/forms-material](../forms-material/README.md)**: Dynamic forms pre-styled with Angular Material inputs and controls.
 
 ---
 
@@ -96,40 +100,81 @@ export class CustomFancyInputComponent
 }
 ```
 
-### 2. Register Your Component
+### 2. Register, Construct, and Set Form Config
 
-Register it into the registry service:
+To use the dynamic form in your application:
+1. Provide the `NgsFormsService` at the component level (so that each page/form gets its own isolated instance of the form service).
+2. Register your custom components with `NgsFormsComponentRegistryService`.
+3. Construct your layout configuration (`NgsFormsFormConfig`).
+4. Set the configuration on `NgsFormsService`.
+5. Include the `<ngs-form></ngs-form>` tag in your component template.
+
+Here is a complete setup:
 
 ```typescript
-import { Component } from '@angular/core';
-import { NgsFormsComponentRegistryService } from '@ng-simplicity/forms-core';
+import { Component, OnInit, inject } from '@angular/core';
+import { Validators } from '@angular/forms';
+import { 
+  NgsFormComponent,
+  NgsFormsComponentRegistryService, 
+  NgsFormsService, 
+  NgsFormsFormConfig, 
+  NgsFormsFormGroupComponent 
+} from '@ng-simplicity/forms-core';
 import { CustomFancyInputComponent } from './custom-fancy-input.component';
 
 @Component({
   selector: 'app-root',
-  template: '<ngs-form></ngs-form>'
+  standalone: true,
+  imports: [NgsFormComponent],
+  providers: [NgsFormsService],
+  template: `
+    <div class="form-container">
+      <h2>Profile Settings</h2>
+      <ngs-form></ngs-form>
+      <button (click)="onSubmit()">Submit</button>
+    </div>
+  `
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+  private ngsFormsService = inject(NgsFormsService);
+
   constructor(registry: NgsFormsComponentRegistryService) {
+    // Register your custom components with the dynamic engine
     registry.register(CustomFancyInputComponent.key, CustomFancyInputComponent);
   }
+
+  ngOnInit() {
+    // Construct the schema configuration
+    const formConfig: NgsFormsFormConfig = {
+      inputUpdateDebounce: 100,
+      root: NgsFormsFormGroupComponent.create({ name: 'profileForm' }, [
+        CustomFancyInputComponent.create({
+          name: 'nickname',
+          label: 'Nickname',
+          placeholder: 'Enter cool nickname...',
+          customColor: 'purple',
+          validators: [Validators.required, Validators.minLength(3)],
+          errorMessageMap: {
+            required: 'Nickname is required.',
+            minlength: 'Nickname must be at least 3 characters.'
+          }
+        })
+      ])
+    };
+
+    // Set the configuration to initialize the form control tree
+    this.ngsFormsService.setFormConfig(formConfig);
+  }
+
+  onSubmit() {
+    if (this.ngsFormsService.isValid) {
+      console.log('Form Submitted!', this.ngsFormsService.formValue);
+    } else {
+      this.ngsFormsService.setIsSubmitted(true); // Triggers error validation display
+    }
+  }
 }
-```
-
-### 3. Add to Schema
-
-```typescript
-const formConfig = {
-  inputUpdateDebounce: 100,
-  root: NgsFormsFormGroupComponent.create({ name: 'profileForm' }, [
-    CustomFancyInputComponent.create({
-      name: 'nickname',
-      label: 'Nickname',
-      placeholder: 'Enter cool nickname...',
-      customColor: 'purple'
-    })
-  ])
-};
 ```
 
 ---
@@ -148,6 +193,200 @@ Each form control component that extends `NgsFormsFormItemWithVisibleAndValidato
    }
    ```
 3. **Displaying Errors**: Within your custom component template, bind your error display element to the `errorMessage` property inherited from the base class. The core engine dynamically updates `errorMessage` based on whether the control is invalid, touched, dirty, or if the form has been submitted.
+
+---
+
+## Common Control Properties
+
+Most controls and layout structures support a standard set of core properties that are managed by the dynamic forms engine. These properties allow passing either a static/basic value or an asynchronous stream (`Observable`):
+
+1. **Visibility**:
+   - `visible` (boolean): Controls whether the item is mounted in the DOM.
+   - `visible$` (`Observable<boolean>`): Stream version to dynamically show/hide components.
+   - *Note: Visibility is configured at the wrapper component layer (`NgsFormsFormItem`).*
+
+2. **Disabled Status**:
+   - `disabled` (boolean): Sets the initial disabled state of the form control.
+   - `disabled$` (`Observable<boolean>`): Stream to toggle disabled state.
+   - *Configured at the inner `config` level.*
+
+3. **Validators**:
+   - `validators` (`Array<ValidatorFn>`): Array of standard/custom Angular Validator functions.
+   - `validators$` (`Observable<Array<ValidatorFn>>`): Stream of validator functions to change validators dynamically.
+   - *Configured at the inner `config` level.*
+
+4. **Options** (Only for components with choice selection like `select` and `radio`):
+   - `options` (`Array<NgsFormsFormInputOption>`): Static array of choices `{ id: string | number, label: string, disabled?: boolean }`.
+   - `options$` (`Observable<Array<NgsFormsFormInputOption>>`): Stream to dynamically populate choices.
+   - *Configured at the inner `config` level.*
+
+> [!TIP]
+> By supplying **Observable** streams (such as `visible$`, `disabled$`, `validators$`, or `options$`), you can build highly dynamic and reactive forms. Because these observables can be piped directly from the form service's value change stream (`this.ngsFormsService.formValue$`), fields can dynamically enable/disable, appear/disappear, change options, or update validation rules in real-time based on user input in other fields.
+
+---
+
+## Core Layout & Structural Components
+
+`@ng-simplicity/forms-core` provides all non-styling-specific components and layout containers. Here is the list of available core components and how to construct them:
+
+### 1. Form Group (`form-group`)
+Creates a nested `FormGroup` control.
+- **Component**: `NgsFormsFormGroupComponent`
+- **Key**: `'form-group'`
+- **Config Type**: `NgsFormsFormItemConfigBaseItemWithNameAndValidators`
+
+```typescript
+import { NgsFormsFormGroupComponent } from '@ng-simplicity/forms-core';
+
+const group = NgsFormsFormGroupComponent.create(
+  {
+    name: 'profileDetails',
+    disabled: false,
+  },
+  [
+    // Array of child NgsFormsFormItem<any> components
+  ]
+);
+```
+
+### 2. Form Array Container (`form-array`)
+Creates a dynamic `FormArray` containing a list of repeated controls/groups.
+- **Component**: `NgsFormsFormArrayContainerComponent`
+- **Key**: `'form-array'`
+- **Config Type**: `NgsFormItemArrayConfig`
+
+```typescript
+import { NgsFormsFormArrayContainerComponent } from '@ng-simplicity/forms-core';
+
+const contactList = NgsFormsFormArrayContainerComponent.create({
+  name: 'contacts',
+  initialItemCount: 1, // Number of items shown initially
+  minItems: 1, // Minimum allowed items
+  maxItems: 5, // Maximum allowed items
+  containerClass: 'custom-array-class', // CSS class for array container
+  itemContainerClass: 'custom-array-item-class', // CSS class for each item container
+  items: [
+    // Template items to replicate (e.g. input-text controls followed by a form-array-remove-button)
+  ]
+});
+```
+
+### 3. Form Array Add Item Button (`form-array-add-item`)
+Button to dynamically append a new item into the parent FormArray.
+- **Component**: `NgsFormsFormArrayAddItemComponent`
+- **Key**: `'form-array-add-item'`
+- **Config Type**: `NgsFormItemArrayAddItemConfig`
+
+```typescript
+import { NgsFormsFormArrayAddItemComponent } from '@ng-simplicity/forms-core';
+
+const addContactBtn = NgsFormsFormArrayAddItemComponent.create({
+  buttonText: 'Add Contact',
+  buttonClass: 'btn btn-success',
+  buttonIcon: 'plus-icon'
+});
+```
+
+### 4. Form Array Remove Item Button (`form-array-remove-item`)
+Button to dynamically remove the current item from the parent FormArray.
+- **Component**: `NgsFormsFormArrayRemoveItemComponent`
+- **Key**: `'form-array-remove-item'`
+- **Config Type**: `NgsFormItemArrayRemoveItemConfig`
+
+```typescript
+import { NgsFormsFormArrayRemoveItemComponent } from '@ng-simplicity/forms-core';
+
+const removeContactBtn = NgsFormsFormArrayRemoveItemComponent.create({
+  buttonText: 'Delete',
+  buttonClass: 'btn btn-danger',
+  buttonIcon: 'trash-icon'
+});
+```
+
+### 5. Section (`section`)
+A visual layout grouping with a title and subtitle.
+- **Component**: `NgsFormsFormSectionComponent`
+- **Key**: `'section'`
+- **Config Type**: `NgsFormsFormSectionConfig`
+
+```typescript
+import { NgsFormsFormSectionComponent } from '@ng-simplicity/forms-core';
+
+const personalSection = NgsFormsFormSectionComponent.create({
+  title: 'Personal Information',
+  titleClass: 'custom-title-class', // Optional, defaults to 'h3'
+  subtitle: 'Tell us a bit about yourself',
+  subtitleClass: 'custom-subtitle-class', // Optional, defaults to 'lead'
+  items: [
+    // Array of child NgsFormsFormItem<any> components
+  ]
+});
+```
+
+### 6. Row Layout (`form-row`)
+Arranges child elements in a flex grid row.
+- **Component**: `NgsFormsRowComponent`
+- **Key**: `'form-row'`
+- **Config Type**: `NgsFormItemRowConfig`
+
+```typescript
+import { NgsFormsRowComponent } from '@ng-simplicity/forms-core';
+
+const flexRow = NgsFormsRowComponent.create({
+  containerClass: 'row g-3', // CSS class for row container
+  columnClass: 'col-md-6', // CSS class applied to ALL child columns (optional)
+  columnClasses: ['col-md-8', 'col-md-4'], // CSS classes applied to each column individually (optional)
+  items: [
+    // Array of child NgsFormsFormItem<any> components
+  ]
+});
+```
+
+### 7. Column Layout (`column`)
+Groups elements vertically inside a layout.
+- **Component**: `NgsFormsColumnComponent`
+- **Key**: `'column'`
+- **Config Type**: `NgsFormsFormItemContainerConfigBase`
+
+```typescript
+import { NgsFormsColumnComponent } from '@ng-simplicity/forms-core';
+
+const layoutCol = NgsFormsColumnComponent.create({
+  items: [
+    // Array of child NgsFormsFormItem<any> components
+  ]
+});
+```
+
+### 8. HTML Content (`content-html`)
+Inserts static HTML blocks directly into the layout.
+- **Component**: `NgsFormsHtmlContentComponent`
+- **Key**: `'content-html'`
+- **Config Type**: `NgsFormItemHtmlContentConfig`
+
+```typescript
+import { NgsFormsHtmlContentComponent } from '@ng-simplicity/forms-core';
+
+const disclaimerText = NgsFormsHtmlContentComponent.create({
+  html: '<p class="text-muted">By clicking register, you agree to our policies.</p>',
+  sanitize: true // Whether to run sanitizer on the html
+});
+```
+
+### 9. Text Div (`text-div`)
+Inserts a basic text div.
+- **Component**: `NgsFormsTextDivComponent`
+- **Key**: `'text-div'`
+- **Config Type**: `NgsFormsTextDivConfig`
+
+```typescript
+import { NgsFormsTextDivComponent } from '@ng-simplicity/forms-core';
+
+const headerText = NgsFormsTextDivComponent.create({
+  text: 'Billing Details',
+  classes: 'fw-bold mb-2' // CSS class name for styling
+});
+```
 
 ---
 
@@ -186,3 +425,17 @@ Ensure your custom configuration type extends one of these core interfaces for f
   ```bash
   nx test forms-core --codeCoverage
   ```
+
+---
+
+## Example Applications
+
+Fully functional example applications demonstrating the form engine functionality are located in the [`apps/`](../../apps) folder of this monorepo:
+- **`forms-bootstrap-demo`**: Integrates and showcases the `@ng-simplicity/forms-bootstrap` package.
+- **`forms-material-demo`**: Integrates and showcases the `@ng-simplicity/forms-material` package.
+
+---
+
+## Support & Contributions
+
+If you have feature suggestions, need a feature to make `@ng-simplicity/forms-core` work for your project, or encounter any bugs, please log an issue in the GitHub issue tracker.

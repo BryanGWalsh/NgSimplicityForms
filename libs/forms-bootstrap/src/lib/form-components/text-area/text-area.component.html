@@ -6,29 +6,34 @@
                 [formControl]="control"
                 class="form-control {{textAreaConfig.inputCssClass}}"
                 id="{{id}}-top"
+                [attr.aria-describedby]="errorMessage ? id + '-error' : null"
                 placeholder="{{textAreaConfig.placeholder}}"
                 style="height: 210px"></textarea>
       @if (errorMessage) {
-        <div class="text-danger">{{ errorMessage }}</div>
+        <div class="text-danger mt-1" id="{{id}}-error" style="font-size: 0.875rem;">
+          {{ errorMessage }}
+        </div>
       }
     </div>
-
   } @else {
     @if (textAreaConfig.labelLocation === 'left') {
       <div class="mb-3 row">
         <label [class.text-danger]="!!errorMessage" class="col-sm-2 col-form-label"
                for="{{id}}-left">{{ textAreaConfig.label }}</label>
         <div class="col-sm-10">
-        <textarea [class.border-danger]="!!errorMessage"
-                  [formControl]="control"
-                  class="form-control {{textAreaConfig.inputCssClass}}"
-                  id="{{id}}-left"
-                  placeholder="{{textAreaConfig.placeholder}}"
-                  style="height: 210px"></textarea>
+          <textarea [class.border-danger]="!!errorMessage"
+                    [formControl]="control"
+                    class="form-control {{textAreaConfig.inputCssClass}}"
+                    id="{{id}}-left"
+                    [attr.aria-describedby]="errorMessage ? id + '-error' : null"
+                    placeholder="{{textAreaConfig.placeholder}}"
+                    style="height: 210px"></textarea>
+          @if (errorMessage) {
+            <div class="text-danger mt-1" id="{{id}}-error" style="font-size: 0.875rem;">
+              {{ errorMessage }}
+            </div>
+          }
         </div>
-        @if (errorMessage) {
-          <div class="text-danger">{{ errorMessage }}</div>
-        }
       </div>
     }
   }

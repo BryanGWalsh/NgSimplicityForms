@@ -1,7 +1,7 @@
 import { NgsFormsBaseClassItemsContainerBase } from '../../../classes/form-component-base/form-component-items-container.class';
 import { NgsFormsFormSectionConfig, sectionConfigDefaults } from './section-config.interface';
 import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
-import { defaults } from 'lodash';
+import { ngsDefaults } from '../../../misc/defaults';
 import { v4 } from 'uuid';
 import { NgsFormsFormItemDirective } from '../../core';
 import { NgsFormsFormItem } from '../../../models';
@@ -24,6 +24,6 @@ export class NgsFormsFormSectionComponent extends NgsFormsBaseClassItemsContaine
   }
 
   ngOnInit() {
-    this.config = defaults(this.config, sectionConfigDefaults);
+    this.config = ngsDefaults(this.config, sectionConfigDefaults);
   }
 }

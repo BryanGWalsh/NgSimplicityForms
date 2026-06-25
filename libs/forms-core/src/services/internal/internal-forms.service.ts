@@ -3,7 +3,7 @@ import { FormGroup, UntypedFormGroup } from '@angular/forms';
 import { NgsFormsFormConfig } from '../../models';
 import { Injectable } from '@angular/core';
 import { NgsFormsGlobalFormState } from '../../models/global-state.interface';
-import { defaults } from 'lodash';
+import { ngsDefaults } from '../../misc/defaults';
 
 @Injectable()
 export class NgsFormsInternalService {
@@ -27,7 +27,7 @@ export class NgsFormsInternalService {
   }
   private mergeState(key: string, update: any): void {
     const obj = this.state.value[key] || {};
-    const updated = defaults(update, obj);
+    const updated = ngsDefaults(update, obj);
     this.state.value[key] = updated;
     this.state.next(this.state.value);
   }
@@ -41,7 +41,7 @@ export class NgsFormsInternalService {
   subscribeToState(fieldName: string) {
     let last = '';
     return this.state.pipe(
-      map((allState) => defaults(allState[fieldName], allState['global'])),
+      map((allState) => ngsDefaults(allState[fieldName], allState['global'])),
       filter((currentState) => {
         const stringifiedState = JSON.stringify(currentState);
         const isUpdated = stringifiedState !== last;

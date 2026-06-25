@@ -3,7 +3,7 @@
   [class]="config.buttonClass || 'btn btn-outline-primary'"
   type="button">
   @if (config.buttonIcon) {
-    <i [class]="config.buttonIcon"></i>
+    <i [class]="config.buttonIcon" aria-hidden="true"></i>
   }
   {{ config.buttonText || 'Add Item' }}
 </button>

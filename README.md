@@ -7,7 +7,9 @@
 
 **NG-Simplicity Forms** is an ecosystem of Angular packages designed to dynamically generate forms from rich configuration schemas. Built from the ground up to support modern Angular design paradigms, the library focuses heavily on **Signals-based state management**, **OnPush change detection**, and full compatibility with **Zoneless** applications.
 
-By separating the form logic and state coordinator from the UI layout components, the engine supports multiple styling frameworks (such as Bootstrap and Angular Material) using the same declarative form configurations.
+It enables you to construct highly dynamic, complex forms where control properties (such as visibility, enabled/disabled state, select options, and validation rules) reactively adapt in real-time based on the current values inside the form.
+
+By separating the form logic and state coordinator from the UI styling layout components, the engine supports multiple styling frameworks as extensions of the core engine, using the same declarative form configurations. The ecosystem is also highly customizable, allowing you to develop and add your own custom form controls to the registry to be used in the form rendering.
 
 ---
 
@@ -15,11 +17,16 @@ By separating the form logic and state coordinator from the UI layout components
 
 This library is organized as an Nx workspace consisting of three primary packages:
 
-| Package | Directory | Description |
+| Package | Directory / README | Description |
 |---|---|---|
-| **`@ng-simplicity/forms-core`** | [`libs/forms-core`](file:///home/bryan/git/bryan-projects/angular-open-source/ng-simplicity/forms/libs/forms-core/README.md) | Core form engine containing the reactive service API, dynamic component registry, models, base classes, and structural components (Column, Row, Section, Form Group, etc.). |
-| **`@ng-simplicity/forms-bootstrap`** | [`libs/forms-bootstrap`](file:///home/bryan/git/bryan-projects/angular-open-source/ng-simplicity/forms/libs/forms-bootstrap/README.md) | Bootstrap-themed implementation of the core components (e.g. text inputs, textareas) pre-styled for Bootstrap layouts. |
-| **`@ng-simplicity/forms-material`** | [`libs/forms-material`](file:///home/bryan/git/bryan-projects/angular-open-source/ng-simplicity/forms/libs/forms-material/README.md) | Angular Material-themed implementation of the core components. |
+| **`@ng-simplicity/forms-core`** | [`libs/forms-core`](./libs/forms-core/README.md) | Core form engine containing the reactive service API, dynamic component registry, models, base classes, and structural components (Column, Row, Section, Form Group, etc.). |
+| **`@ng-simplicity/forms-bootstrap`** | [`libs/forms-bootstrap`](./libs/forms-bootstrap/README.md) | Bootstrap-themed implementation of the core components (e.g. text inputs, textareas) pre-styled for Bootstrap layouts. |
+| **`@ng-simplicity/forms-material`** | [`libs/forms-material`](./libs/forms-material/README.md) | Angular Material-themed implementation of the core components. |
+
+### Example Applications
+Fully functional example applications demonstrating the form engine functionality are located in the [`apps/`](./apps) folder of this monorepo:
+- **`forms-bootstrap-demo`**: Integrates and showcases the `@ng-simplicity/forms-bootstrap` package.
+- **`forms-material-demo`**: Integrates and showcases the `@ng-simplicity/forms-material` package.
 
 ---
 
