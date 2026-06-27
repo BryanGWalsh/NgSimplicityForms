@@ -5,7 +5,7 @@ import {
 } from '@angular/forms';
 import { v4 } from 'uuid';
 
-import { NgsFormsFormItem, NgsFormsFormItemConfigBaseItemWithNameAndValidators } from '../../../models';
+import { NgsFormsFormItem, NgsFormsFormGroupConfig } from '../../../models';
 import { NgsFormsFormItemWithVisibleAndValidatorsBase } from '../../../classes/form-component-base/form-component-item-with-visible-and-validators-base.class';
 
 import { NgsFormsFormItemDirective } from '../../core';
@@ -18,20 +18,18 @@ import { NgsFormsFormItemDirective } from '../../core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NgsFormsFormGroupComponent
-  extends NgsFormsFormItemWithVisibleAndValidatorsBase<NgsFormsFormItemConfigBaseItemWithNameAndValidators>
+  extends NgsFormsFormItemWithVisibleAndValidatorsBase<NgsFormsFormGroupConfig>
   implements OnInit
 {
   static override key = 'form-group';
 
   static create(
-    config: NgsFormsFormItemConfigBaseItemWithNameAndValidators,
-    items?: Array<NgsFormsFormItem<any>>
-  ): NgsFormsFormItem<NgsFormsFormItemConfigBaseItemWithNameAndValidators> {
+    config: NgsFormsFormGroupConfig
+  ): NgsFormsFormItem<NgsFormsFormGroupConfig> {
     return {
-      uuid: v4(),
+      uuid: config.uuid || v4(),
       type: NgsFormsFormGroupComponent.key,
       config,
-      items,
     };
   }
 

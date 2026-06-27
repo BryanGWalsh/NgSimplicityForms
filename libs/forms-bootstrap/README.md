@@ -72,30 +72,33 @@ export class BootstrapFormPageComponent implements OnInit {
     // Construct the form configuration
     const formConfig: NgsFormsFormConfig = {
       inputUpdateDebounce: 150,
-      root: NgsFormsFormGroupComponent.create({ name: 'profileForm' }, [
-        NgsFormsRowComponent.create({
-          items: [
-            NgsFormsBootstrapFormItemInputComponent.create({
-              name: 'username',
-              label: 'Username',
-              placeholder: 'Enter username...',
-              type: 'text',
-              labelLocation: 'top',
-              validators: [Validators.required],
-              errorMessageMap: {
-                required: 'Username is required.'
-              }
-            }),
-            NgsFormsBootstrapFormsItemTextAreaComponent.create({
-              name: 'bio',
-              label: 'Biography',
-              placeholder: 'Write a short bio...',
-              labelLocation: 'left',
-              inputCssClass: 'shadow-sm'
-            })
-          ]
-        })
-      ])
+      root: NgsFormsFormGroupComponent.create({
+        name: 'profileForm',
+        items: [
+          NgsFormsRowComponent.create({
+            items: [
+              NgsFormsBootstrapFormItemInputComponent.create({
+                name: 'username',
+                label: 'Username',
+                placeholder: 'Enter username...',
+                type: 'text',
+                labelLocation: 'top',
+                validators: [Validators.required],
+                errorMessageMap: {
+                  required: 'Username is required.'
+                }
+              }),
+              NgsFormsBootstrapFormsItemTextAreaComponent.create({
+                name: 'bio',
+                label: 'Biography',
+                placeholder: 'Write a short bio...',
+                labelLocation: 'left',
+                inputCssClass: 'shadow-sm'
+              })
+            ]
+          })
+        ]
+      })
     };
 
     // Initialize the dynamic form controls
@@ -133,7 +136,7 @@ Most controls in this styling library support a standard set of core properties 
 1. **Visibility**:
    - `visible` (boolean): Controls whether the item is mounted in the DOM.
    - `visible$` (`Observable<boolean>`): Stream version to dynamically show/hide components.
-   - *Note: Visibility is configured at the wrapper component layer (`NgsFormsFormItem`).*
+   - *Note: Visibility is configured at the inner config level (`NgsFormsFormItemConfigBase`).*
 
 2. **Disabled Status**:
    - `disabled` (boolean): Sets the initial disabled state of the form control.

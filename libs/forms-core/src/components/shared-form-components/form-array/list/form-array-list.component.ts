@@ -1,4 +1,4 @@
-import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy, ChangeDetectorRef, OnInit } from '@angular/core';
 import { NgsFormsFormArrayInternalService } from '../service';
 import { AbstractControl, FormArray, UntypedFormGroup } from '@angular/forms';
 
@@ -12,18 +12,25 @@ import { NgsFormsFormItemDirective, NgsFormsBaseClassFormComponent, NgsFormsForm
   imports: [NgsFormsFormItemDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NgsFormsFormArrayListComponent extends NgsFormsBaseClassFormComponent<NgsFormsFormArrayListConfig> {
+export class NgsFormsFormArrayListComponent extends NgsFormsBaseClassFormComponent<NgsFormsFormArrayListConfig> implements OnInit {
   static override key = 'form-array-list';
   public internalArrayService = inject<NgsFormsFormArrayInternalService>(
     NgsFormsFormArrayInternalService
   );
   public myFormArray: FormArray<any> = this.internalArrayService.formArray;
+  private changeDetectorRef = inject(ChangeDetectorRef);
+
+  ngOnInit() {
+    this.subscribe(this.internalArrayService.itemsChanged, () => {
+      this.changeDetectorRef.markForCheck();
+    });
+  }
 
   static create(
     config: NgsFormsFormArrayListConfig
   ): NgsFormsFormItem<NgsFormsFormArrayListConfig> {
     return {
-      uuid: v4(),
+      uuid: config.uuid || v4(),
       type: NgsFormsFormArrayListComponent.key,
       config: config,
     };

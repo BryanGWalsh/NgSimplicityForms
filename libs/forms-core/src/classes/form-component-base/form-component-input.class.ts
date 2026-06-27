@@ -11,7 +11,7 @@ export abstract class NgsFormsBaseClassFormInputComponent<T extends NgsFormsForm
   private readonly internalService = inject(NgsFormsInternalService);
 
   readonly commonState: Signal<NgsFormsCommonComponentState> = toSignal(
-    this.internalService.subscribeToState(this.config.name),
+    this.internalService.subscribeToState(this.itemData.uuid || '', this.config.name),
     { initialValue: {} as NgsFormsCommonComponentState }
   );
 

@@ -1,5 +1,5 @@
-@if (itemData.items) {
-  @for (item of itemData.items; track item.uuid) {
+@if (config.items) {
+  @for (item of config.items; track item.uuid) {
     <ng-container [ngs-form-item]="item" [ngs-form-group]="formGroupControl"></ng-container>
   }
 }

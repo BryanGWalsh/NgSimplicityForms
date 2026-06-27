@@ -18,7 +18,7 @@ export class NgsFormsBootstrapRadioInputComponent extends NgsFormsBaseClassFormI
     config: NgsFormsFormsItemConfigBoostrapRadio
   ): NgsFormsFormItem<NgsFormsFormsItemConfigBoostrapRadio> {
     return {
-      uuid: v4(),
+      uuid: config.uuid || v4(),
       type: NgsFormsBootstrapRadioInputComponent.key,
       config,
     };

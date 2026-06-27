@@ -1,4 +1,4 @@
-import { Directive, inject, Injector, Input, OnDestroy, OnInit, ViewContainerRef } from '@angular/core';
+import { ChangeDetectorRef, Directive, inject, Injector, Input, OnDestroy, OnInit, ViewContainerRef } from '@angular/core';
 import { UntypedFormArray, UntypedFormGroup } from '@angular/forms';
 import { NgsFormItemController } from '../../../controllers';
 import { INgsFormsFormControlAddRemove, NgsFormsFormControlAddRemoveFunctions } from '../../../misc';
@@ -27,6 +27,7 @@ export class NgsFormsFormItemDirective implements OnInit, OnDestroy {
 
   private readonly viewContainerRef = inject(ViewContainerRef);
   private readonly injector = inject(Injector);
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
 
   private readonly formComponentRegistryService = inject(NgsFormsComponentRegistryService);
 
@@ -41,7 +42,14 @@ export class NgsFormsFormItemDirective implements OnInit, OnDestroy {
     if (this.formGroup) {
       addRemoveFn = NgsFormsFormControlAddRemoveFunctions.formGroup(this.formGroup);
     }
-    this.controller = new NgsFormItemController(this.injector, this.viewContainerRef, this.itemData, addRemoveFn, this.index);
+    this.controller = new NgsFormItemController(
+      this.injector,
+      this.viewContainerRef,
+      this.itemData,
+      addRemoveFn,
+      this.index,
+      this.changeDetectorRef
+    );
   }
 
   ngOnDestroy() {

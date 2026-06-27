@@ -1,10 +1,11 @@
-import { Directive, inject, OnDestroy, OnInit, Signal } from '@angular/core';
+import { Directive, inject, OnDestroy, OnInit, Signal, ChangeDetectorRef } from '@angular/core';
 import { FormControl, UntypedFormControl, ValidatorFn } from '@angular/forms';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { INgsFormsFormControlAddRemove, NGS_FORMS_CONTROL_ADD_REMOVE_FN } from '../../misc';
 import { NgsFormsInternalService } from '../../services';
 import { NgsFormsFormItemConfigBaseItemWithNameAndValidators } from '../../models/item-config-bases/';
 import { NgsFormsBaseClassFormComponent } from '../../classes/index';
+import { merge } from 'rxjs';
 
 @Directive({})
 export class NgsFormsFormItemWithVisibleAndValidatorsBase<T extends NgsFormsFormItemConfigBaseItemWithNameAndValidators> extends NgsFormsBaseClassFormComponent<T> implements OnInit, OnDestroy {
@@ -12,14 +13,50 @@ export class NgsFormsFormItemWithVisibleAndValidatorsBase<T extends NgsFormsForm
   errorMessage = '';
   private formAddRemoveFns = inject<INgsFormsFormControlAddRemove>(NGS_FORMS_CONTROL_ADD_REMOVE_FN);
   private privateService = inject<NgsFormsInternalService>(NgsFormsInternalService);
+  private changeDetectorRef = inject(ChangeDetectorRef);
   readonly submitted: Signal<boolean> = toSignal(this.privateService.isSubmitted$, { initialValue: false });
 
   ngOnInit() {
-    this.control = new FormControl(undefined, { validators: [] });
+    if (!this.control) {
+      this.control = new FormControl(undefined, { validators: [] });
+    }
     //this.bindVisible();
     this.bindValidators();
     //this.bindControlValidityChange();
     this.formAddRemoveFns.add(this.control, this.config.name);
+
+    // Listen to changes and update error message dynamically
+    this.subscribe(
+      merge(
+        this.control.valueChanges,
+        this.control.statusChanges,
+        this.privateService.isSubmitted$
+      ),
+      () => {
+        this.updateErrorMessage();
+        this.changeDetectorRef.markForCheck();
+      }
+    );
+  }
+
+  private updateErrorMessage() {
+    if (!this.control) {
+      this.errorMessage = '';
+      return;
+    }
+    const showErrors = this.control.invalid && (this.control.touched || this.control.dirty || this.submitted());
+    if (!showErrors) {
+      this.errorMessage = '';
+      return;
+    }
+    const errors = this.control.errors;
+    if (!errors) {
+      this.errorMessage = '';
+      return;
+    }
+    const firstErrorKey = Object.keys(errors)[0];
+    const map = this.config.errorMessageMap;
+    this.errorMessage = map?.[firstErrorKey] || `Field is invalid: ${firstErrorKey}`;
   }
 
   override ngOnDestroy() {

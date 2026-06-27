@@ -16,7 +16,7 @@ export class NgsFormsColumnComponent extends NgsFormsBaseClassItemsContainerBase
 
   static create(config: NgsFormsFormItemContainerConfigBase): NgsFormsFormItem<NgsFormsFormItemContainerConfigBase> {
     return {
-      uuid: v4(),
+      uuid: config.uuid || v4(),
       type: NgsFormsColumnComponent.key,
       config,
     };

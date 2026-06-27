@@ -4,11 +4,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NgsFormBootstrapInputComponentResources } from './input-component.resources';
 import { NgsFormsFormItemConfigBootstrapTextInput } from './input.config';
 import { v4 } from 'uuid';
-import { NgIf } from '@angular/common';
-
 @Component({
   selector: 'ngs-forms-bs-input',
-  imports: [ReactiveFormsModule, NgIf],
+  imports: [ReactiveFormsModule],
   templateUrl: './input.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -21,7 +19,7 @@ export class NgsFormsBootstrapFormItemInputComponent extends NgsFormsBaseClassFo
 
   static create(config: NgsFormsFormItemConfigBootstrapTextInput): NgsFormsFormItem<NgsFormsFormItemConfigBootstrapTextInput> {
     return {
-      uuid: v4(),
+      uuid: config.uuid || v4(),
       type: NgsFormsBootstrapFormItemInputComponent.key,
       config,
     };

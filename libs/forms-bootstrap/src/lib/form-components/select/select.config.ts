@@ -2,6 +2,6 @@ import { NgsFormsFormItemConfigBaseInputWithOptions } from '@ng-simplicity/forms
 
 export interface NgsFormsFormItemConfigBootstrapSelectInput extends NgsFormsFormItemConfigBaseInputWithOptions {
   labelLocation?: 'top' | 'left';
-  placeholder?: boolean;
+  placeholder?: string;
   placeHolderValue?: string;
 }

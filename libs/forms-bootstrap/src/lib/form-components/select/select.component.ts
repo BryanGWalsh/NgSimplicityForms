@@ -19,7 +19,7 @@ export class NgsFormsBootstrapFormItemSelectInputComponent extends NgsFormsBaseC
     config: NgsFormsFormItemConfigBootstrapSelectInput
   ): NgsFormsFormItem<NgsFormsFormItemConfigBootstrapSelectInput> {
     return {
-      uuid: v4(),
+      uuid: config.uuid || v4(),
       type: NgsFormsBootstrapFormItemSelectInputComponent.key,
       config,
     };

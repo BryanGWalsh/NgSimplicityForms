@@ -17,7 +17,7 @@ export class NgsFormsTextDivComponent extends NgsFormsBaseClassFormComponent<Ngs
     config: NgsFormsTextDivConfig
   ): NgsFormsFormItem<NgsFormsTextDivConfig> {
     return {
-      uuid: v4(),
+      uuid: config.uuid || v4(),
       type: NgsFormsTextDivComponent.key,
       config: config,
     };

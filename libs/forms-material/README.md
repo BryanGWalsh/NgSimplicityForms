@@ -72,29 +72,32 @@ export class MaterialFormPageComponent implements OnInit {
     // Construct the form configuration
     const formConfig: NgsFormsFormConfig = {
       inputUpdateDebounce: 150,
-      root: NgsFormsFormGroupComponent.create({ name: 'contactForm' }, [
-        NgsFormsRowComponent.create({
-          items: [
-            NgsFormsMaterialFormItemInputComponent.create({
-              name: 'email',
-              label: 'Email Address',
-              placeholder: 'Enter your email...',
-              type: 'email',
-              validators: [Validators.required, Validators.email],
-              errorMessageMap: {
-                required: 'Email address is required.',
-                email: 'Please enter a valid email address.'
-              }
-            }),
-            NgsFormsMaterialFormItemTextAreaComponent.create({
-              name: 'message',
-              label: 'Your Message',
-              placeholder: 'Write your message...',
-              rows: 4
-            })
-          ]
-        })
-      ])
+      root: NgsFormsFormGroupComponent.create({
+        name: 'contactForm',
+        items: [
+          NgsFormsRowComponent.create({
+            items: [
+              NgsFormsMaterialFormItemInputComponent.create({
+                name: 'email',
+                label: 'Email Address',
+                placeholder: 'Enter your email...',
+                type: 'email',
+                validators: [Validators.required, Validators.email],
+                errorMessageMap: {
+                  required: 'Email address is required.',
+                  email: 'Please enter a valid email address.'
+                }
+              }),
+              NgsFormsMaterialFormItemTextAreaComponent.create({
+                name: 'message',
+                label: 'Your Message',
+                placeholder: 'Write your message...',
+                rows: 4
+              })
+            ]
+          })
+        ]
+      })
     };
 
     // Initialize the dynamic form controls
@@ -132,7 +135,7 @@ Most controls in this styling library support a standard set of core properties 
 1. **Visibility**:
    - `visible` (boolean): Controls whether the item is mounted in the DOM.
    - `visible$` (`Observable<boolean>`): Stream version to dynamically show/hide components.
-   - *Note: Visibility is configured at the wrapper component layer (`NgsFormsFormItem`).*
+   - *Note: Visibility is configured at the inner config level (`NgsFormsFormItemConfigBase`).*
 
 2. **Disabled Status**:
    - `disabled` (boolean): Sets the initial disabled state of the form control.

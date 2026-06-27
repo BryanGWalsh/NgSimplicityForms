@@ -1,4 +1,5 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { UntypedFormControl } from '@angular/forms';
 import { NgsFormsFormItem } from '../../../../models';
 import { NgsFormsFormItemDirective } from '../../../core/index';
 import { NgsFormItemArrayConfig } from './form-array-config.model';
@@ -15,11 +16,17 @@ import { v4 } from 'uuid';
 })
 export class NgsFormsFormArrayContainerComponent extends NgsFormsFormItemWithVisibleAndValidatorsBase<NgsFormItemArrayConfig> {
   static override key = 'form-array';
+
+  constructor(private formArrayService: NgsFormsFormArrayInternalService) {
+    super();
+    this.control = this.formArrayService.formArray as unknown as UntypedFormControl;
+  }
+
   static create(
     config: NgsFormItemArrayConfig
   ): NgsFormsFormItem<NgsFormItemArrayConfig> {
     return {
-      uuid: v4(),
+      uuid: config.uuid || v4(),
       type: NgsFormsFormArrayContainerComponent.key,
       config: config,
     };

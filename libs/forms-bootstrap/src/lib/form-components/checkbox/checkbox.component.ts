@@ -18,7 +18,7 @@ export class NgsFormsBootstrapFormsItemCheckboxComponent extends NgsFormsBaseCla
     config: NgsFormsFormItemConfigBootstrapCheckbox
   ): NgsFormsFormItem<NgsFormsFormItemConfigBootstrapCheckbox> {
     return {
-      uuid: v4(),
+      uuid: config.uuid || v4(),
       type: NgsFormsBootstrapFormsItemCheckboxComponent.key,
       config,
     };

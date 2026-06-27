@@ -50,7 +50,7 @@ describe('NgsFormComponent', () => {
     expect(setInternalServiceSpy).toHaveBeenCalled();
   });
 
-  it('should render form item when config and group are set', () => {
+  it('should render form item when config and group are set', async () => {
     formsService.setFormConfig({
       inputUpdateDebounce: 100,
       globalState: {},
@@ -62,6 +62,7 @@ describe('NgsFormComponent', () => {
     });
 
     fixture.detectChanges();
+    await fixture.whenStable();
 
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('mock-input')).toBeTruthy();

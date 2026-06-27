@@ -28,7 +28,7 @@ export class NgsFormsRowComponent extends NgsFormsBaseClassFormComponent<NgsForm
   }
   static create(config: NgsFormItemRowConfig): NgsFormsFormItem<NgsFormItemRowConfig> {
     return {
-      uuid: v4(),
+      uuid: config.uuid || v4(),
       type: NgsFormsRowComponent.key,
       config: config,
     };

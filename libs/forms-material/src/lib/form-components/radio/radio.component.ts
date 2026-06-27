@@ -24,7 +24,7 @@ export class NgsFormsMaterialRadioInputComponent extends NgsFormsBaseClassFormIt
 
   static create(config: NgsFormsFormItemConfigMaterialRadio): NgsFormsFormItem<NgsFormsFormItemConfigMaterialRadio> {
     return {
-      uuid: v4(),
+      uuid: config.uuid || v4(),
       type: NgsFormsMaterialRadioInputComponent.key,
       config,
     };

@@ -38,10 +38,15 @@ export class NgsFormsInternalService {
     this.mergeState(componentKey, state);
   }
 
-  subscribeToState(fieldName: string) {
+  subscribeToState(uuid: string, name?: string) {
     let last = '';
     return this.state.pipe(
-      map((allState) => ngsDefaults(allState[fieldName], allState['global'])),
+      map((allState) => {
+        const stateByUuid = allState[uuid] || {};
+        const stateByName = name ? (allState[name] || {}) : {};
+        const globalState = allState['global'] || {};
+        return ngsDefaults(stateByUuid, ngsDefaults(stateByName, globalState));
+      }),
       filter((currentState) => {
         const stringifiedState = JSON.stringify(currentState);
         const isUpdated = stringifiedState !== last;

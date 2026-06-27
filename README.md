@@ -90,9 +90,9 @@ export class MyFormPageComponent implements OnInit {
       globalState: {
         theme: 'dark'
       },
-      root: NgsFormsFormGroupComponent.create(
-        { name: 'registrationForm' },
-        [
+      root: NgsFormsFormGroupComponent.create({
+        name: 'registrationForm',
+        items: [
           NgsFormsMaterialFormItemInputComponent.create({
             name: 'username',
             label: 'Username',
@@ -108,7 +108,7 @@ export class MyFormPageComponent implements OnInit {
             validators: [Validators.required, Validators.email]
           })
         ]
-      )
+      })
     };
 
     // Feed configuration to the form engine

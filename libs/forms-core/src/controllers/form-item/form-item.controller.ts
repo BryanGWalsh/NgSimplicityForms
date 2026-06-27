@@ -1,4 +1,4 @@
-import { ComponentRef, Injector, Provider, ViewContainerRef } from '@angular/core';
+import { ChangeDetectorRef, ComponentRef, Injector, Provider, ViewContainerRef } from '@angular/core';
 import { NgsFormsFormItem } from '../../models';
 import { NgsSubscriber } from '../../classes/base/subscriber.class';
 import { INgsFormsFormControlAddRemove, NGS_FORMS_CONTROL_ADD_REMOVE_FN, NGS_FORMS_ITEM_DATA, NGS_FORMS_ITEM_INDEX } from '../../misc';
@@ -15,7 +15,8 @@ export class NgsFormItemController extends NgsSubscriber {
     private readonly viewContainerRef: ViewContainerRef,
     private readonly itemData: NgsFormsFormItem<any>,
     private readonly addRemoveControlFn?: INgsFormsFormControlAddRemove,
-    private readonly index?: number
+    private readonly index?: number,
+    private readonly changeDetectorRef?: ChangeDetectorRef
   ) {
     super();
     this.bindVisibility();
@@ -27,16 +28,16 @@ export class NgsFormItemController extends NgsSubscriber {
   }
 
   private bindVisibility() {
-    if (!this.itemData.visible$) {
-      this.create();
+    if (!this.itemData.config.visible$) {
+      Promise.resolve().then(() => this.create());
       return;
     }
-    this.subscribe(this.itemData.visible$, (visible) => {
+    this.subscribe(this.itemData.config.visible$, (visible: any) => {
       if (this.lastVisible === visible) return;
 
       this.lastVisible = visible;
       if (visible) {
-        this.create();
+        Promise.resolve().then(() => this.create());
         return;
       }
       this.detach();
@@ -61,11 +62,14 @@ export class NgsFormItemController extends NgsSubscriber {
       return;
     }
     this.componentRef = this.viewContainerRef.createComponent(componentType, { injector: myInjector });
+    this.componentRef.changeDetectorRef?.detectChanges();
+    this.changeDetectorRef?.markForCheck();
     this.parentVisibility.next(true);
   }
 
   private detach() {
     this.parentVisibility.next(false);
     this.componentRef?.destroy();
+    this.changeDetectorRef?.markForCheck();
   }
 }

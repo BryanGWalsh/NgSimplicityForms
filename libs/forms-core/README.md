@@ -148,19 +148,22 @@ export class AppComponent implements OnInit {
     // Construct the schema configuration
     const formConfig: NgsFormsFormConfig = {
       inputUpdateDebounce: 100,
-      root: NgsFormsFormGroupComponent.create({ name: 'profileForm' }, [
-        CustomFancyInputComponent.create({
-          name: 'nickname',
-          label: 'Nickname',
-          placeholder: 'Enter cool nickname...',
-          customColor: 'purple',
-          validators: [Validators.required, Validators.minLength(3)],
-          errorMessageMap: {
-            required: 'Nickname is required.',
-            minlength: 'Nickname must be at least 3 characters.'
-          }
-        })
-      ])
+      root: NgsFormsFormGroupComponent.create({
+        name: 'profileForm',
+        items: [
+          CustomFancyInputComponent.create({
+            name: 'nickname',
+            label: 'Nickname',
+            placeholder: 'Enter cool nickname...',
+            customColor: 'purple',
+            validators: [Validators.required, Validators.minLength(3)],
+            errorMessageMap: {
+              required: 'Nickname is required.',
+              minlength: 'Nickname must be at least 3 characters.'
+            }
+          })
+        ]
+      })
     };
 
     // Set the configuration to initialize the form control tree
@@ -203,7 +206,7 @@ Most controls and layout structures support a standard set of core properties th
 1. **Visibility**:
    - `visible` (boolean): Controls whether the item is mounted in the DOM.
    - `visible$` (`Observable<boolean>`): Stream version to dynamically show/hide components.
-   - *Note: Visibility is configured at the wrapper component layer (`NgsFormsFormItem`).*
+   - *Note: Visibility is configured at the inner config level (`NgsFormsFormItemConfigBase`).*
 
 2. **Disabled Status**:
    - `disabled` (boolean): Sets the initial disabled state of the form control.
@@ -225,6 +228,82 @@ Most controls and layout structures support a standard set of core properties th
 
 ---
 
+## Dynamic Form Arrays (`form-array`)
+
+Form Arrays in `@ng-simplicity/forms-core` allow for dynamic lists of repeating items (such as adding multiple emergency contacts or addresses). Managing form arrays requires three distinct components working in harmony:
+
+1. **`NgsFormsFormArrayContainerComponent` (Container)**: 
+   - Manages the outer `FormArray` control and acts as the shell.
+   - Requires setting `name` (the control name), `initialItemCount` (minimum display elements), and boundaries (`minItems`, `maxItems`).
+2. **`NgsFormsFormArrayListComponent` (Repeater)**:
+   - Resides inside the `items` array of the container.
+   - Defines a `templateItem` property containing the layout / controls to clone for each dynamic item.
+   - **Crucial Pattern**: The `templateItem` should wrap the inputs inside a layout structure (like a `form-row` or `column`). The engine will dynamically register these repeated fields inside a dedicated `FormGroup` *per array item* under the hood (e.g. `contacts: [{ name: '', phone: '' }]`), isolating the control states.
+3. **Array Mutation Buttons (`form-array-add-item` / `form-array-remove-item`)**:
+   - `NgsFormsFormArrayAddItemComponent`: Placed inside the container's items array (outside the repeater component) to trigger appending a new form group cloned from the `templateItem`.
+   - `NgsFormsFormArrayRemoveItemComponent`: Placed inside the `templateItem` template (next to the form inputs) so each item row contains a button to delete itself.
+
+### Example Schema Configuration
+
+Here is a complete setup illustrating how these components work together:
+
+```typescript
+import {
+  NgsFormsFormArrayContainerComponent,
+  NgsFormsFormArrayListComponent,
+  NgsFormsRowComponent,
+  NgsFormsFormArrayRemoveItemComponent,
+  NgsFormsFormArrayAddItemComponent
+} from '@ng-simplicity/forms-core';
+
+const contactArray = NgsFormsFormArrayContainerComponent.create({
+  name: 'contacts',
+  initialItemCount: 1,
+  minItems: 1,
+  maxItems: 3,
+  containerClass: 'contacts-container',
+  itemContainerClass: 'contact-row-card',
+  items: [
+    // 1. The Repeater Component containing the repeated schema structure
+    NgsFormsFormArrayListComponent.create({
+      templateItem: NgsFormsRowComponent.create({
+        containerClass: 'row align-items-center',
+        items: [
+          // Input fields per array item
+          SomeInputComponent.create({
+            name: 'contactName',
+            label: 'Contact Name',
+            validators: [Validators.required]
+          }),
+          SomeInputComponent.create({
+            name: 'contactPhone',
+            label: 'Phone Number',
+            validators: [Validators.required]
+          }),
+          // 2. The Remove Button placed inside the templateItem row to delete this specific row
+          NgsFormsFormArrayRemoveItemComponent.create({
+            buttonText: 'Remove',
+            buttonClass: 'btn btn-danger'
+          })
+        ]
+      })
+    }),
+    
+    // 3. The Add Button placed outside the repeater but inside the container to append rows
+    NgsFormsRowComponent.create({
+      items: [
+        NgsFormsFormArrayAddItemComponent.create({
+          buttonText: 'Add Additional Contact',
+          buttonClass: 'btn btn-primary'
+        })
+      ]
+    })
+  ]
+});
+```
+
+---
+
 ## Core Layout & Structural Components
 
 `@ng-simplicity/forms-core` provides all non-styling-specific components and layout containers. Here is the list of available core components and how to construct them:
@@ -238,15 +317,13 @@ Creates a nested `FormGroup` control.
 ```typescript
 import { NgsFormsFormGroupComponent } from '@ng-simplicity/forms-core';
 
-const group = NgsFormsFormGroupComponent.create(
-  {
-    name: 'profileDetails',
-    disabled: false,
-  },
-  [
+const group = NgsFormsFormGroupComponent.create({
+  name: 'profileDetails',
+  disabled: false,
+  items: [
     // Array of child NgsFormsFormItem<any> components
   ]
-);
+});
 ```
 
 ### 2. Form Array Container (`form-array`)
@@ -406,8 +483,9 @@ All base classes are exported from `@ng-simplicity/forms-core`:
 ### Available Configuration Interfaces
 Ensure your custom configuration type extends one of these core interfaces for full TypeScript safety:
 
-*   **`NgsFormsFormItemConfigBase`**: Standard base structure containing only an optional `uuid?: string`.
+*   **`NgsFormsFormItemConfigBase`**: Standard base structure containing optional `uuid?: string`, `visible?: boolean`, `visible$?: Observable<boolean>`, and `initialState?: any`.
 *   **`NgsFormsFormItemConfigBaseItemWithNameAndValidators`**: Core interface for registerable form controls. Adds `name: string`, `errorMessageMap?: NgsFormsFormErrorKeyValueMap`, `disabled?`/`disabled$?`, and `validators?`/`validators$?`.
+*   **`NgsFormsFormGroupConfig`**: Extends both the name/validators base and the items container base. Used for FormGroup configurations.
 *   **`NgsFormsFormItemConfigBaseInput`**: Extends the name/validators base. Adds common interactive input properties: `id?: string`, `label: string`, and `value?: unknown`.
 *   **`NgsFormsFormItemConfigBaseTextInput`**: Extends the input base. Adds text-specific options: `placeholder?: string` and `type?: 'text' | 'email' | 'password'`.
 *   **`NgsFormsFormItemConfigBaseInputWithOptions`**: Extends the input base. Adds selection fields: `options?: Array<NgsFormsFormInputOption>` and `options$?: Observable<Array<NgsFormsFormInputOption>>`.

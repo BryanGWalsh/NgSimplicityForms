@@ -17,7 +17,7 @@ export class NgsFormsFormSectionComponent extends NgsFormsBaseClassItemsContaine
 
   static create(config: NgsFormsFormSectionConfig): NgsFormsFormItem<NgsFormsFormSectionConfig> {
     return {
-      uuid: v4(),
+      uuid: config.uuid || v4(),
       type: NgsFormsFormSectionComponent.key,
       config: config,
     };

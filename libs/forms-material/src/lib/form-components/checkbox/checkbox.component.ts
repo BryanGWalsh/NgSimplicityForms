@@ -19,7 +19,7 @@ export class NgsFormsMaterialFormItemCheckboxComponent extends NgsFormsBaseClass
 
   static create(config: NgsFormsFormItemConfigBaseInput): NgsFormsFormItem<NgsFormsFormItemConfigBaseInput> {
     return {
-      uuid: v4(),
+      uuid: config.uuid || v4(),
       type: NgsFormsMaterialFormItemCheckboxComponent.key,
       config,
     };

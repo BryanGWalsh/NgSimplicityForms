@@ -7,11 +7,16 @@ import { NgsFormsFormItem } from '../form-config';
 
 export interface NgsFormsFormItemConfigBase {
   uuid?: string;
+  visible?: boolean;
+  visible$?: Observable<boolean>;
+  initialState?: any;
 }
 
 export interface NgsFormsFormItemContainerConfigBase extends NgsFormsFormItemConfigBase {
   items: Array<NgsFormsFormItem<any>>
 }
+
+export interface NgsFormsFormGroupConfig extends NgsFormsFormItemConfigBaseItemWithNameAndValidators, NgsFormsFormItemContainerConfigBase {}
 
 export interface NgsFormsFormItemConfigBaseItemWithNameAndValidators extends NgsFormsFormItemConfigBase{
   name: string;

@@ -16,7 +16,7 @@ export class NgsFormsFormArrayAddItemComponent extends NgsFormsBaseClassFormComp
 
   static create(config: NgsFormItemArrayAddItemConfig): NgsFormsFormItem<NgsFormItemArrayAddItemConfig> {
     return {
-      uuid: v4(),
+      uuid: config.uuid || v4(),
       type: NgsFormsFormArrayAddItemComponent.key,
       config: config,
     };

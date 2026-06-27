@@ -1,4 +1,4 @@
-import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy, ElementRef } from '@angular/core';
 import { NgsFormsBaseClassFormComponent } from '../../../../classes/form-component-base/form-component.class';
 import { NgsFormsFormItem } from '../../../../models';
 import { NgsFormItemArrayRemoveItemConfig } from './form-array-remove-item-config.model';
@@ -14,7 +14,23 @@ import { v4 } from 'uuid';
 export class NgsFormsFormArrayRemoveItemComponent extends NgsFormsBaseClassFormComponent<NgsFormItemArrayRemoveItemConfig> {
   static override key = 'form-array-remove-item';
   internalArrayService = inject(NgsFormsFormArrayInternalService);
-  myIndex = inject<number>(NGS_FORMS_ITEM_INDEX);
+  private elementRef = inject(ElementRef);
+  private indexFromDi = inject<number>(NGS_FORMS_ITEM_INDEX, { optional: true });
+
+  get myIndex(): number {
+    if (this.indexFromDi !== null && this.indexFromDi !== undefined) {
+      return this.indexFromDi;
+    }
+    const el = this.elementRef.nativeElement as HTMLElement;
+    const container = el.closest('[data-index]');
+    if (container) {
+      const idxAttr = container.getAttribute('data-index');
+      if (idxAttr !== null) {
+        return parseInt(idxAttr, 10);
+      }
+    }
+    return 0;
+  }
 
   constructor() {
     super();
@@ -22,7 +38,7 @@ export class NgsFormsFormArrayRemoveItemComponent extends NgsFormsBaseClassFormC
 
   static create(config: NgsFormItemArrayRemoveItemConfig): NgsFormsFormItem<NgsFormItemArrayRemoveItemConfig> {
     return {
-      uuid: v4(),
+      uuid: config.uuid || v4(),
       type: NgsFormsFormArrayRemoveItemComponent.key,
       config,
     };

@@ -27,7 +27,7 @@ export class NgsFormsHtmlContentComponent extends NgsFormsBaseClassFormComponent
     config: NgsFormItemHtmlContentConfig
   ): NgsFormsFormItem<NgsFormItemHtmlContentConfig> {
     return {
-      uuid: v4(),
+      uuid: config.uuid || v4(),
       type: NgsFormsHtmlContentComponent.key,
       config,
     };

@@ -1,5 +1,5 @@
 import { Injector, ViewContainerRef, Component, ComponentRef } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
+import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { NgsFormItemController } from './form-item.controller';
 import { NgsFormsComponentRegistryService } from '../../services/form-component-registry/form-component-registry.service';
 import { NgsFormsFormItem } from '../../models';
@@ -28,7 +28,10 @@ describe('NgsFormItemController', () => {
 
     mockComponentRef = {
       destroy: jest.fn(),
-      instance: {}
+      instance: {},
+      changeDetectorRef: {
+        detectChanges: jest.fn()
+      }
     } as any;
 
     mockViewContainerRef = {
@@ -36,7 +39,7 @@ describe('NgsFormItemController', () => {
     } as any;
   });
 
-  it('should instantiate and create component immediately if visible$ is not provided', () => {
+  it('should instantiate and create component immediately if visible$ is not provided', fakeAsync(() => {
     const itemData: NgsFormsFormItem<any> = {
       uuid: '123',
       type: 'mock-component',
@@ -49,6 +52,7 @@ describe('NgsFormItemController', () => {
       itemData
     );
 
+    tick();
     expect(mockViewContainerRef.createComponent).toHaveBeenCalled();
     const createComponentMock = mockViewContainerRef.createComponent as any;
     const mockInjector = createComponentMock.mock.calls[0][1]?.injector;
@@ -56,15 +60,16 @@ describe('NgsFormItemController', () => {
 
     controller.destroy();
     expect(mockComponentRef.destroy).toHaveBeenCalled();
-  });
+  }));
 
-  it('should listen to visible$ and create/detach component accordingly', () => {
+  it('should listen to visible$ and create/detach component accordingly', fakeAsync(() => {
     const visible$ = new BehaviorSubject<boolean>(false);
     const itemData: NgsFormsFormItem<any> = {
       uuid: '123',
       type: 'mock-component',
-      config: {},
-      visible$
+      config: {
+        visible$
+      }
     };
 
     const controller = new NgsFormItemController(
@@ -73,21 +78,24 @@ describe('NgsFormItemController', () => {
       itemData
     );
 
+    tick();
     // Initial state is false, so createComponent shouldn't be called yet
     expect(mockViewContainerRef.createComponent).not.toHaveBeenCalled();
 
     // Toggle to true
     visible$.next(true);
+    tick();
     expect(mockViewContainerRef.createComponent).toHaveBeenCalledTimes(1);
 
     // Toggle back to false
     visible$.next(false);
+    tick();
     expect(mockComponentRef.destroy).toHaveBeenCalledTimes(1);
 
     controller.destroy();
-  });
+  }));
 
-  it('should pass index and addRemoveControlFn if provided', () => {
+  it('should pass index and addRemoveControlFn if provided', fakeAsync(() => {
     const itemData: NgsFormsFormItem<any> = {
       uuid: '123',
       type: 'mock-component',
@@ -106,6 +114,7 @@ describe('NgsFormItemController', () => {
       5
     );
 
+    tick();
     expect(mockViewContainerRef.createComponent).toHaveBeenCalled();
     const createComponentMock = mockViewContainerRef.createComponent as any;
     const mockInjector = createComponentMock.mock.calls[0][1]?.injector;
@@ -113,9 +122,9 @@ describe('NgsFormItemController', () => {
     expect(mockInjector?.get(NGS_FORMS_CONTROL_ADD_REMOVE_FN)).toBe(mockAddRemoveFn);
 
     controller.destroy();
-  });
+  }));
 
-  it('should log error if component type is not registered', () => {
+  it('should log error if component type is not registered', fakeAsync(() => {
     const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
     const itemData: NgsFormsFormItem<any> = {
       uuid: '123',
@@ -129,10 +138,11 @@ describe('NgsFormItemController', () => {
       itemData
     );
 
+    tick();
     expect(consoleErrorSpy).toHaveBeenCalledWith('Ngs form component type unregistered-component not registered.');
     expect(mockViewContainerRef.createComponent).not.toHaveBeenCalled();
 
     controller.destroy();
     consoleErrorSpy.mockRestore();
-  });
+  }));
 });

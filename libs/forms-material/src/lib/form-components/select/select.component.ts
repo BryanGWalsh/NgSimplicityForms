@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import {
@@ -24,11 +24,17 @@ export class NgsFormsMaterialFormItemSelectInputComponent extends NgsFormsBaseCl
   static override key = 'select';
   selectConfig = this.config as NgsFormsFormItemConfigMaterialSelectInput;
 
+  matcher = {
+    isErrorState: (control: FormControl | null): boolean => {
+      return !!(control && control.invalid && (control.touched || control.dirty || this.submitted()));
+    }
+  };
+
   static create(
     config: NgsFormsFormItemConfigMaterialSelectInput
   ): NgsFormsFormItem<NgsFormsFormItemConfigMaterialSelectInput> {
     return {
-      uuid: v4(),
+      uuid: config.uuid || v4(),
       type: NgsFormsMaterialFormItemSelectInputComponent.key,
       config,
     };

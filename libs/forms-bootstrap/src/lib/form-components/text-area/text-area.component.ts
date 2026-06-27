@@ -17,7 +17,7 @@ export class NgsFormsBootstrapFormsItemTextAreaComponent extends NgsFormsBaseCla
 
   static create(config: NgsFormsFormItemConfigBootstrapTextArea): NgsFormsFormItem<NgsFormsFormItemConfigBootstrapTextArea> {
     return {
-      uuid: v4(),
+      uuid: config.uuid || v4(),
       type: NgsFormsBootstrapFormsItemTextAreaComponent.key,
       config,
     };
