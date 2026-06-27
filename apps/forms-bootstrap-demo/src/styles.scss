@@ -1,0 +1,49 @@
+/* You can add global styles to this file, and also import other style files */
+
+.form-section {
+  margin-bottom: 4.5rem;
+  padding-bottom: 2.5rem;
+  border-bottom: 1px solid #dee2e6;
+  
+  &:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+}
+
+.form-section-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #212529;
+  margin-bottom: 0.25rem;
+}
+
+.form-section-subtitle {
+  font-size: 0.9rem;
+  color: #6c757d;
+  margin-bottom: 1.25rem;
+}
+
+.form-check-input {
+  border: 1.5px solid #adb5bd !important;
+  
+  &:checked {
+    background-color: #0d6efd;
+    border-color: #0d6efd !important;
+  }
+  
+  &:focus {
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+    border-color: #86b7fe !important;
+  }
+}
+
+.form-control, .form-select {
+  border: 1px solid #ced4da;
+  
+  &:focus {
+    border-color: #86b7fe;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+  }
+}

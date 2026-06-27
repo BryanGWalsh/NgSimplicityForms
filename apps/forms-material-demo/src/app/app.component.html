@@ -1,0 +1,74 @@
+<mat-toolbar color="primary" class="app-toolbar">
+  <span>NG-Simplicity Forms Material Demo</span>
+</mat-toolbar>
+
+<main class="material-demo-shell">
+  <section class="material-demo-hero">
+    <h1>Dynamic registration profile</h1>
+    <p>
+      A comprehensive Angular Material renderer demo for validation, conditional visibility,
+      nested groups, and dynamic form arrays.
+    </p>
+  </section>
+
+  <section class="material-demo-grid">
+    <mat-card class="material-demo-form-card">
+      <mat-card-header>
+        <mat-card-title>Material Dynamic Form</mat-card-title>
+        <mat-card-subtitle>Angular Material Renderer</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <ngs-form></ngs-form>
+
+        <div class="material-demo-actions">
+          <button type="button" mat-raised-button color="primary" (click)="onSubmit()">
+            Submit Form
+          </button>
+          <button type="button" mat-stroked-button (click)="onReset()">
+            Reset Form
+          </button>
+          <button type="button" mat-stroked-button color="accent" (click)="onLoadSampleData()">
+            Load Sample Data
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <aside class="material-demo-side-panel">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Form Engine Status</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="status-row">
+            <span>Validity</span>
+            <span class="status-pill" [class.status-pill-success]="isValid" [class.status-pill-error]="!isValid">
+              {{ isValid ? 'VALID' : 'INVALID' }}
+            </span>
+          </div>
+          <div class="status-row">
+            <span>Dirty State</span>
+            <span class="status-pill" [class.status-pill-warning]="isDirty" [class.status-pill-neutral]="!isDirty">
+              {{ isDirty ? 'DIRTY' : 'PRISTINE' }}
+            </span>
+          </div>
+          <div class="status-row">
+            <span>Submitted</span>
+            <span class="status-pill" [class.status-pill-info]="isSubmitted()" [class.status-pill-neutral]="!isSubmitted()">
+              {{ isSubmitted() ? 'YES' : 'NO' }}
+            </span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Live Form Value</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <pre class="json-panel"><code>{{ formValue() | json }}</code></pre>
+        </mat-card-content>
+      </mat-card>
+    </aside>
+  </section>
+</main>

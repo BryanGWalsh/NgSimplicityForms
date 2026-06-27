@@ -1,0 +1,89 @@
+<div class="container mt-4 pb-5">
+  <!-- Header Hero Panel -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="p-4 bg-light rounded-3 border shadow-sm">
+        <h1 class="display-6 fw-bold text-primary mb-2">
+          <i class="bi bi-ui-checks"></i> NG-Simplicity Forms Bootstrap Demo
+        </h1>
+        <p class="fs-5 text-muted mb-0">
+          A comprehensive demonstration of dynamic forms generation using <strong>Angular 20</strong>, <strong>Signals</strong>, and <strong>Bootstrap 5</strong>.
+          This demo showcases validation, dynamic visibility, layouts, and arrays.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <!-- Form Renderer Card -->
+    <div class="col-lg-8 mb-4">
+      <div class="card shadow-sm border-0">
+        <div class="card-header bg-primary text-white d-flex align-items-center justify-content-between py-3">
+          <h5 class="mb-0"><i class="bi bi-pencil-square"></i> Dynamic Registration Profile</h5>
+          <span class="badge bg-white text-primary fw-semibold">Bootstrap 5 Renderer</span>
+        </div>
+        <div class="card-body p-4 border border-top-0 rounded-bottom">
+          <ngs-form></ngs-form>
+          
+          <hr class="my-4 text-muted" />
+          
+          <div class="d-flex flex-wrap gap-2 justify-content-between">
+            <div class="d-flex gap-2">
+              <button type="button" class="btn btn-primary" (click)="onSubmit()">
+                <i class="bi bi-check-circle-fill me-1"></i> Submit Form
+              </button>
+              <button type="button" class="btn btn-outline-secondary" (click)="onReset()">
+                <i class="bi bi-arrow-counterclockwise me-1"></i> Reset Form
+              </button>
+            </div>
+            <button type="button" class="btn btn-outline-success" (click)="onLoadSampleData()">
+              <i class="bi bi-cloud-arrow-down-fill me-1"></i> Load Sample Data
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- State and Live Value Panels -->
+    <div class="col-lg-4">
+      <!-- Form Status Card -->
+      <div class="card shadow-sm mb-4">
+        <div class="card-header bg-dark text-white py-3">
+          <h5 class="mb-0"><i class="bi bi-info-circle-fill me-1"></i> Form Engine Status</h5>
+        </div>
+        <div class="card-body">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+              <span>Validity</span>
+              <span class="badge rounded-pill px-3 py-2" [class.bg-success]="isValid" [class.bg-danger]="!isValid">
+                {{ isValid ? 'VALID' : 'INVALID' }}
+              </span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+              <span>Dirty State (Modified)</span>
+              <span class="badge rounded-pill px-3 py-2" [class.bg-warning]="isDirty" [class.bg-secondary]="!isDirty">
+                {{ isDirty ? 'DIRTY' : 'PRISTINE' }}
+              </span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+              <span>Submitted State</span>
+              <span class="badge rounded-pill px-3 py-2" [class.bg-info]="isSubmitted()" [class.bg-secondary]="!isSubmitted()">
+                {{ isSubmitted() ? 'YES' : 'NO' }}
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Live Value JSON Viewer -->
+      <div class="card shadow-sm">
+        <div class="card-header bg-secondary text-white py-3">
+          <h5 class="mb-0"><i class="bi bi-braces-face me-1"></i> Live Form Value (Signal)</h5>
+        </div>
+        <div class="card-body p-2">
+          <pre class="bg-light p-3 rounded border mb-0" style="max-height: 480px; overflow-y: auto; font-size: 0.85rem; font-family: monospace;"><code>{{ formValue() | json }}</code></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
