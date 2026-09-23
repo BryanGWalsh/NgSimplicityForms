@@ -6,6 +6,12 @@ This core package is extended by styling integration packages that provide prebu
 - **[@ng-simplicity/forms-bootstrap](../forms-bootstrap/README.md)**: Dynamic forms pre-styled with Bootstrap form fields and layouts.
 - **[@ng-simplicity/forms-material](../forms-material/README.md)**: Dynamic forms pre-styled with Angular Material inputs and controls.
 
+## Compatibility
+
+| Package | Package version | Angular support |
+|---|---:|---|
+| `@ng-simplicity/forms-core` | `1.1.1` | `17.x`–`22.x` |
+
 ---
 
 ## Installation

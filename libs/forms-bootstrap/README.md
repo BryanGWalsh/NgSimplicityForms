@@ -2,6 +2,12 @@
 
 A package containing pre-styled Bootstrap form inputs, containers, and templates. It serves as a visual UI extension of the reactive [@ng-simplicity/forms-core](https://www.npmjs.com/package/@ng-simplicity/forms-core) engine, inheriting its powerful dynamic capabilities. This allows you to construct highly dynamic, complex forms where control properties (such as visibility, enabled/disabled state, select options, and validation rules) reactively adapt in real-time based on the current values inside the form. The package is highly customizable; because it utilizes the core registry system, you can develop and add your own custom form controls to the registry to be used in the form rendering alongside the Bootstrap presets.
 
+## Compatibility
+
+| Package | Package version | Angular support |
+|---|---:|---|
+| `@ng-simplicity/forms-bootstrap` | `1.1.1` | `17.x`–`22.x` |
+
 ---
 
 ## Installation

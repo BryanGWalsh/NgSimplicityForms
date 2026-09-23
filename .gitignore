@@ -376,3 +376,7 @@ README.md
 !/libs/forms-bootstrap/README.md
 !/README.md
 /docs
+
+# Helper scripts
+/test.sh
+/publish.sh
