@@ -18,9 +18,11 @@ All four packages are currently at version `1.1.2` and support Angular `17.x` th
 | `@ng-simplicity/forms-material` | `1.1.2` | `17.x`–`22.x` | `@angular/material` `17.x`–`22.x` and `@ng-simplicity/forms-core ^1.1.2` |
 | `@ng-simplicity/forms-tailwind` | `1.1.2` | `17.x`–`22.x` | `@ng-simplicity/forms-core ^1.1.2` and Tailwind CSS (v4 recommended, v3 works) in your build |
 
+The style packages require `@ng-simplicity/forms-core ^1.1.2` because 1.1.2 is the first release where every package declares `uuid` as a dependency (and where the `registerAll…` helpers register `content-html`).
+
 Use Angular Material from the same major as Angular. Its peer dependencies must also include the corresponding Angular major, so the Material package accepts Material majors 17 through 22.
 
-The shared package versions let a compatible fix be released once and used by applications on any supported Angular major. For example, a fix released as `1.1.1` can be installed by applications using Angular 17, 20, or 22 without separate Angular-specific package releases. The current packages are post-1.0, so compatible fixes can use patch releases. Before 1.0, npm caret ranges are narrower: `^0.1.0` stops before `0.2.0`, so consumers would not receive a fix published as `0.2.0` without changing their declared range.
+The shared package versions let a compatible fix be released once and used by applications on any supported Angular major. For example, a fix released as `1.1.2` can be installed by applications using Angular 17, 20, or 22 without separate Angular-specific package releases. The current packages are post-1.0, so compatible fixes can use patch releases. Before 1.0, npm caret ranges are narrower: `^0.1.0` stops before `0.2.0`, so consumers would not receive a fix published as `0.2.0` without changing their declared range.
 
 
 **NG-Simplicity Forms** is an ecosystem of Angular packages designed to dynamically generate forms from rich configuration schemas. Built from the ground up to support modern Angular design paradigms, the library focuses heavily on **Signals-based state management**, **OnPush change detection**, and full compatibility with **Zoneless** applications.

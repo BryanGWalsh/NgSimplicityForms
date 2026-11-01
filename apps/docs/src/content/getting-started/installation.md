@@ -8,7 +8,7 @@ All the packages share a version number and support Angular **17 through 22**. A
 | --- | --- | --- |
 | `@ng-simplicity/forms-core` | `1.1.2` | `@angular/core`, `@angular/common`, `@angular/forms` 17 to 22, `rxjs` 7 |
 | `@ng-simplicity/forms-bootstrap` | `1.1.2` | the above, plus `@ng-simplicity/forms-core ^1.1.2` |
-| `@ng-simplicity/forms-material` | `1.1.2` | the above, plus `@angular/material` 17 to 22 (same major as Angular) |
+| `@ng-simplicity/forms-material` | `1.1.2` | the above, plus `@ng-simplicity/forms-core ^1.1.2` and `@angular/material` 17 to 22 (same major as Angular) |
 | `@ng-simplicity/forms-tailwind` | `1.1.2` | the above, plus `@ng-simplicity/forms-core ^1.1.2`. Needs Tailwind CSS in your build (v4 recommended) |
 
 Each package uses [`uuid`](https://www.npmjs.com/package/uuid) to generate item ids and lists it under `dependencies`, so your package manager installs it for you.
