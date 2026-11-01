@@ -6,17 +6,19 @@ All the packages share a version number and support Angular **17 through 22**. A
 
 | Package | Version | Peer dependencies |
 | --- | --- | --- |
-| `@ng-simplicity/forms-core` | `1.1.1` | `@angular/core`, `@angular/common`, `@angular/forms` 17 to 22 |
+| `@ng-simplicity/forms-core` | `1.1.1` | `@angular/core`, `@angular/common`, `@angular/forms` 17 to 22, `rxjs` 7 |
 | `@ng-simplicity/forms-bootstrap` | `1.1.1` | the above, plus `@ng-simplicity/forms-core ^1.1.1` |
 | `@ng-simplicity/forms-material` | `1.1.1` | the above, plus `@angular/material` 17 to 22 (same major as Angular) |
 | `@ng-simplicity/forms-tailwind` | `1.1.1` | the above, plus `@ng-simplicity/forms-core ^1.1.1`. Needs Tailwind CSS in your build (v4 recommended) |
 
-The packages also import [`uuid`](https://www.npmjs.com/package/uuid) to generate item ids. It is not declared in their `package.json` yet, so install it in your application as well.
+Each package uses [`uuid`](https://www.npmjs.com/package/uuid) to generate item ids and lists it under `dependencies`, so your package manager installs it for you.
+
+> **Note** Version `1.1.1` on npm does not declare `uuid` yet. If you install `1.1.1`, add `uuid` to the install command yourself (`npm install uuid`). Later releases include it.
 
 ## With Bootstrap
 
 ```bash
-npm install @ng-simplicity/forms-core @ng-simplicity/forms-bootstrap uuid bootstrap
+npm install @ng-simplicity/forms-core @ng-simplicity/forms-bootstrap bootstrap
 ```
 
 Add the Bootstrap stylesheet to the `styles` array of your build target in `angular.json` (or `project.json` in an Nx workspace):
@@ -36,7 +38,7 @@ Continue with [Quick start: Bootstrap](/getting-started/bootstrap).
 
 ```bash
 ng add @angular/material
-npm install @ng-simplicity/forms-core @ng-simplicity/forms-material uuid
+npm install @ng-simplicity/forms-core @ng-simplicity/forms-material
 ```
 
 `ng add` sets up a theme and animations. If you add Material by hand, include a theme stylesheet such as `@angular/material/prebuilt-themes/azure-blue.css` and add `provideAnimationsAsync()` to your application providers.
@@ -48,7 +50,7 @@ Continue with [Quick start: Angular Material](/getting-started/material).
 Set up Tailwind in your application first ([Tailwind's Angular guide](https://tailwindcss.com/docs/installation/framework-guides/angular)), then install the packages:
 
 ```bash
-npm install @ng-simplicity/forms-core @ng-simplicity/forms-tailwind uuid
+npm install @ng-simplicity/forms-core @ng-simplicity/forms-tailwind
 ```
 
 Tailwind does not scan `node_modules`, so tell it about the package in the stylesheet that imports Tailwind. The path is relative to that stylesheet:
@@ -64,7 +66,7 @@ Continue with [Quick start: Tailwind CSS](/getting-started/tailwind).
 
 ## With your own components
 
-Install only `@ng-simplicity/forms-core` and `uuid`, then follow [Building a custom control](/tutorials/custom-control). The structural items (groups, sections, rows, columns and form arrays) come from the core package and work with any styling.
+Install only `@ng-simplicity/forms-core`, then follow [Building a custom control](/tutorials/custom-control). The structural items (groups, sections, rows, columns and form arrays) come from the core package and work with any styling.
 
 ## Upgrades
 

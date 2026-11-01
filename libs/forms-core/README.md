@@ -1,5 +1,9 @@
 # @ng-simplicity/forms-core
 
+[![Documentation](https://img.shields.io/badge/Docs-ng--simplicity--forms.bryangwalsh.com-4f46e5.svg)](https://ng-simplicity-forms.bryangwalsh.com)
+
+📖 **Documentation, tutorials and live demos:** [ng-simplicity-forms.bryangwalsh.com](https://ng-simplicity-forms.bryangwalsh.com) · [Core concepts](https://ng-simplicity-forms.bryangwalsh.com/guides/core-concepts) · [API reference](https://ng-simplicity-forms.bryangwalsh.com/api)
+
 The core engine package for **NG-Simplicity Forms**. This package manages form states, dynamic registry injection, component lifecycle bindings, and structural layout directives (Rows, Columns, Sections, Groups, Arrays). It enables you to construct highly dynamic, complex forms where control properties (such as visibility, enabled/disabled state, select options, and validation rules) reactively adapt in real-time based on the current values inside the form. The engine is highly customizable, allowing you to develop and add your own custom form controls to the registry to be used in the form rendering.
 
 This core package is extended by styling integration packages that provide prebuilt themed form components:

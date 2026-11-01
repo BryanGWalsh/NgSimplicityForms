@@ -62,8 +62,9 @@ export const NGS_FORMS_TAILWIND_DEFAULT_CLASSES: NgsFormsTailwindClasses = {
   labelValid: 'text-gray-700 dark:text-gray-200',
   labelInvalid: 'text-red-600 dark:text-red-400',
   controlWrapperHorizontal: 'sm:col-span-10',
+  // Arbitrary values (border-[1px], bg-[white]) avoid Bootstrap's !important utilities of the same name, for apps that load both.
   control:
-    'block w-full rounded-md border-[1px] border-solid bg-white px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400 ' +
+    'block w-full rounded-md border-[1px] border-solid bg-[white] px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400 ' +
     'focus:outline-none focus:ring-2 disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-500 ' +
     'dark:bg-gray-900 dark:text-gray-100 dark:placeholder:text-gray-500 dark:disabled:bg-gray-800',
   controlValid: 'border-gray-300 focus:border-blue-500 focus:ring-blue-500/40 dark:border-gray-600',
