@@ -1,0 +1,17 @@
+@if (control) {
+  <div [class]="horizontal ? classes.fieldHorizontal : classes.field">
+    <label [class]="cx(horizontal ? classes.labelHorizontal : classes.label, errorMessage ? classes.labelInvalid : classes.labelValid)"
+           [attr.for]="inputId">{{ textAreaConfig.label }}</label>
+    <div [class]="horizontal ? classes.controlWrapperHorizontal : ''">
+      <textarea [class]="cx(classes.control, classes.textarea, errorMessage ? classes.controlInvalid : classes.controlValid, textAreaConfig.inputCssClass)"
+                [formControl]="control"
+                [id]="inputId"
+                [attr.aria-invalid]="errorMessage ? true : null"
+                [attr.aria-describedby]="errorMessage ? id + '-error' : null"
+                [attr.placeholder]="textAreaConfig.placeholder || null"></textarea>
+      @if (errorMessage) {
+        <p [class]="classes.error" id="{{id}}-error">{{ errorMessage }}</p>
+      }
+    </div>
+  </div>
+}

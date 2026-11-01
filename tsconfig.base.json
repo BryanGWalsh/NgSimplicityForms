@@ -17,7 +17,8 @@
     "paths": {
       "@ng-simplicity/forms-bootstrap": ["libs/forms-bootstrap/src/public_api.ts"],
       "@ng-simplicity/forms-core": ["libs/forms-core/src/public_api.ts"],
-      "@ng-simplicity/forms-material": ["libs/forms-material/src/public_api.ts"]
+      "@ng-simplicity/forms-material": ["libs/forms-material/src/public_api.ts"],
+      "@ng-simplicity/forms-tailwind": ["libs/forms-tailwind/src/public_api.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

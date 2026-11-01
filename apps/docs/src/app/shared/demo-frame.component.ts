@@ -70,7 +70,7 @@ export class DemoFrameComponent {
   private readonly sanitizer = inject(DomSanitizer);
 
   readonly demo = computed(() => DEMOS[this.id()]);
-  readonly themeLabel = computed(() => ({ bootstrap: 'Bootstrap', material: 'Material', custom: 'Custom' })[this.demo()?.theme ?? 'custom']);
+  readonly themeLabel = computed(() => ({ bootstrap: 'Bootstrap', material: 'Material', tailwind: 'Tailwind', custom: 'Custom' })[this.demo()?.theme ?? 'custom']);
 
   readonly component = resource<Type<unknown> | undefined, { id: string }>({
     params: () => ({ id: this.id() }),

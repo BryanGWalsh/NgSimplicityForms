@@ -16,6 +16,7 @@ All three packages are currently at version `1.1.1` and support Angular `17.x` t
 | `@ng-simplicity/forms-core` | `1.1.1` | `17.x`–`22.x` | — |
 | `@ng-simplicity/forms-bootstrap` | `1.1.1` | `17.x`–`22.x` | `@ng-simplicity/forms-core ^1.1.0` |
 | `@ng-simplicity/forms-material` | `1.1.1` | `17.x`–`22.x` | `@angular/material` `17.x`–`22.x` and `@ng-simplicity/forms-core ^1.1.0` |
+| `@ng-simplicity/forms-tailwind` | `1.1.1` | `17.x`–`22.x` | `@ng-simplicity/forms-core ^1.1.1` and Tailwind CSS (v4 recommended, v3 works) in your build |
 
 Use Angular Material from the same major as Angular. Its peer dependencies must also include the corresponding Angular major, so the Material package accepts Material majors 17 through 22.
 
@@ -39,6 +40,7 @@ This library is organized as an Nx workspace consisting of three primary package
 | **`@ng-simplicity/forms-core`** | [`libs/forms-core`](./libs/forms-core/README.md) | Core form engine containing the reactive service API, dynamic component registry, models, base classes, and structural components (Column, Row, Section, Form Group, etc.). |
 | **`@ng-simplicity/forms-bootstrap`** | [`libs/forms-bootstrap`](./libs/forms-bootstrap/README.md) | Bootstrap-themed implementation of the core components (e.g. text inputs, textareas) pre-styled for Bootstrap layouts. |
 | **`@ng-simplicity/forms-material`** | [`libs/forms-material`](./libs/forms-material/README.md) | Angular Material-themed implementation of the core components. |
+| **`@ng-simplicity/forms-tailwind`** | [`libs/forms-tailwind`](./libs/forms-tailwind/README.md) | Tailwind CSS-styled implementation of the core components, with every class overridable through a provider. |
 
 ### Documentation Site
 Guides, tutorials with live demos, and a generated API reference are published at **[ng-simplicity-forms.bryangwalsh.com](https://ng-simplicity-forms.bryangwalsh.com)**. The site's source lives in [`apps/docs`](./apps/docs). Run it locally with `npm run serve-docs`. It is deployed to GitHub Pages by [`.github/workflows/docs.yml`](./.github/workflows/docs.yml); see the site's "Contributing to the docs" page for setup.
@@ -55,7 +57,7 @@ Fully functional example applications demonstrating the form engine functionalit
 - **Declarative Form Config**: Define your entire form hierarchy (including conditional structures, options, validators, and custom state) using strongly typed configurations.
 - **Signals & OnPush-First**: Seamlessly translates Reactive Form observables (`valueChanges`, submit status, validity) into Angular Signals for high-performance, lag-free UI updates.
 - **Zoneless Ready**: Built strictly with modern APIs (`toSignal`, rxjs-interop) making it completely compatible with zoneless environments.
-- **Framework Separation**: Swap or mix UI styling libraries (e.g. Bootstrap and Material) by switching components in the registry, without rewriting form logic.
+- **Framework Separation**: Swap or mix UI styling libraries (Bootstrap, Material or Tailwind) by switching components in the registry, without rewriting form logic.
 - **Dynamic Visibility & Validators**: Bind fields' visibility and validators to dynamic streams (`Observable` / `BehaviorSubject`) for fully reactive forms that adapt to user input on the fly.
 - **State Merging**: Automatically merges global form states with local component overrides, offering granular component customization.
 

@@ -39,6 +39,12 @@ const packages = [
     entry: 'libs/forms-material/src/public_api.ts',
     description: 'Angular Material styled input components and the registration helper for them.',
   },
+  {
+    name: '@ng-simplicity/forms-tailwind',
+    slug: 'forms-tailwind',
+    entry: 'libs/forms-tailwind/src/public_api.ts',
+    description: 'Tailwind CSS styled input components, the class configuration token and the registration helper.',
+  },
 ];
 
 const app = await Application.bootstrap(

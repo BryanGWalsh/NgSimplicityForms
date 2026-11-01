@@ -3,7 +3,7 @@ import { Type } from '@angular/core';
 export interface DemoDefinition {
   title: string;
   /** Which component set the demo registers. Pages only mix demos of one theme, see the note below. */
-  theme: 'bootstrap' | 'material' | 'custom';
+  theme: 'bootstrap' | 'material' | 'tailwind' | 'custom';
   /** Source files shown in the code tabs, relative to this folder. The first one is the demo component. */
   files: string[];
   load: () => Promise<Type<unknown>>;
@@ -12,9 +12,9 @@ export interface DemoDefinition {
 /**
  * Every live demo on the site. Markdown pages embed one with a line containing `::: demo <id>`.
  *
- * The component registry is a single platform-wide service, and the Bootstrap and Material packages register
- * components under the same keys. Each demo registers its theme in its constructor, so keep Bootstrap and
- * Material demos on separate pages.
+ * The component registry is a single platform-wide service, and the Bootstrap, Material and Tailwind packages
+ * register components under the same keys. Each demo registers its theme in its constructor, so keep demos of
+ * different themes on separate pages.
  */
 export const DEMOS: Record<string, DemoDefinition> = {
   'quick-start-bootstrap': {
@@ -28,6 +28,12 @@ export const DEMOS: Record<string, DemoDefinition> = {
     theme: 'material',
     files: ['quick-start-material/quick-start-material.demo.ts'],
     load: () => import('./quick-start-material/quick-start-material.demo').then((m) => m.QuickStartMaterialDemoComponent),
+  },
+  'quick-start-tailwind': {
+    title: 'Registration form (Tailwind)',
+    theme: 'tailwind',
+    files: ['quick-start-tailwind/quick-start-tailwind.demo.ts'],
+    load: () => import('./quick-start-tailwind/quick-start-tailwind.demo').then((m) => m.QuickStartTailwindDemoComponent),
   },
   'sign-up': {
     title: 'Sign-up form',
@@ -94,5 +100,11 @@ export const DEMOS: Record<string, DemoDefinition> = {
     theme: 'material',
     files: ['material-catalog/material-catalog.demo.ts'],
     load: () => import('./material-catalog/material-catalog.demo').then((m) => m.MaterialCatalogDemoComponent),
+  },
+  'tailwind-catalog': {
+    title: 'All Tailwind components',
+    theme: 'tailwind',
+    files: ['tailwind-catalog/tailwind-catalog.demo.ts'],
+    load: () => import('./tailwind-catalog/tailwind-catalog.demo').then((m) => m.TailwindCatalogDemoComponent),
   },
 };

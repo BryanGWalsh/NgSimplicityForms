@@ -1,0 +1,18 @@
+@if (control) {
+  <div [class]="classes.checkboxField">
+    <div [class]="classes.choice">
+      <input [class]="cx(classes.choiceInput, errorMessage && classes.choiceInputInvalid)"
+             [formControl]="control"
+             id="{{id}}"
+             [attr.aria-invalid]="errorMessage ? true : null"
+             [attr.aria-describedby]="errorMessage ? id + '-error' : null"
+             type="checkbox">
+      <label [class]="cx(classes.choiceLabel, errorMessage ? classes.labelInvalid : classes.labelValid)" for="{{id}}">
+        {{ checkboxConfig.label }}
+      </label>
+    </div>
+    @if (errorMessage) {
+      <p [class]="classes.error" id="{{id}}-error">{{ errorMessage }}</p>
+    }
+  </div>
+}

@@ -7,7 +7,8 @@
   "include": [
     "../../libs/forms-core/src/**/*.ts",
     "../../libs/forms-bootstrap/src/**/*.ts",
-    "../../libs/forms-material/src/**/*.ts"
+    "../../libs/forms-material/src/**/*.ts",
+    "../../libs/forms-tailwind/src/**/*.ts"
   ],
-  "exclude": ["../../libs/**/*.spec.ts", "../../libs/**/test-setup.ts"]
+  "exclude": ["../../libs/**/*.spec.ts", "../../libs/**/test-setup.ts", "../../libs/**/testing/**"]
 }
