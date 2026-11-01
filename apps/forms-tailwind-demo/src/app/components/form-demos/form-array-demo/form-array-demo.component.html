@@ -1,0 +1,81 @@
+<div class="mx-auto max-w-7xl px-4 pt-6 pb-12">
+  <!-- Header Hero Panel -->
+  <div class="mb-6 rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+    <h1 class="mb-2 text-3xl font-bold text-sky-600 dark:text-sky-400">NG-Simplicity Forms Tailwind Demo</h1>
+    <p class="text-lg text-gray-600 dark:text-gray-400">
+      A comprehensive demonstration of dynamic forms generation using <strong>Angular 20</strong>, <strong>Signals</strong>, and
+      <strong>Tailwind CSS 4</strong>. This demo showcases validation, dynamic visibility, layouts, and arrays.
+    </p>
+  </div>
+
+  <div class="grid gap-6 lg:grid-cols-3">
+    <!-- Form Renderer Card -->
+    <div class="lg:col-span-2">
+      <div class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900">
+        <div class="flex items-center justify-between bg-sky-600 px-6 py-4 text-white">
+          <h2 class="text-lg font-semibold">Dynamic Registration Profile</h2>
+          <span class="rounded-full bg-white px-3 py-1 text-xs font-semibold text-sky-700">Tailwind Renderer</span>
+        </div>
+        <div class="p-6">
+          <ngs-form></ngs-form>
+
+          <hr class="my-6 border-gray-200 dark:border-gray-800" />
+
+          <div class="flex flex-wrap justify-between gap-2">
+            <div class="flex gap-2">
+              <button type="button" class="rounded-md bg-sky-600 px-4 py-2 text-sm font-semibold text-white hover:bg-sky-700" (click)="onSubmit()">
+                Submit Form
+              </button>
+              <button type="button" class="rounded-md border border-gray-300 px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800" (click)="onReset()">
+                Reset Form
+              </button>
+            </div>
+            <button type="button" class="rounded-md border border-emerald-500 px-4 py-2 text-sm font-semibold text-emerald-700 hover:bg-emerald-50 dark:text-emerald-400 dark:hover:bg-emerald-950" (click)="onLoadSampleData()">
+              Load Sample Data
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- State and Live Value Panels -->
+    <div class="space-y-6">
+      <!-- Form Status Card -->
+      <div class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900">
+        <div class="bg-gray-900 px-6 py-4 text-white dark:bg-gray-800">
+          <h2 class="text-lg font-semibold">Form Engine Status</h2>
+        </div>
+        <ul class="divide-y divide-gray-200 px-6 dark:divide-gray-800">
+          <li class="flex items-center justify-between py-3">
+            <span>Validity</span>
+            <span data-testid="status-validity" class="rounded-full px-3 py-1 text-xs font-semibold text-white" [class.bg-emerald-600]="isValid" [class.bg-red-600]="!isValid">
+              {{ isValid ? 'VALID' : 'INVALID' }}
+            </span>
+          </li>
+          <li class="flex items-center justify-between py-3">
+            <span>Dirty State (Modified)</span>
+            <span data-testid="status-dirty" class="rounded-full px-3 py-1 text-xs font-semibold" [class.bg-amber-400]="isDirty" [class.text-gray-900]="isDirty" [class.bg-gray-500]="!isDirty" [class.text-white]="!isDirty">
+              {{ isDirty ? 'DIRTY' : 'PRISTINE' }}
+            </span>
+          </li>
+          <li class="flex items-center justify-between py-3">
+            <span>Submitted State</span>
+            <span data-testid="status-submitted" class="rounded-full px-3 py-1 text-xs font-semibold text-white" [class.bg-sky-500]="isSubmitted()" [class.bg-gray-500]="!isSubmitted()">
+              {{ isSubmitted() ? 'YES' : 'NO' }}
+            </span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Live Value JSON Viewer -->
+      <div class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900">
+        <div class="bg-gray-600 px-6 py-4 text-white">
+          <h2 class="text-lg font-semibold">Live Form Value (Signal)</h2>
+        </div>
+        <div class="p-2">
+          <pre class="max-h-[480px] overflow-y-auto rounded-md border border-gray-200 bg-gray-50 p-3 font-mono text-xs dark:border-gray-800 dark:bg-gray-950"><code>{{ formValue() | json }}</code></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

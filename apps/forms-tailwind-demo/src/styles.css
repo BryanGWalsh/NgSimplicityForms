@@ -1,0 +1,18 @@
+/*
+ * Tailwind CSS for the demo. In an application that installs the package from npm, point @source at
+ * node_modules/@ng-simplicity/forms-tailwind instead of the library source.
+ */
+@import 'tailwindcss' source(none);
+@source './';
+@source '../../../libs/forms-tailwind/src/lib';
+
+/* Section styles for the core layout components. */
+.form-section {
+  @apply mb-10;
+}
+.form-section-title {
+  @apply mb-1 text-xl font-semibold text-gray-900 dark:text-gray-100;
+}
+.form-section-subtitle {
+  @apply mb-5 text-sm text-gray-500 dark:text-gray-400;
+}

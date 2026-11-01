@@ -51,6 +51,7 @@ Guides, tutorials with live demos, and a generated API reference are published a
 Fully functional example applications demonstrating the form engine functionality are located in the [`apps/`](./apps) folder of this monorepo:
 - **`forms-bootstrap-demo`**: Integrates and showcases the `@ng-simplicity/forms-bootstrap` package.
 - **`forms-material-demo`**: Integrates and showcases the `@ng-simplicity/forms-material` package.
+- **`forms-tailwind-demo`**: Integrates and showcases the `@ng-simplicity/forms-tailwind` package (served on port 4202).
 
 ---
 
@@ -293,6 +294,10 @@ This monorepo uses Nx to manage building, linting, testing, and serving.
 - **Run Material Demo Application**:
   ```bash
   npm run serve-material-demo
+  ```
+- **Run Tailwind Demo Application** (http://localhost:4202):
+  ```bash
+  npm run serve-tailwind-demo
   ```
 - **Build All Library Packages**:
   ```bash
