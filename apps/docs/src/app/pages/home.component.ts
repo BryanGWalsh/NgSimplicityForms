@@ -26,7 +26,7 @@ const SNIPPET = `NgsFormsFormGroupComponent.create({
   template: `
     <section class="docs-hero">
       <div class="docs-hero-text">
-        <span class="badge text-bg-light border mb-3">Angular 17 – 22 · Signals · Zoneless ready</span>
+        <span class="badge bg-body-tertiary text-body border mb-3">Angular 17 – 22 · Signals · Zoneless ready</span>
         <h1 class="display-5 fw-bold">Forms from configuration, not boilerplate.</h1>
         <p class="lead text-body-secondary">
           NG-Simplicity Forms renders complete Angular reactive forms from a typed configuration tree.

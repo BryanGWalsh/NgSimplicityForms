@@ -53,7 +53,7 @@ export interface RatingConfig extends NgsFormsFormItemConfigBaseInput {
   `,
   styles: `
     .docs-rating { display: flex; gap: 2px; }
-    .docs-rating-star { border: 0; background: none; padding: 0 2px; font-size: 1.5rem; color: #d1d5db; line-height: 1; }
+    .docs-rating-star { border: 0; background: none; padding: 0 2px; font-size: 1.5rem; color: #484f58; line-height: 1; }
     .docs-rating-star.on { color: #f59e0b; }
     .docs-rating-star:focus-visible { outline: 2px solid #6366f1; border-radius: 4px; }
   `,

@@ -106,9 +106,9 @@ interface MemberGroup {
                 <div class="docs-member" [id]="'member-' + m.name">
                   <div class="docs-member-head">
                     <code class="docs-member-name">{{ m.name }}{{ m.optional ? '?' : '' }}</code>
-                    @if (m.static) { <span class="badge text-bg-light border">static</span> }
-                    @if (m.protected) { <span class="badge text-bg-light border">protected</span> }
-                    @if (m.readonly) { <span class="badge text-bg-light border">readonly</span> }
+                    @if (m.static) { <span class="badge bg-body-tertiary text-body border">static</span> }
+                    @if (m.protected) { <span class="badge bg-body-tertiary text-body border">protected</span> }
+                    @if (m.readonly) { <span class="badge bg-body-tertiary text-body border">readonly</span> }
                     @if (m.notImplemented) { <span class="badge docs-badge-ni">not implemented</span> }
                     @if (m.inheritedFrom) {
                       <span class="small text-body-secondary ms-auto">inherited from
