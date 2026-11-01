@@ -74,7 +74,7 @@ The theme packages register their components under the same keys:
 | --- | --- | --- | --- |
 | `form-group`, `section`, `form-row`, `column`, `text-div` | ✓ | | |
 | `form-array`, `form-array-list`, `form-array-add-item`, `form-array-remove-item` | ✓ | | |
-| `content-html` | ✓ (register yourself) | | |
+| `content-html` | ✓ | | |
 | `input-text` | | `NgsFormsBootstrapFormItemInputComponent` | `NgsFormsMaterialFormItemInputComponent` |
 | `input-textarea` | | `NgsFormsBootstrapFormsItemTextAreaComponent` | `NgsFormsMaterialFormItemTextAreaComponent` |
 | `checkbox` | | `NgsFormsBootstrapFormsItemCheckboxComponent` | `NgsFormsMaterialFormItemCheckboxComponent` |

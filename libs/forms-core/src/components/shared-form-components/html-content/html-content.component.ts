@@ -7,8 +7,8 @@ import { v4 } from 'uuid';
 /**
  * Renders an HTML string inside the form. The HTML is passed through Angular's sanitizer.
  *
- * @remarks Registry key: `content-html`. It is not registered by `registerCoreNgsFormComponents()`, so register
- * it yourself: `registry.register(NgsFormsHtmlContentComponent.key, NgsFormsHtmlContentComponent)`.
+ * @remarks Registry key: `content-html`. Registered by `registerCoreNgsFormComponents()`, which the theme packages'
+ * `registerAll…` helpers call for you.
  */
 @Component({
   selector: 'ngs-form-component-html-content',

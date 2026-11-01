@@ -64,11 +64,9 @@ NgsFormsTextDivComponent.create({ text: 'Packaging', classes: 'fw-semibold mb-1'
 NgsFormsTextDivComponent.title('Shipping', 'h4'),
 ```
 
-For rich content, register and use `NgsFormsHtmlContentComponent` (key `content-html`). Its HTML passes through Angular's sanitizer.
+For rich content, use `NgsFormsHtmlContentComponent` (key `content-html`). Its HTML passes through Angular's sanitizer.
 
 ```ts
-registry.register(NgsFormsHtmlContentComponent.key, NgsFormsHtmlContentComponent);
-
 NgsFormsHtmlContentComponent.create({ html: '<p>Read the <a href="/terms">terms</a> first.</p>', sanitize: true }),
 ```
 

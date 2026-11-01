@@ -11,6 +11,7 @@ import { NgsFormsFormSectionComponent } from './components/shared-form-component
 import { NgsFormsRowComponent } from './components/shared-form-components/row';
 import { NgsFormsTextDivComponent } from './components/shared-form-components/text-div';
 import { NgsFormsFormGroupComponent } from './components/shared-form-components/form-group';
+import { NgsFormsHtmlContentComponent } from './components/shared-form-components/html-content/html-content.component';
 
 
 /** Registration helpers for the structural components in `@ng-simplicity/forms-core`. */
@@ -20,7 +21,7 @@ import { NgsFormsFormGroupComponent } from './components/shared-form-components/
 export class NgsFormsCoreModule {
   /**
    * Registers the structural components: `form-group`, `form-row`, `column`, `form-array`, `form-array-list`,
-   * `form-array-add-item`, `form-array-remove-item`, `text-div` and `section`.
+   * `form-array-add-item`, `form-array-remove-item`, `text-div`, `content-html` and `section`.
    *
    * @remarks The theme packages call this for you from their own `registerAll…` helpers.
    */
@@ -53,7 +54,10 @@ export class NgsFormsCoreModule {
       NgsFormsTextDivComponent.key,
       NgsFormsTextDivComponent
     );
-    //registryService.register('content-html', NgsFormsHtmlContentComponent);
+    registryService.register(
+      NgsFormsHtmlContentComponent.key,
+      NgsFormsHtmlContentComponent
+    );
     registryService.register(
       NgsFormsFormSectionComponent.key,
       NgsFormsFormSectionComponent
