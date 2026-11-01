@@ -4,8 +4,16 @@ import { AbstractControl, FormArray, UntypedFormGroup } from '@angular/forms';
 
 import { v4 } from 'uuid';
 import { NgsFormsFormArrayListConfig } from './form-array-list.config';
-import { NgsFormsFormItemDirective, NgsFormsBaseClassFormComponent, NgsFormsFormItem } from '../../../../internal';
+import { NgsFormsFormItemDirective } from '../../../core';
+import { NgsFormsBaseClassFormComponent } from '../../../../classes/form-component-base/form-component.class';
+import { NgsFormsFormItem } from '../../../../models';
 
+/**
+ * Renders one copy of `templateItem` for every row of the enclosing form array. Each row gets its own form group,
+ * so the controls in the template become the properties of each array entry.
+ *
+ * @remarks Registry key: `form-array-list`. Must be placed inside an `NgsFormsFormArrayContainerComponent`.
+ */
 @Component({
   selector: 'ngs-forms-form-array-list',
   templateUrl: './form-array-list.component.html',
@@ -26,6 +34,7 @@ export class NgsFormsFormArrayListComponent extends NgsFormsBaseClassFormCompone
     });
   }
 
+  /** Creates a `form-array-list` item. */
   static create(
     config: NgsFormsFormArrayListConfig
   ): NgsFormsFormItem<NgsFormsFormArrayListConfig> {

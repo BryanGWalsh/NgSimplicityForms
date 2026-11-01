@@ -4,8 +4,13 @@ import { NgsFormsFormInputOption, NgsFormsFormItemConfigBaseInputWithOptions } f
 import { toSignal } from '@angular/core/rxjs-interop';
 import { of } from 'rxjs';
 
+/**
+ * Base class for inputs with options. Exposes `options` as a signal that follows `options$` when given and falls
+ * back to the static `options`.
+ */
 @Directive()
 export class NgsFormsBaseClassFormItemInputWithOptionsComponent<T extends NgsFormsFormItemConfigBaseInputWithOptions> extends NgsFormsBaseClassFormInputComponent<T> {
+  /** The current options. */
   options: Signal<Array<NgsFormsFormInputOption>> = toSignal(
     this.config.options$ ?? of(this.config.options ?? []),
     { initialValue: this.config.options ?? [] }

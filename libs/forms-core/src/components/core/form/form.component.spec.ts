@@ -68,3 +68,43 @@ describe('NgsFormComponent', () => {
     expect(compiled.querySelector('mock-input')).toBeTruthy();
   });
 });
+
+describe('NgsFormComponent re-configuration', () => {
+  @Component({ selector: 'mock-first', template: 'first', standalone: true })
+  class FirstComponent {}
+  @Component({ selector: 'mock-second', template: 'second', standalone: true })
+  class SecondComponent {}
+
+  it('should re-render the form when setFormConfig is called again', async () => {
+    await TestBed.configureTestingModule({
+      imports: [NgsFormComponent],
+      providers: [
+        NgsFormsService,
+        {
+          provide: NgsFormsComponentRegistryService,
+          useValue: {
+            getComponentTypeForKey: (key: string) => (key === 'first' ? FirstComponent : SecondComponent),
+            register: jest.fn(),
+          },
+        },
+      ],
+    }).compileComponents();
+
+    const fixture = TestBed.createComponent(NgsFormComponent);
+    const formsService = TestBed.inject(NgsFormsService);
+    const element = fixture.nativeElement as HTMLElement;
+
+    formsService.setFormConfig({ inputUpdateDebounce: 0, globalState: {}, root: { uuid: 'a', type: 'first', config: {} } });
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    expect(element.querySelector('mock-first')).toBeTruthy();
+
+    formsService.setFormConfig({ inputUpdateDebounce: 0, globalState: {}, root: { uuid: 'b', type: 'second', config: {} } });
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    expect(element.querySelector('mock-first')).toBeFalsy();
+    expect(element.querySelector('mock-second')).toBeTruthy();
+  });
+});

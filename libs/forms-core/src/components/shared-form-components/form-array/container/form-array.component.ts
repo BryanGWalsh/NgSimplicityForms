@@ -7,6 +7,12 @@ import { NgsFormsFormItemWithVisibleAndValidatorsBase } from '../../../../classe
 import { NgsFormsFormArrayInternalService } from '../service/form-array-internal.service';
 import { v4 } from 'uuid';
 
+/**
+ * A repeatable list of rows backed by an `UntypedFormArray`. Its value is an array under `name`.
+ *
+ * @remarks Registry key: `form-array`. Put an `NgsFormsFormArrayListComponent` inside `items` to render the rows,
+ * and `NgsFormsFormArrayAddItemComponent` / `NgsFormsFormArrayRemoveItemComponent` to let users change them.
+ */
 @Component({
   selector: 'ngs-forms-form-array',
   imports: [NgsFormsFormItemDirective],
@@ -22,6 +28,7 @@ export class NgsFormsFormArrayContainerComponent extends NgsFormsFormItemWithVis
     this.control = this.formArrayService.formArray as unknown as UntypedFormControl;
   }
 
+  /** Creates a `form-array` item. */
   static create(
     config: NgsFormItemArrayConfig
   ): NgsFormsFormItem<NgsFormItemArrayConfig> {

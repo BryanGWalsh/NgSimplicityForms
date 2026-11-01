@@ -8,6 +8,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { v4 } from 'uuid';
 
+/**
+ * Angular Material checkbox (`mat-checkbox`).
+ *
+ * @remarks Registry key: `checkbox`.
+ */
 @Component({
   selector: 'ngs-forms-mat-checkbox',
   imports: [ReactiveFormsModule, MatCheckboxModule],
@@ -17,6 +22,7 @@ import { v4 } from 'uuid';
 export class NgsFormsMaterialFormItemCheckboxComponent extends NgsFormsBaseClassFormInputComponent<NgsFormsFormItemConfigBaseInput> {
   static override key = 'checkbox';
 
+  /** Creates a `checkbox` item. */
   static create(config: NgsFormsFormItemConfigBaseInput): NgsFormsFormItem<NgsFormsFormItemConfigBaseInput> {
     return {
       uuid: config.uuid || v4(),

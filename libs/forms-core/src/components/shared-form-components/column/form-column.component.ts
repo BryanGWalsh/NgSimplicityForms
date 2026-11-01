@@ -5,6 +5,11 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { v4 } from 'uuid';
 import { NgsFormsFormItemDirective } from '../../core';
 
+/**
+ * Renders its items one after another without any wrapper markup. Useful as a grouping node inside a row.
+ *
+ * @remarks Registry key: `column`. Does not create a form control.
+ */
 @Component({
   selector: 'ngs-form-component-column',
   templateUrl: './form-column.component.html',
@@ -14,6 +19,7 @@ import { NgsFormsFormItemDirective } from '../../core';
 export class NgsFormsColumnComponent extends NgsFormsBaseClassItemsContainerBase<NgsFormsFormItemContainerConfigBase> {
   static override key = 'column';
 
+  /** Creates a `column` item. */
   static create(config: NgsFormsFormItemContainerConfigBase): NgsFormsFormItem<NgsFormsFormItemContainerConfigBase> {
     return {
       uuid: config.uuid || v4(),

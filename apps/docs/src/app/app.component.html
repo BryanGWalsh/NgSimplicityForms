@@ -1,0 +1,64 @@
+<a class="visually-hidden-focusable docs-skip" href="#main">Skip to content</a>
+<header class="docs-topbar navbar border-bottom px-3">
+  <button
+    type="button"
+    class="btn btn-link d-lg-none text-body p-1 me-2"
+    aria-label="Toggle navigation"
+    [attr.aria-expanded]="sidebarOpen()"
+    aria-controls="docs-sidebar"
+    (click)="sidebarOpen.set(!sidebarOpen())">
+    <i class="bi bi-list fs-4" aria-hidden="true"></i>
+  </button>
+  <a class="navbar-brand d-flex align-items-center gap-2 fw-semibold" routerLink="/">
+    <span class="docs-logo" aria-hidden="true"><i class="bi bi-ui-checks-grid"></i></span>
+    NG-Simplicity Forms
+  </a>
+  <nav class="ms-auto d-flex align-items-center gap-1 gap-sm-3" aria-label="Primary">
+    <a class="nav-link d-none d-sm-inline" routerLink="/getting-started/introduction" routerLinkActive="active">Docs</a>
+    <a class="nav-link d-none d-sm-inline" routerLink="/tutorials/sign-up-form" routerLinkActive="active">Tutorials</a>
+    <a class="nav-link d-none d-sm-inline" routerLink="/api" routerLinkActive="active">API</a>
+    <a class="nav-link" [href]="repoUrl" target="_blank" rel="noopener" aria-label="GitHub repository">
+      <i class="bi bi-github fs-5" aria-hidden="true"></i>
+    </a>
+  </nav>
+</header>
+
+<div class="docs-layout">
+  <aside id="docs-sidebar" class="docs-sidebar border-end" [class.open]="sidebarOpen()">
+    <docs-search></docs-search>
+    <nav aria-label="Documentation">
+      @for (section of nav; track section.title) {
+        <div class="docs-nav-section">
+          <div class="docs-nav-heading"><i class="bi {{ section.icon }}" aria-hidden="true"></i> {{ section.title }}</div>
+          <ul class="list-unstyled mb-0">
+            @for (page of section.pages; track page.path) {
+              <li>
+                <a class="docs-nav-link" [routerLink]="'/' + page.path" routerLinkActive="active" ariaCurrentWhenActive="page">{{ page.title }}</a>
+              </li>
+            }
+          </ul>
+        </div>
+      }
+      <div class="docs-nav-section">
+        <div class="docs-nav-heading"><i class="bi bi-braces" aria-hidden="true"></i> API reference</div>
+        <ul class="list-unstyled mb-0">
+          <li><a class="docs-nav-link" routerLink="/api" [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="active">All packages</a></li>
+          <li><a class="docs-nav-link" routerLink="/api" fragment="forms-core">forms-core</a></li>
+          <li><a class="docs-nav-link" routerLink="/api" fragment="forms-bootstrap">forms-bootstrap</a></li>
+          <li><a class="docs-nav-link" routerLink="/api" fragment="forms-material">forms-material</a></li>
+        </ul>
+      </div>
+    </nav>
+  </aside>
+  @if (sidebarOpen()) {
+    <button type="button" class="docs-backdrop d-lg-none border-0" aria-label="Close navigation" (click)="sidebarOpen.set(false)"></button>
+  }
+
+  <main id="main" class="docs-main" tabindex="-1">
+    <router-outlet></router-outlet>
+    <footer class="docs-footer text-body-secondary small border-top">
+      <span>NG-Simplicity Forms · MIT licensed · © {{ year }}</span>
+      <a [href]="repoUrl" target="_blank" rel="noopener">GitHub</a>
+    </footer>
+  </main>
+</div>

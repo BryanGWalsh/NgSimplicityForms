@@ -5,6 +5,11 @@ import { NgsFormItemArrayAddItemConfig } from './form-array-add-item-config.mode
 import { NgsFormsFormArrayInternalService } from '../service/form-array-internal.service';
 import { v4 } from 'uuid';
 
+/**
+ * A button that appends a row to the enclosing form array, up to `maxItems`.
+ *
+ * @remarks Registry key: `form-array-add-item`. Must be placed inside an `NgsFormsFormArrayContainerComponent`.
+ */
 @Component({
   selector: 'ngs-forms-form-array-add-item',
   templateUrl: './form-array-add-item.component.html',
@@ -14,6 +19,7 @@ export class NgsFormsFormArrayAddItemComponent extends NgsFormsBaseClassFormComp
   static override key = 'form-array-add-item';
   internalArrayService = inject(NgsFormsFormArrayInternalService);
 
+  /** Creates a `form-array-add-item` item. */
   static create(config: NgsFormItemArrayAddItemConfig): NgsFormsFormItem<NgsFormItemArrayAddItemConfig> {
     return {
       uuid: config.uuid || v4(),

@@ -10,10 +10,22 @@ import {
   NgsFormsBootstrapFormItemSelectInputComponent
 } from './form-components';
 
+/** Registration helper for the Bootstrap components. */
 @NgModule({
   imports: [CommonModule, FormsModule, ReactiveFormsModule, NgsFormsCoreModule],
 })
 export class NgsFormsBootstrapModule {
+  /**
+   * Registers the core structural components plus the Bootstrap `input-text`, `input-textarea`, `checkbox`,
+   * `radio` and `select` components.
+   *
+   * @example
+   * ```ts
+   * constructor(registry: NgsFormsComponentRegistryService) {
+   *   NgsFormsBootstrapModule.registerAllBootStrapComponents(registry);
+   * }
+   * ```
+   */
   static registerAllBootStrapComponents(registryService: NgsFormsComponentRegistryService) {
     NgsFormsCoreModule.registerCoreNgsFormComponents(registryService);
     registryService.register(NgsFormsBootstrapFormsItemCheckboxComponent.key, NgsFormsBootstrapFormsItemCheckboxComponent);

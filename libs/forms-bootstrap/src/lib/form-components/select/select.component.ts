@@ -5,6 +5,12 @@ import { NgsFormsBaseClassFormItemInputWithOptionsComponent, NgsFormsFormItem } 
 import { ReactiveFormsModule } from '@angular/forms';
 import { v4 } from 'uuid';
 
+/**
+ * Bootstrap 5 select (`.form-select`). The control's value is the `id` of the chosen option.
+ *
+ * @remarks Registry key: `select`. Supports `options$` for options that change at runtime, a disabled
+ * `placeholder` option, and `labelLocation`.
+ */
 @Component({
   selector: 'ngs-forms-bootstrap-select-input',
   imports: [ReactiveFormsModule],
@@ -15,6 +21,7 @@ export class NgsFormsBootstrapFormItemSelectInputComponent extends NgsFormsBaseC
   static override key = 'select';
   selectConfig = this.config as NgsFormsFormItemConfigBootstrapSelectInput;
 
+  /** Creates a `select` item. */
   static create(
     config: NgsFormsFormItemConfigBootstrapSelectInput
   ): NgsFormsFormItem<NgsFormsFormItemConfigBootstrapSelectInput> {

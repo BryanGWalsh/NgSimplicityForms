@@ -5,6 +5,12 @@ import { Injectable } from '@angular/core';
 import { NgsFormsGlobalFormState } from '../../models/global-state.interface';
 import { ngsDefaults } from '../../misc/defaults';
 
+/**
+ * Per form state holder that connects `<ngs-form>`, its items and `NgsFormsService`.
+ *
+ * @remarks Provided by `NgsFormComponent`. Application code should use `NgsFormsService` instead; this service is
+ * exported for authors of custom components and may change between minor versions.
+ */
 @Injectable()
 export class NgsFormsInternalService {
   formGroup$ = new BehaviorSubject<FormGroup>(new UntypedFormGroup({}));

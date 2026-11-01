@@ -1,4 +1,4 @@
-@if (formConfig()?.root && formGroup()) {
-  <ng-container [ngs-form-group]="formGroup()!" [ngs-form-item]="formConfig()!.root"></ng-container>
+<!-- Tracking by form group re-creates the tree whenever setFormConfig() is called again, since each call creates a new group. -->
+@for (entry of rendered(); track entry.group) {
+  <ng-container [ngs-form-group]="entry.group" [ngs-form-item]="entry.root"></ng-container>
 }
-
