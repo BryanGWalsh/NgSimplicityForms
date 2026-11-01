@@ -4,6 +4,11 @@ import { NgsFormsTextDivConfig } from './text-div-config.model';
 import { NgsFormsFormItem } from '../../../models';
 import { v4 } from 'uuid';
 
+/**
+ * Renders a line of static text, such as a heading or a hint, inside the form.
+ *
+ * @remarks Registry key: `text-div`. Config: `text` and optional `classes`.
+ */
 @Component({
   selector: 'ngs-form-component-text-div',
   imports: [],
@@ -13,6 +18,7 @@ import { v4 } from 'uuid';
 export class NgsFormsTextDivComponent extends NgsFormsBaseClassFormComponent<NgsFormsTextDivConfig> {
   static override key = 'text-div';
 
+  /** Creates a `text-div` item. */
   static create(
     config: NgsFormsTextDivConfig
   ): NgsFormsFormItem<NgsFormsTextDivConfig> {
@@ -22,6 +28,9 @@ export class NgsFormsTextDivComponent extends NgsFormsBaseClassFormComponent<Ngs
       config: config,
     };
   }
+  /**
+   * Shortcut for a heading: creates a `text-div` with `text` and the given class (default `h2`).
+   */
   static title(
     title: string,
     divClass = 'h2'

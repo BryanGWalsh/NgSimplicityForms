@@ -1,0 +1,13 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "target": "es2022",
+    "noEmit": true
+  },
+  "include": [
+    "../../libs/forms-core/src/**/*.ts",
+    "../../libs/forms-bootstrap/src/**/*.ts",
+    "../../libs/forms-material/src/**/*.ts"
+  ],
+  "exclude": ["../../libs/**/*.spec.ts", "../../libs/**/test-setup.ts"]
+}

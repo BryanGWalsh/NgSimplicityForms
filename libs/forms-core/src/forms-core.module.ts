@@ -13,10 +13,17 @@ import { NgsFormsTextDivComponent } from './components/shared-form-components/te
 import { NgsFormsFormGroupComponent } from './components/shared-form-components/form-group';
 
 
+/** Registration helpers for the structural components in `@ng-simplicity/forms-core`. */
 @NgModule({
   imports: [CommonModule, FormsModule, ReactiveFormsModule],
 })
 export class NgsFormsCoreModule {
+  /**
+   * Registers the structural components: `form-group`, `form-row`, `column`, `form-array`, `form-array-list`,
+   * `form-array-add-item`, `form-array-remove-item`, `text-div` and `section`.
+   *
+   * @remarks The theme packages call this for you from their own `registerAll…` helpers.
+   */
   static registerCoreNgsFormComponents(
     registryService: NgsFormsComponentRegistryService
   ) {

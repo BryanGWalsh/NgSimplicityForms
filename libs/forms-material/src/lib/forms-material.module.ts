@@ -10,10 +10,17 @@ import {
   NgsFormsMaterialFormItemTextAreaComponent
 } from './form-components';
 
+/** Registration helper for the Angular Material components. */
 @NgModule({
   imports: [CommonModule, FormsModule, ReactiveFormsModule, NgsFormsCoreModule],
 })
 export class NgsFormsMaterialModule {
+  /**
+   * Registers the core structural components plus the Material `input-text`, `input-textarea`, `checkbox`,
+   * `radio` and `select` components.
+   *
+   * @remarks The Material components need animations: add `provideAnimationsAsync()` to your application providers.
+   */
   static registerAllMaterialComponents(registryService: NgsFormsComponentRegistryService) {
     NgsFormsCoreModule.registerCoreNgsFormComponents(registryService);
     registryService.register(NgsFormsMaterialFormItemCheckboxComponent.key, NgsFormsMaterialFormItemCheckboxComponent);

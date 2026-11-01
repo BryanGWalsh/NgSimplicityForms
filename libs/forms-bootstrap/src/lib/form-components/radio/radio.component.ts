@@ -4,6 +4,11 @@ import { NgsFormsFormsItemConfigBoostrapRadio } from './radio.config';
 import { ReactiveFormsModule } from '@angular/forms';
 import { v4 } from 'uuid';
 
+/**
+ * Bootstrap 5 radio group. The control's value is the `id` of the chosen option.
+ *
+ * @remarks Registry key: `radio`. Set `alignment: 'horizontal'` to show the options inline.
+ */
 @Component({
   selector: 'ngs-forms-bootstrap-radio-group-input',
   imports: [ReactiveFormsModule],
@@ -14,6 +19,7 @@ export class NgsFormsBootstrapRadioInputComponent extends NgsFormsBaseClassFormI
   static override key = 'radio';
   radioConfig = this.config as NgsFormsFormsItemConfigBoostrapRadio;
 
+  /** Creates a `radio` item. */
   static create(
     config: NgsFormsFormsItemConfigBoostrapRadio
   ): NgsFormsFormItem<NgsFormsFormsItemConfigBoostrapRadio> {

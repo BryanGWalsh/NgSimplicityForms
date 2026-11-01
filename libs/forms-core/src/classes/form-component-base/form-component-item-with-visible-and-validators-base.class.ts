@@ -4,16 +4,26 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { INgsFormsFormControlAddRemove, NGS_FORMS_CONTROL_ADD_REMOVE_FN } from '../../misc';
 import { NgsFormsInternalService } from '../../services';
 import { NgsFormsFormItemConfigBaseItemWithNameAndValidators } from '../../models/item-config-bases/';
-import { NgsFormsBaseClassFormComponent } from '../../classes/index';
+import { NgsFormsBaseClassFormComponent } from './form-component.class';
 import { merge } from 'rxjs';
 
+/**
+ * Base class for items that own a form control. Creates the control, applies `validators` / `validators$`,
+ * registers it with the parent group under `config.name` and keeps `errorMessage` up to date.
+ */
 @Directive({})
 export class NgsFormsFormItemWithVisibleAndValidatorsBase<T extends NgsFormsFormItemConfigBaseItemWithNameAndValidators> extends NgsFormsBaseClassFormComponent<T> implements OnInit, OnDestroy {
+  /** The item's form control. Bind it with `[formControl]`. */
   control: UntypedFormControl | undefined;
+  /**
+   * Message for the control's first error, taken from `errorMessageMap`. Empty while the control is valid, or
+   * before it is touched, dirty or submitted.
+   */
   errorMessage = '';
   private formAddRemoveFns = inject<INgsFormsFormControlAddRemove>(NGS_FORMS_CONTROL_ADD_REMOVE_FN);
   private privateService = inject<NgsFormsInternalService>(NgsFormsInternalService);
   private changeDetectorRef = inject(ChangeDetectorRef);
+  /** Whether the form has been marked as submitted with `NgsFormsService.setIsSubmitted()`. */
   readonly submitted: Signal<boolean> = toSignal(this.privateService.isSubmitted$, { initialValue: false });
 
   ngOnInit() {

@@ -4,6 +4,12 @@ import { NgsFormItemHtmlContentConfig } from './html-content-config.model';
 import { NgsFormsFormItem } from '../../../models';
 import { v4 } from 'uuid';
 
+/**
+ * Renders an HTML string inside the form. The HTML is passed through Angular's sanitizer.
+ *
+ * @remarks Registry key: `content-html`. It is not registered by `registerCoreNgsFormComponents()`, so register
+ * it yourself: `registry.register(NgsFormsHtmlContentComponent.key, NgsFormsHtmlContentComponent)`.
+ */
 @Component({
   selector: 'ngs-form-component-html-content',
   imports: [],
@@ -23,6 +29,7 @@ export class NgsFormsHtmlContentComponent extends NgsFormsBaseClassFormComponent
       '';
   }
 
+  /** Creates a `content-html` item. */
   static create(
     config: NgsFormItemHtmlContentConfig
   ): NgsFormsFormItem<NgsFormItemHtmlContentConfig> {

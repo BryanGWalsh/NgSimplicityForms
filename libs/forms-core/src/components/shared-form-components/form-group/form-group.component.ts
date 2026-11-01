@@ -11,6 +11,19 @@ import { NgsFormsFormItemWithVisibleAndValidatorsBase } from '../../../classes/f
 import { NgsFormsFormItemDirective } from '../../core';
 
 
+/**
+ * A named group of items backed by an `UntypedFormGroup`. Its value is nested under `name` in the form value.
+ *
+ * @remarks Registry key: `form-group`. Usually the `root` of a form, and also useful for nesting related fields
+ * (an address, for example) or for hiding a whole group with `visible$`.
+ * @example
+ * ```ts
+ * NgsFormsFormGroupComponent.create({
+ *   name: 'address',
+ *   items: [addressLine1, city, postcode],
+ * })
+ * ```
+ */
 @Component({
   selector: 'ngs-forms-form-group',
   templateUrl: './form-group.component.html',
@@ -23,6 +36,7 @@ export class NgsFormsFormGroupComponent
 {
   static override key = 'form-group';
 
+  /** Creates a `form-group` item. */
   static create(
     config: NgsFormsFormGroupConfig
   ): NgsFormsFormItem<NgsFormsFormGroupConfig> {

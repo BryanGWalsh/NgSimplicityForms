@@ -6,6 +6,12 @@ import { NgsFormsFormArrayInternalService } from '../service';
 import { NGS_FORMS_ITEM_INDEX } from '../../../../misc';
 import { v4 } from 'uuid';
 
+/**
+ * A button that removes its own row from the enclosing form array, down to `minItems`.
+ *
+ * @remarks Registry key: `form-array-remove-item`. Place it inside the `templateItem` of an
+ * `NgsFormsFormArrayListComponent` so each row gets one.
+ */
 @Component({
   selector: 'ngs-forms-form-array-remove-item',
   templateUrl: './form-array-remove-item.component.html',
@@ -17,6 +23,7 @@ export class NgsFormsFormArrayRemoveItemComponent extends NgsFormsBaseClassFormC
   private elementRef = inject(ElementRef);
   private indexFromDi = inject<number>(NGS_FORMS_ITEM_INDEX, { optional: true });
 
+  /** Index of the row this button belongs to. */
   get myIndex(): number {
     if (this.indexFromDi !== null && this.indexFromDi !== undefined) {
       return this.indexFromDi;
@@ -36,6 +43,7 @@ export class NgsFormsFormArrayRemoveItemComponent extends NgsFormsBaseClassFormC
     super();
   }
 
+  /** Creates a `form-array-remove-item` item. */
   static create(config: NgsFormItemArrayRemoveItemConfig): NgsFormsFormItem<NgsFormItemArrayRemoveItemConfig> {
     return {
       uuid: config.uuid || v4(),
