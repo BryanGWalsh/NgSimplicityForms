@@ -40,7 +40,7 @@ Markdown extras:
 2. Register it in `demo-registry.ts` with a title, its theme and the files to show.
 3. Embed it in a page with `::: demo <id>`.
 
-Keep Bootstrap and Material demos on separate pages: the component registry is shared by the whole page.
+Keep demos of different themes (Bootstrap, Material, Tailwind) on separate pages: the component registry is shared by the whole page. Tailwind demos can use any Tailwind class: the docs build scans `src/app/demos` and the Tailwind package. Tailwind's preflight reset is not loaded, so the rest of the site keeps its Bootstrap styles.
 
 ## API reference
 

@@ -21,6 +21,7 @@ export const NAV: NavSection[] = [
       { title: 'Installation', path: 'getting-started/installation', file: 'getting-started/installation.md' },
       { title: 'Quick start: Bootstrap', path: 'getting-started/bootstrap', file: 'getting-started/quick-start-bootstrap.md' },
       { title: 'Quick start: Angular Material', path: 'getting-started/material', file: 'getting-started/quick-start-material.md' },
+      { title: 'Quick start: Tailwind CSS', path: 'getting-started/tailwind', file: 'getting-started/quick-start-tailwind.md' },
     ],
   },
   {
@@ -52,6 +53,7 @@ export const NAV: NavSection[] = [
     pages: [
       { title: 'Bootstrap components', path: 'themes/bootstrap', file: 'themes/bootstrap.md' },
       { title: 'Material components', path: 'themes/material', file: 'themes/material.md' },
+      { title: 'Tailwind components', path: 'themes/tailwind', file: 'themes/tailwind.md' },
     ],
   },
   {

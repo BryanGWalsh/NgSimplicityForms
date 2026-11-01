@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [Unreleased]
+
+### Added
+- New `@ng-simplicity/forms-tailwind` styling package with Tailwind CSS `input-text`, `input-textarea`, `checkbox`, `radio` and `select` components, `NgsFormsTailwindModule.registerAllTailwindComponents()`, and `provideNgsFormsTailwindClasses()` for overriding the default classes.
+- Docs: Tailwind installation steps, a Tailwind quick start and a Tailwind component reference with live demos.
+
 ## [1.0.0] - 2026-06-19
 
 ### Added

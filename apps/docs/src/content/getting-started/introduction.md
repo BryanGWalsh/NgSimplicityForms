@@ -10,7 +10,7 @@ Hand written forms are easy until they are not. Once fields appear and disappear
 
 - **One source of truth.** The configuration describes both the structure of the form value and what the user sees.
 - **Reactive rules.** Visibility (`visible$`), validators (`validators$`) and options (`options$`) can be RxJS streams, usually derived from the form's own value.
-- **Swappable rendering.** The engine looks components up by key in a registry. The Bootstrap and Material packages register the same keys, so the same configuration renders in either style, and you can register your own components.
+- **Swappable rendering.** The engine looks components up by key in a registry. The Bootstrap, Material and Tailwind packages register the same keys, so the same configuration renders in any of those styles, and you can register your own components.
 - **Modern Angular.** Every component uses `OnPush`, state is exposed through signals, and nothing depends on zone.js. This documentation site runs zoneless.
 
 ## The packages
@@ -20,6 +20,7 @@ Hand written forms are easy until they are not. Once fields appear and disappear
 | `@ng-simplicity/forms-core` | The engine: `NgsFormsService`, the component registry, the `<ngs-form>` renderer, configuration models, base classes, and structural items (group, section, row, column, form array, text). |
 | `@ng-simplicity/forms-bootstrap` | Bootstrap 5 inputs: text, textarea, checkbox, radio and select. |
 | `@ng-simplicity/forms-material` | Angular Material inputs: text, textarea, checkbox, radio and select. |
+| `@ng-simplicity/forms-tailwind` | Native inputs styled with Tailwind CSS utilities: text, textarea, checkbox, radio and select. |
 
 You always install `forms-core`, plus one theme package or your own components.
 
@@ -45,6 +46,6 @@ NgsFormsFormConfig
 ## Where to go next
 
 - [Installation](/getting-started/installation) lists the packages and peer dependencies.
-- [Quick start: Bootstrap](/getting-started/bootstrap) and [Quick start: Angular Material](/getting-started/material) build the form above step by step.
+- [Quick start: Bootstrap](/getting-started/bootstrap), [Quick start: Angular Material](/getting-started/material) and [Quick start: Tailwind CSS](/getting-started/tailwind) build the form above step by step.
 - The [tutorials](/tutorials/sign-up-form) walk through common use cases, each with a live demo.
 - The [API reference](/api) documents every export.

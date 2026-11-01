@@ -1,0 +1,14 @@
+/*
+ * Tailwind CSS for the Tailwind demos. Only the theme variables and utilities are loaded: preflight (Tailwind's
+ * reset) is left out so it does not restyle the Bootstrap based docs. Sources are listed explicitly so Tailwind
+ * only generates classes used by the Tailwind package and the demos.
+ */
+@layer theme, base, components, utilities;
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css' layer(utilities) source(none);
+
+@source '../../../libs/forms-tailwind/src/lib';
+@source './app/demos';
+
+/* Follow the docs site's colour mode instead of the operating system setting. */
+@custom-variant dark (&:where([data-bs-theme='dark'], [data-bs-theme='dark'] *));

@@ -70,18 +70,18 @@ registry.getComponentTypeForKey('input-text'); // → NgsFormsBootstrapFormItemI
 
 The theme packages register their components under the same keys:
 
-| Key | Core | Bootstrap | Material |
-| --- | --- | --- | --- |
-| `form-group`, `section`, `form-row`, `column`, `text-div` | ✓ | | |
-| `form-array`, `form-array-list`, `form-array-add-item`, `form-array-remove-item` | ✓ | | |
-| `content-html` | ✓ (register yourself) | | |
-| `input-text` | | `NgsFormsBootstrapFormItemInputComponent` | `NgsFormsMaterialFormItemInputComponent` |
-| `input-textarea` | | `NgsFormsBootstrapFormsItemTextAreaComponent` | `NgsFormsMaterialFormItemTextAreaComponent` |
-| `checkbox` | | `NgsFormsBootstrapFormsItemCheckboxComponent` | `NgsFormsMaterialFormItemCheckboxComponent` |
-| `radio` | | `NgsFormsBootstrapRadioInputComponent` | `NgsFormsMaterialRadioInputComponent` |
-| `select` | | `NgsFormsBootstrapFormItemSelectInputComponent` | `NgsFormsMaterialFormItemSelectInputComponent` |
+| Key | Core | Bootstrap | Material | Tailwind |
+| --- | --- | --- | --- | --- |
+| `form-group`, `section`, `form-row`, `column`, `text-div` | ✓ | | | |
+| `form-array`, `form-array-list`, `form-array-add-item`, `form-array-remove-item` | ✓ | | | |
+| `content-html` | ✓ (register yourself) | | | |
+| `input-text` | | `NgsFormsBootstrapFormItemInputComponent` | `NgsFormsMaterialFormItemInputComponent` | `NgsFormsTailwindFormItemInputComponent` |
+| `input-textarea` | | `NgsFormsBootstrapFormsItemTextAreaComponent` | `NgsFormsMaterialFormItemTextAreaComponent` | `NgsFormsTailwindFormItemTextAreaComponent` |
+| `checkbox` | | `NgsFormsBootstrapFormsItemCheckboxComponent` | `NgsFormsMaterialFormItemCheckboxComponent` | `NgsFormsTailwindFormItemCheckboxComponent` |
+| `radio` | | `NgsFormsBootstrapRadioInputComponent` | `NgsFormsMaterialRadioInputComponent` | `NgsFormsTailwindRadioInputComponent` |
+| `select` | | `NgsFormsBootstrapFormItemSelectInputComponent` | `NgsFormsMaterialFormItemSelectInputComponent` | `NgsFormsTailwindFormItemSelectInputComponent` |
 
-Because the keys match, a configuration built with Bootstrap `create()` helpers renders with Material components if Material is registered instead. The `create()` helper only decides the key and the config type.
+Because the keys match, a configuration built with Bootstrap `create()` helpers renders with Material or Tailwind components if one of those is registered instead. The `create()` helper only decides the key and the config type.
 
 > **Warning** The registry is provided in the `platform` injector, so there is one per page. Registering Material replaces the Bootstrap components for every form on the page. Use one theme per application, or register custom keys (for example `mat-input-text`) if you really need both.
 

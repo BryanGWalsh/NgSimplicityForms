@@ -5,7 +5,7 @@
   "prefix": "docs",
   "sourceRoot": "apps/docs/src",
   "tags": [],
-  "implicitDependencies": ["forms-core", "forms-bootstrap", "forms-material"],
+  "implicitDependencies": ["forms-core", "forms-bootstrap", "forms-material", "forms-tailwind"],
   "targets": {
     "api": {
       "executor": "nx:run-commands",
@@ -42,6 +42,7 @@
           "node_modules/bootstrap-icons/font/bootstrap-icons.css",
           "@angular/material/prebuilt-themes/azure-blue.css",
           "node_modules/highlight.js/styles/github.css",
+          "apps/docs/src/tailwind.css",
           "apps/docs/src/styles.scss"
         ],
         "scripts": []

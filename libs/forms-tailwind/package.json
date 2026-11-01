@@ -1,0 +1,29 @@
+{
+  "name": "@ng-simplicity/forms-tailwind",
+  "version": "1.1.1",
+  "license": "MIT",
+  "description": "Tailwind CSS styled form controls for @ng-simplicity/forms-core.",
+  "keywords": [
+    "angular",
+    "forms",
+    "dynamic-forms",
+    "reactive-forms",
+    "tailwind",
+    "tailwindcss"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BryanGWalsh/NgSimplicityForms.git",
+    "directory": "libs/forms-tailwind"
+  },
+  "peerDependencies": {
+    "@angular/common": "^17.0.0 || ^18.0.0 || ^19.0.0 || ^20.0.0 || ^21.0.0 || ^22.0.0",
+    "@angular/core": "^17.0.0 || ^18.0.0 || ^19.0.0 || ^20.0.0 || ^21.0.0 || ^22.0.0",
+    "@angular/forms": "^17.0.0 || ^18.0.0 || ^19.0.0 || ^20.0.0 || ^21.0.0 || ^22.0.0",
+    "@ng-simplicity/forms-core": "^1.1.1"
+  },
+  "dependencies": {
+    "uuid": "^11.0.5"
+  },
+  "sideEffects": false
+}

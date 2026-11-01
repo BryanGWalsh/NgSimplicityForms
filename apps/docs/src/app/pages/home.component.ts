@@ -31,7 +31,7 @@ const SNIPPET = `NgsFormsFormGroupComponent.create({
         <p class="lead text-body-secondary">
           NG-Simplicity Forms renders complete Angular reactive forms from a typed configuration tree.
           Visibility, validators and options can all be streams, so the form reacts to what the user enters.
-          Pick Bootstrap, Angular Material, or bring your own components.
+          Pick Bootstrap, Angular Material, Tailwind CSS, or bring your own components.
         </p>
         <div class="d-flex flex-wrap gap-2">
           <a class="btn btn-primary btn-lg" routerLink="/getting-started/introduction">Get started</a>
@@ -81,13 +81,14 @@ export class HomeComponent {
     { icon: 'bi-diagram-3', title: 'Declarative config', text: 'Describe groups, sections, rows, arrays and inputs as one typed tree with static create() helpers.' },
     { icon: 'bi-lightning-charge', title: 'Reactive by design', text: 'Bind visibility, validators and options to Observables, so the form adapts as values change.' },
     { icon: 'bi-cpu', title: 'Signals, OnPush, zoneless', text: 'Built on toSignal and OnPush components. This whole site runs without zone.js.' },
-    { icon: 'bi-palette2', title: 'Swappable themes', text: 'The same configuration renders with Bootstrap, Angular Material, or components you register yourself.' },
+    { icon: 'bi-palette2', title: 'Swappable themes', text: 'The same configuration renders with Bootstrap, Angular Material, Tailwind CSS, or components you register yourself.' },
   ];
 
   readonly paths = [
     { icon: 'bi-download', title: 'Install', text: 'Packages, peer dependencies and Angular version support.', link: '/getting-started/installation' },
     { icon: 'bi-bootstrap', title: 'Bootstrap quick start', text: 'A working form in four steps with Bootstrap 5.', link: '/getting-started/bootstrap' },
     { icon: 'bi-layers', title: 'Material quick start', text: 'The same form with Angular Material components.', link: '/getting-started/material' },
+    { icon: 'bi-wind', title: 'Tailwind quick start', text: 'The same form styled with Tailwind CSS utilities.', link: '/getting-started/tailwind' },
     { icon: 'bi-list-ol', title: 'Form arrays', text: 'Let users add and remove repeating rows.', link: '/tutorials/form-arrays' },
     { icon: 'bi-puzzle', title: 'Custom controls', text: 'Build and register a control of your own.', link: '/tutorials/custom-control' },
     { icon: 'bi-braces', title: 'API reference', text: 'Every exported class, interface and option.', link: '/api' },
