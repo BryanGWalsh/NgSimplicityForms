@@ -9,6 +9,7 @@
   "scripts": {
     "serve-bootstrap-demo": "export SASS_QUIET_DEPS=true && nx serve forms-bootstrap-demo",
     "serve-material-demo": "export SASS_QUIET_DEPS=true && nx serve forms-material-demo",
+    "serve-tailwind-demo": "nx serve forms-tailwind-demo",
     "serve-docs": "nx serve docs",
     "build:docs": "nx build docs",
     "build:packages": "nx run-many -t build -p forms-core,forms-bootstrap,forms-material,forms-tailwind",
