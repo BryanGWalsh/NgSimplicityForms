@@ -3,6 +3,9 @@
 [![Active Development](https://img.shields.io/badge/Status-Active%20Development-orange.svg)](#)
 [![Angular Support](https://img.shields.io/badge/Angular-17--22.x-red.svg)](#)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](#)
+[![Documentation](https://img.shields.io/badge/Docs-ng--simplicity--forms.bryangwalsh.com-4f46e5.svg)](https://ng-simplicity-forms.bryangwalsh.com)
+
+📖 **Documentation, tutorials and live demos:** [ng-simplicity-forms.bryangwalsh.com](https://ng-simplicity-forms.bryangwalsh.com) · [Getting started](https://ng-simplicity-forms.bryangwalsh.com/getting-started/introduction) · [API reference](https://ng-simplicity-forms.bryangwalsh.com/api)
 
 ## Compatibility
 
@@ -38,7 +41,7 @@ This library is organized as an Nx workspace consisting of three primary package
 | **`@ng-simplicity/forms-material`** | [`libs/forms-material`](./libs/forms-material/README.md) | Angular Material-themed implementation of the core components. |
 
 ### Documentation Site
-Guides, tutorials with live demos, and a generated API reference live in [`apps/docs`](./apps/docs). Run it locally with `npm run serve-docs`. It is deployed to GitHub Pages by [`.github/workflows/docs.yml`](./.github/workflows/docs.yml); see the site's "Contributing to the docs" page for setup.
+Guides, tutorials with live demos, and a generated API reference are published at **[ng-simplicity-forms.bryangwalsh.com](https://ng-simplicity-forms.bryangwalsh.com)**. The site's source lives in [`apps/docs`](./apps/docs). Run it locally with `npm run serve-docs`. It is deployed to GitHub Pages by [`.github/workflows/docs.yml`](./.github/workflows/docs.yml); see the site's "Contributing to the docs" page for setup.
 
 ### Example Applications
 Fully functional example applications demonstrating the form engine functionality are located in the [`apps/`](./apps) folder of this monorepo:
