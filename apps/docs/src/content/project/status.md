@@ -27,7 +27,7 @@ These options exist in the configuration types so that configurations can be wri
 - **Custom controls without `[formControl]`** need to call `control.updateValueAndValidity()` after `super.ngOnInit()` so their validators run once. See [Building a custom control](/tutorials/custom-control#2-extend-the-input-base-class).
 - **Patching needs rendered controls.** Wait a tick after `setFormConfig()`, give arrays enough rows with `initialItemCount`, and patch conditional fields after they appear. See [Editing existing data](/tutorials/editing-data).
 - **One theme per page.** The registry is platform wide and the theme packages share keys.
-- **`uuid` is a runtime dependency** of all three packages but is not declared in their `package.json`. Install it in your application.
+- **`uuid` is not declared in version `1.1.1`.** It is declared as a dependency of all three packages from the next release. On `1.1.1`, install it in your application.
 - **`content-html` is not registered** by the `registerAll…` helpers. Register `NgsFormsHtmlContentComponent` yourself.
 - **The Material package relies on a few utility classes** (`w-100`, `mb-2`, `mb-3`) and application styles for radio layout. See the [Material quick start](/getting-started/material#4-add-the-supporting-styles).
 - **Section and text config interfaces** (`NgsFormsFormSectionConfig`, `NgsFormsTextDivConfig`) are not exported from the package entry point, so you cannot import them by name yet. The `create()` helpers are fully typed regardless.

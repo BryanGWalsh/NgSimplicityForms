@@ -3,5 +3,8 @@
   "dest": "../../dist/libs/forms-material",
   "lib": {
     "entryFile": "src/public_api.ts"
-  }
+  },
+  "allowedNonPeerDependencies": [
+    "uuid"
+  ]
 }
