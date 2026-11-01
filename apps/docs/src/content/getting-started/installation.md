@@ -6,14 +6,14 @@ All the packages share a version number and support Angular **17 through 22**. A
 
 | Package | Version | Peer dependencies |
 | --- | --- | --- |
-| `@ng-simplicity/forms-core` | `1.1.1` | `@angular/core`, `@angular/common`, `@angular/forms` 17 to 22, `rxjs` 7 |
-| `@ng-simplicity/forms-bootstrap` | `1.1.1` | the above, plus `@ng-simplicity/forms-core ^1.1.1` |
-| `@ng-simplicity/forms-material` | `1.1.1` | the above, plus `@angular/material` 17 to 22 (same major as Angular) |
-| `@ng-simplicity/forms-tailwind` | `1.1.1` | the above, plus `@ng-simplicity/forms-core ^1.1.1`. Needs Tailwind CSS in your build (v4 recommended) |
+| `@ng-simplicity/forms-core` | `1.1.2` | `@angular/core`, `@angular/common`, `@angular/forms` 17 to 22, `rxjs` 7 |
+| `@ng-simplicity/forms-bootstrap` | `1.1.2` | the above, plus `@ng-simplicity/forms-core ^1.1.2` |
+| `@ng-simplicity/forms-material` | `1.1.2` | the above, plus `@angular/material` 17 to 22 (same major as Angular) |
+| `@ng-simplicity/forms-tailwind` | `1.1.2` | the above, plus `@ng-simplicity/forms-core ^1.1.2`. Needs Tailwind CSS in your build (v4 recommended) |
 
 Each package uses [`uuid`](https://www.npmjs.com/package/uuid) to generate item ids and lists it under `dependencies`, so your package manager installs it for you.
 
-> **Note** Version `1.1.1` on npm does not declare `uuid` yet. If you install `1.1.1`, add `uuid` to the install command yourself (`npm install uuid`). Later releases include it.
+> **Note** Versions `1.1.1` and earlier do not declare `uuid`. If you install one of them, add `uuid` to the install command yourself (`npm install uuid`).
 
 ## With Bootstrap
 

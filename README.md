@@ -9,14 +9,14 @@
 
 ## Compatibility
 
-All three packages are currently at version `1.1.1` and support Angular `17.x` through `22.x`. Angular 17 is the minimum because the templates use built-in control flow (`@if` and `@for`); Signals alone would allow an Angular 16 floor, but the template syntax does not.
+All four packages are currently at version `1.1.2` and support Angular `17.x` through `22.x`. Angular 17 is the minimum because the templates use built-in control flow (`@if` and `@for`); Signals alone would allow an Angular 16 floor, but the template syntax does not.
 
 | Package | Package version | Angular support | Additional peer requirement |
 |---|---:|---|---|
-| `@ng-simplicity/forms-core` | `1.1.1` | `17.x`–`22.x` | — |
-| `@ng-simplicity/forms-bootstrap` | `1.1.1` | `17.x`–`22.x` | `@ng-simplicity/forms-core ^1.1.0` |
-| `@ng-simplicity/forms-material` | `1.1.1` | `17.x`–`22.x` | `@angular/material` `17.x`–`22.x` and `@ng-simplicity/forms-core ^1.1.0` |
-| `@ng-simplicity/forms-tailwind` | `1.1.1` | `17.x`–`22.x` | `@ng-simplicity/forms-core ^1.1.1` and Tailwind CSS (v4 recommended, v3 works) in your build |
+| `@ng-simplicity/forms-core` | `1.1.2` | `17.x`–`22.x` | — |
+| `@ng-simplicity/forms-bootstrap` | `1.1.2` | `17.x`–`22.x` | `@ng-simplicity/forms-core ^1.1.2` |
+| `@ng-simplicity/forms-material` | `1.1.2` | `17.x`–`22.x` | `@angular/material` `17.x`–`22.x` and `@ng-simplicity/forms-core ^1.1.2` |
+| `@ng-simplicity/forms-tailwind` | `1.1.2` | `17.x`–`22.x` | `@ng-simplicity/forms-core ^1.1.2` and Tailwind CSS (v4 recommended, v3 works) in your build |
 
 Use Angular Material from the same major as Angular. Its peer dependencies must also include the corresponding Angular major, so the Material package accepts Material majors 17 through 22.
 

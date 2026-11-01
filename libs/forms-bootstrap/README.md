@@ -10,7 +10,7 @@ A package containing pre-styled Bootstrap form inputs, containers, and templates
 
 | Package | Package version | Angular support |
 |---|---:|---|
-| `@ng-simplicity/forms-bootstrap` | `1.1.1` | `17.x`–`22.x` |
+| `@ng-simplicity/forms-bootstrap` | `1.1.2` | `17.x`–`22.x` |
 
 ---
 

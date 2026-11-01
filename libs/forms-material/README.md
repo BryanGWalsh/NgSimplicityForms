@@ -10,7 +10,7 @@ An integration package containing pre-styled Angular Material inputs, form field
 
 | Package | Package version | Angular support | Angular Material support |
 |---|---:|---|---|
-| `@ng-simplicity/forms-material` | `1.1.1` | `17.x`–`22.x` | `17.x`–`22.x` (use the matching Angular major) |
+| `@ng-simplicity/forms-material` | `1.1.2` | `17.x`–`22.x` | `17.x`–`22.x` (use the matching Angular major) |
 
 ---
 
