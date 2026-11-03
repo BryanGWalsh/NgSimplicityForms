@@ -8,24 +8,21 @@ These options exist in the configuration types so that configurations can be wri
 
 | Option | Where | Today |
 | --- | --- | --- |
-| `disabled`, `disabled$` | inputs, groups, arrays | Ignored. Disable controls yourself if needed. |
-| `visible` | every item | Ignored. Use `visible$`. |
-| `value` | inputs | Ignored. Use `patchValue()` after the form renders. |
-| `id` | inputs | Ignored. Components generate their own ids. |
 | `initialState` | items and form config | Ignored. |
 | `inputUpdateDebounce` | form config | Ignored. Values update on every change. |
 | `itemContainerClass` | form array | Ignored. Use `containerClass` on the list. |
-| `onAddItem`, `onRemoveItem` | form array buttons | Not called. |
 | `sanitize` | `content-html` | HTML is always sanitized. |
 | `NgsFormItemVisibilityFn`, `NgsFormValidatorArrayBuilderFn`, `NgsFormDisableFn` | types | Not consumed. |
 | `NgsServerSideValidationErrorObjectType` | type | Not consumed. |
-| `displayMode`, `showEditToggle` state | component state | Not read by the built-in components; available to custom ones. |
+| `displayMode`, `showEditToggle` state | component state | Meant for switching a control between an edit and a read-only view. Not read by the built-in components; available to custom ones. |
 
 ## Behaviour to know about
 
 - **Swapped validators apply on the next change.** `validators$` replaces a control's validators without re-running them. See the workaround in [Validation and errors](/guides/validation#changing-validators-at-runtime).
 - **Custom controls without `[formControl]`** need to call `control.updateValueAndValidity()` after `super.ngOnInit()` so their validators run once. See [Building a custom control](/tutorials/custom-control#2-extend-the-input-base-class).
-- **Patching needs rendered controls.** Wait a tick after `setFormConfig()`, give arrays enough rows with `initialItemCount`, and patch conditional fields after they appear. See [Editing existing data](/tutorials/editing-data).
+- **Patching needs rendered controls.** Wait a tick after `setFormConfig()`, give arrays enough rows with `initialItemCount`, and patch conditional fields after they appear. For fixed defaults, set `value` on the input instead. See [Editing existing data](/tutorials/editing-data).
+- **Disabled controls are left out of the form value.** That is how Angular reactive forms work, and it means they also skip validation.
+- **Set ids must be unique.** An input with a fixed `id` inside a form array row repeats that id on every row.
 - **One theme per page.** The registry is platform wide and the theme packages share keys.
 - **`uuid` is not declared in version `1.1.1` and earlier.** From `1.1.2` every package declares it. On older versions, install it in your application.
 - **`content-html` is not registered in version `1.1.1` and earlier.** From `1.1.2` the `registerAll…` helpers register it. On older versions, call `registry.register(NgsFormsHtmlContentComponent.key, NgsFormsHtmlContentComponent)` yourself.

@@ -16,6 +16,8 @@ this.forms.patchValue({
 
 ## Wait for the form to render
 
+For fixed defaults that don't come from your data, set `value` on the input's config instead. It is applied when the control is created, so no waiting is needed.
+
 Form items are created asynchronously. If you call `setFormConfig()` and `patchValue()` in the same tick, the controls do not exist yet and the values are dropped. Wait for one macrotask between the two:
 
 ```ts

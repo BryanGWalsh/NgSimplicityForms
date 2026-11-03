@@ -65,10 +65,24 @@ NgsFormsFormGroupComponent.create({
 }),
 ```
 
+## Disable instead of hide
+
+To keep a field on screen but stop the user editing it, use `disabled$` (or a static `disabled: true`). It works on inputs, groups and arrays, and disabling a group or array disables everything inside it:
+
+```ts
+NgsFormsBootstrapFormItemInputComponent.create({
+  name: 'companyName',
+  label: 'Company',
+  disabled$: value$.pipe(map((v) => !v.hasCompany), distinctUntilChanged()),
+}),
+```
+
+Like Angular reactive forms, disabled controls are left out of `formValue$` and skip validation.
+
 ## Things to know
 
 - **Hidden means gone.** When an item is hidden its component is destroyed. Showing it again creates a fresh control, so the value the user typed earlier is not restored. If you need to keep it, store it yourself and `patchValue()` it back.
-- **Items without `visible$` are always shown.** The static `visible` flag in the config types is reserved and not read yet.
+- **Items without `visible$` are always shown**, unless they set `visible: false`. A static `visible` is ignored when `visible$` is also set.
 - **Patching hidden fields does nothing.** Values can only be patched into controls that exist. See [Editing existing data](/tutorials/editing-data) for the pattern.
 - **Any Observable works.** Visibility can come from anywhere: a feature flag service, the current user's role, a route parameter.
 

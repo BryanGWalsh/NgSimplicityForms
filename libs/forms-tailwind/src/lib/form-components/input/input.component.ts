@@ -40,7 +40,7 @@ export class NgsFormsTailwindFormItemInputComponent extends NgsFormsBaseClassFor
   /** Whether the label sits to the left of the input. */
   readonly horizontal = this.textConfig.labelLocation === 'left';
   /** The `id` of the `<input>`. */
-  readonly inputId = this.id + (this.horizontal ? '-left' : '-top');
+  readonly inputId = this.id;
   /** @internal */
   readonly cx = ngsTwClassList;
 

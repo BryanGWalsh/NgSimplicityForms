@@ -13,10 +13,9 @@ export interface NgsFormsFormItemConfigBase {
    */
   uuid?: string;
   /**
-   * Static visibility flag.
+   * Static visibility flag. `false` keeps the item out of the form, as if `visible$` had emitted `false`.
    *
-   * @notImplemented
-   * @remarks Reserved for future use: the renderer currently ignores it. Use `visible$` to show or hide an item.
+   * @remarks Ignored when `visible$` is also set.
    */
   visible?: boolean;
   /**
@@ -69,17 +68,19 @@ export interface NgsFormsFormItemConfigBaseItemWithNameAndValidators extends Ngs
    */
   errorMessageMap?: NgsFormsFormErrorKeyValueMap;
   /**
-   * Static disabled flag.
+   * Static disabled flag. `true` disables the item's control (and, for groups and arrays, every control inside).
    *
-   * @notImplemented
-   * @remarks Reserved for future use: the built-in components do not read it yet.
+   * @remarks Ignored when `disabled$` is also set. Disabled controls are left out of `NgsFormsService.formValue$`
+   * and skip validation, which is how Angular reactive forms treat them.
    */
   disabled?: boolean;
   /**
-   * Stream that controls the disabled state.
+   * Stream that controls the disabled state. Each emission disables (`true`) or enables (`false`) the control.
    *
-   * @notImplemented
-   * @remarks Reserved for future use: the built-in components do not read it yet.
+   * @example
+   * ```ts
+   * disabled$: this.forms.formValue$.pipe(map((v) => !v?.profile?.hasCompany))
+   * ```
    */
   disabled$?: Observable<boolean>;
   /**
@@ -101,19 +102,16 @@ export interface NgsFormsFormItemConfigBaseItemWithNameAndValidators extends Ngs
 /** Base configuration for a labelled input control. */
 export interface NgsFormsFormItemConfigBaseInput extends NgsFormsFormItemConfigBaseItemWithNameAndValidators {
   /**
-   * Optional element id.
+   * Element id for the input. When omitted the component generates a unique one.
    *
-   * @notImplemented
-   * @remarks Reserved for future use: the built-in components generate their own ids.
+   * @remarks Must be unique on the page, so avoid it inside form array rows.
    */
   id?: string;
   /** Label text shown next to or above the control. */
   label: string;
   /**
-   * Initial value.
-   *
-   * @notImplemented
-   * @remarks Reserved for future use. Set initial values with `NgsFormsService.patchValue()` after the form renders.
+   * Initial value of the control. Applied when the control is created, including when a `visible$` item is shown
+   * again.
    */
   value?: unknown;
 }

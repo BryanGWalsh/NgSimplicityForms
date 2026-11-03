@@ -22,8 +22,8 @@ describe('NgsFormsTailwindFormItemTextAreaComponent', () => {
   });
 
   it('supports the horizontal layout', () => {
-    const { el } = create({ name: 'notes', label: 'Notes', labelLocation: 'left' });
-    expect(el.querySelector('textarea')!.id).toMatch(/-left$/);
+    const { el, fixture } = create({ name: 'notes', label: 'Notes', labelLocation: 'left' });
+    expect(el.querySelector('textarea')!.id).toBe(fixture.componentInstance.id);
   });
 
   it('shows errors after submit', () => {

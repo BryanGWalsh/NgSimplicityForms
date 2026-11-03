@@ -2,7 +2,7 @@ import { ChangeDetectorRef, ComponentRef, Injector, Provider, ViewContainerRef }
 import { NgsFormsFormItem } from '../../models';
 import { NgsSubscriber } from '../../classes/base/subscriber.class';
 import { INgsFormsFormControlAddRemove, NGS_FORMS_CONTROL_ADD_REMOVE_FN, NGS_FORMS_ITEM_DATA, NGS_FORMS_ITEM_INDEX } from '../../misc';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 import { NgsFormsComponentRegistryService } from '../../services/form-component-registry/form-component-registry.service';
 
 export class NgsFormItemController extends NgsSubscriber {
@@ -28,11 +28,13 @@ export class NgsFormItemController extends NgsSubscriber {
   }
 
   private bindVisibility() {
-    if (!this.itemData.config.visible$) {
+    const config = this.itemData.config;
+    const visible$ = config.visible$ ?? (config.visible !== undefined ? of(config.visible) : undefined);
+    if (!visible$) {
       Promise.resolve().then(() => this.create());
       return;
     }
-    this.subscribe(this.itemData.config.visible$, (visible: any) => {
+    this.subscribe(visible$, (visible: any) => {
       if (this.lastVisible === visible) return;
 
       this.lastVisible = visible;

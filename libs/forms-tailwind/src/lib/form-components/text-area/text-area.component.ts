@@ -25,7 +25,7 @@ export class NgsFormsTailwindFormItemTextAreaComponent extends NgsFormsBaseClass
   /** Whether the label sits to the left of the textarea. */
   readonly horizontal = this.textAreaConfig.labelLocation === 'left';
   /** The `id` of the `<textarea>`. */
-  readonly inputId = this.id + (this.horizontal ? '-left' : '-top');
+  readonly inputId = this.id;
   /** @internal */
   readonly cx = ngsTwClassList;
 
