@@ -85,4 +85,31 @@ describe('NgsFormsInternalService', () => {
       expect(service.checkIsValid()).toBe(false);
     });
   });
+
+  it('seeds state from globalState and initialState on setFormData', () => {
+    service.updateGlobalState({ displayMode: 'input' });
+    service.setFormData({
+      inputUpdateDebounce: 0,
+      globalState: { displayMode: 'summary' },
+      initialState: { email: { showEditToggle: true } },
+      root: { type: 'x', config: {} },
+    } as NgsFormsFormConfig);
+    expect(service.state.value).toEqual({ global: { displayMode: 'summary' }, email: { showEditToggle: true } });
+  });
+
+  it('seeds a component state once from subscribeToState', (done) => {
+    service.subscribeToState('uuid-1', 'name', { displayMode: 'summary' }).pipe(take(1)).subscribe();
+    service.updateComponentState('uuid-1', { displayMode: 'input' });
+    // A second subscription (the item shown again) must not overwrite the existing state.
+    service.subscribeToState('uuid-1', 'name', { displayMode: 'summary' }).pipe(take(1)).subscribe((state) => {
+      expect(state.displayMode).toBe('input');
+      done();
+    });
+  });
+
+  it('ignores an empty uuid or missing initialState when seeding', () => {
+    service.seedComponentState('', { displayMode: 'summary' });
+    service.seedComponentState('uuid-2', undefined);
+    expect(service.state.value).toEqual({});
+  });
 });

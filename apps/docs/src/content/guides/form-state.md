@@ -53,7 +53,7 @@ submit() {
 
 ## Resetting
 
-`setFormConfig()` always starts over: new controls, empty values, `submitted` back to `false`. Keep the config in a method and call it again to reset:
+`setFormConfig()` always starts over: new controls, values back to their configured `value` (or empty), `submitted` back to `false`, and component state back to `globalState` and `initialState`. Keep the config in a method and call it again to reset:
 
 ```ts
 reset() {
@@ -63,14 +63,14 @@ reset() {
 
 ## Component state
 
-Besides values, a form holds free-form state that components can read through `commonState()`:
+Besides values, a form holds free-form state that components can read through `commonState()`. Set the starting state with `globalState` and `initialState` in the config, and change it later:
 
 ```ts
 this.forms.updateGlobalState({ displayMode: 'summary' });            // every component
 this.forms.updateComponentState('email', { showEditToggle: true });  // one component, by name or uuid
 ```
 
-State merges: a component sees its own state first, then state for its `name`, then global state. The built-in components do not use state yet; it is there for your [custom controls](/tutorials/custom-control#reacting-to-form-state).
+State merges: a component sees its own state first, then state for its `name`, then global state. The built-in components do not use state yet. It is there for your own controls. [Component state and edit toggle](/guides/component-state) walks through a summary mode with an edit toggle.
 
 ## Lifecycle
 

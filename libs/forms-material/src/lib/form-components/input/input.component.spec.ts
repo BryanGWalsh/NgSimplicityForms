@@ -101,3 +101,37 @@ describe('NgsFormsMaterialFormItemInputComponent', () => {
     expect(item.uuid).toBeDefined();
   });
 });
+
+describe('NgsFormsMaterialFormItemInputComponent with id, value and disabled', () => {
+  function create(config: object) {
+    TestBed.configureTestingModule({
+      imports: [ReactiveFormsModule, MatInputModule, MatFormFieldModule, NoopAnimationsModule, NgsFormsMaterialFormItemInputComponent],
+      providers: [
+        { provide: NGS_FORMS_ITEM_DATA, useValue: { config } },
+        { provide: NGS_FORMS_CONTROL_ADD_REMOVE_FN, useValue: { add: jest.fn(), remove: jest.fn() } },
+        { provide: NgsFormsInternalService, useValue: { isSubmitted$: of(false), subscribeToState: jest.fn().mockReturnValue(of({})) } },
+        { provide: NgsFormsService, useValue: {} },
+      ],
+    });
+    const fixture = TestBed.createComponent(NgsFormsMaterialFormItemInputComponent);
+    fixture.detectChanges();
+    return fixture.nativeElement as HTMLElement;
+  }
+
+  it('passes a configured id to matInput', () => {
+    const el = create({ name: 'email', label: 'Email', id: 'email-field' });
+    expect(el.querySelector('input')!.id).toBe('email-field');
+  });
+
+  it('lets Material generate the id when none is configured', () => {
+    const el = create({ name: 'email', label: 'Email' });
+    expect(el.querySelector('input')!.id).toMatch(/^mat-input-/);
+  });
+
+  it('starts with the configured value and can be disabled', () => {
+    const el = create({ name: 'email', label: 'Email', value: 'ada@example.com', disabled: true });
+    const input = el.querySelector('input')!;
+    expect(input.value).toBe('ada@example.com');
+    expect(input.disabled).toBe(true);
+  });
+});

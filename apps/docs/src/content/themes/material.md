@@ -10,6 +10,8 @@ You need a Material theme, `provideAnimationsAsync()`, and a few supporting styl
 
 ::: demo material-catalog
 
+Every component also takes the [shared options](/guides/core-concepts#shared-options), including `value`, `id`, `disabled$` and `visible$`. A configured `id` is passed to Material, which otherwise generates its own.
+
 ## Text input · `input-text`
 
 `NgsFormsMaterialFormItemInputComponent` uses `matInput` in an outlined form field.

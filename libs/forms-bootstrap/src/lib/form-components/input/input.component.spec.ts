@@ -94,3 +94,39 @@ describe('NgsFormsBootstrapFormItemInputComponent', () => {
     expect(item.uuid).toBeDefined();
   });
 });
+
+describe('NgsFormsBootstrapFormItemInputComponent with id, value and disabled', () => {
+  function create(config: object) {
+    TestBed.configureTestingModule({
+      imports: [ReactiveFormsModule, NgsFormsBootstrapFormItemInputComponent],
+      providers: [
+        { provide: NGS_FORMS_ITEM_DATA, useValue: { config } },
+        { provide: NGS_FORMS_CONTROL_ADD_REMOVE_FN, useValue: { add: jest.fn(), remove: jest.fn() } },
+        { provide: NgsFormsInternalService, useValue: { isSubmitted$: of(false), subscribeToState: jest.fn().mockReturnValue(of({})) } },
+        { provide: NgsFormsService, useValue: {} },
+      ],
+    });
+    const fixture = TestBed.createComponent(NgsFormsBootstrapFormItemInputComponent);
+    fixture.detectChanges();
+    return fixture.nativeElement as HTMLElement;
+  }
+
+  it('uses the configured id on the input and the label', () => {
+    const el = create({ name: 'email', label: 'Email', labelLocation: 'top', id: 'email-field' });
+    expect(el.querySelector('input')!.id).toBe('email-field');
+    expect(el.querySelector('label')!.getAttribute('for')).toBe('email-field');
+  });
+
+  it('uses the configured id in the horizontal layout too', () => {
+    const el = create({ name: 'email', label: 'Email', labelLocation: 'left', id: 'email-field' });
+    expect(el.querySelector('input')!.id).toBe('email-field');
+    expect(el.querySelector('label')!.getAttribute('for')).toBe('email-field');
+  });
+
+  it('starts with the configured value and can be disabled', () => {
+    const el = create({ name: 'email', label: 'Email', labelLocation: 'top', value: 'ada@example.com', disabled: true });
+    const input = el.querySelector('input')!;
+    expect(input.value).toBe('ada@example.com');
+    expect(input.disabled).toBe(true);
+  });
+});

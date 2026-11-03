@@ -31,10 +31,14 @@ export interface NgsFormsFormItemConfigBase {
    */
   visible$?: Observable<boolean>;
   /**
-   * Initial component state for this item.
+   * Initial component state for this item, read by input components through `commonState()`.
    *
-   * @notImplemented
-   * @remarks Reserved for future use.
+   * @remarks Applied when the component is first created, unless state for this item's `uuid` was already set.
+   * It takes precedence over state set by `name` and over global state.
+   * @example
+   * ```ts
+   * initialState: { displayMode: 'summary', showEditToggle: true }
+   * ```
    */
   initialState?: any;
 }

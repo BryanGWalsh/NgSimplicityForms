@@ -20,7 +20,7 @@ NgsFormsTailwindModule.registerAllTailwindComponents(registry);
 | `placeholder` | `string` | | Placeholder text. |
 | `labelLocation` | `'top' \| 'left'` | `'top'` | `left` puts the label in a 2 / 10 column grid from the `sm` breakpoint up. |
 | `inputCssClass` | `string` | | Extra classes on the `<input>`. |
-| `validators`, `validators$`, `errorMessageMap`, `visible$` | | | See [Core concepts](/guides/core-concepts#shared-options). |
+| `value`, `id`, `disabled`, `disabled$`, `visible`, `visible$`, `validators`, `validators$`, `errorMessageMap` | | | See [Core concepts](/guides/core-concepts#shared-options). |
 
 [API reference](/api/forms-tailwind/NgsFormsTailwindFormItemInputComponent)
 

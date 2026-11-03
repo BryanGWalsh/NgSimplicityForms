@@ -8,13 +8,12 @@ These options exist in the configuration types so that configurations can be wri
 
 | Option | Where | Today |
 | --- | --- | --- |
-| `initialState` | items and form config | Ignored. |
 | `inputUpdateDebounce` | form config | Ignored. Values update on every change. |
 | `itemContainerClass` | form array | Ignored. Use `containerClass` on the list. |
 | `sanitize` | `content-html` | HTML is always sanitized. |
 | `NgsFormItemVisibilityFn`, `NgsFormValidatorArrayBuilderFn`, `NgsFormDisableFn` | types | Not consumed. |
 | `NgsServerSideValidationErrorObjectType` | type | Not consumed. |
-| `displayMode`, `showEditToggle` state | component state | Meant for switching a control between an edit and a read-only view. Not read by the built-in components; available to custom ones. |
+| `displayMode`, `showEditToggle` state | component state | Not read by the built-in components yet. Custom controls can use them, see [Component state and edit toggle](/guides/component-state). |
 
 ## Behaviour to know about
 

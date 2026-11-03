@@ -19,7 +19,7 @@ NgsFormsBootstrapModule.registerAllBootStrapComponents(registry);
 | `type` | `'text' \| 'email' \| 'password'` | `'text'` | Input type. |
 | `placeholder` | `string` | | Placeholder text. |
 | `labelLocation` | `'top' \| 'left'` | `'top'` | `left` renders a horizontal `col-sm-2` / `col-sm-10` row. |
-| `validators`, `validators$`, `errorMessageMap`, `visible$` | | | See [Core concepts](/guides/core-concepts#shared-options). |
+| `value`, `id`, `disabled`, `disabled$`, `visible`, `visible$`, `validators`, `validators$`, `errorMessageMap` | | | See [Core concepts](/guides/core-concepts#shared-options). |
 
 [API reference](/api/forms-bootstrap/NgsFormsBootstrapFormItemInputComponent)
 

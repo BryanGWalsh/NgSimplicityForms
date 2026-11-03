@@ -145,4 +145,37 @@ describe('NgsFormItemController', () => {
     controller.destroy();
     consoleErrorSpy.mockRestore();
   }));
+
+  it('creates the component for visible: true and skips it for visible: false', fakeAsync(() => {
+    const shown = new NgsFormItemController(TestBed.inject(Injector), mockViewContainerRef, {
+      uuid: 'shown',
+      type: 'mock-component',
+      config: { visible: true },
+    });
+    tick();
+    expect(mockViewContainerRef.createComponent).toHaveBeenCalledTimes(1);
+
+    const hidden = new NgsFormItemController(TestBed.inject(Injector), mockViewContainerRef, {
+      uuid: 'hidden',
+      type: 'mock-component',
+      config: { visible: false },
+    });
+    tick();
+    expect(mockViewContainerRef.createComponent).toHaveBeenCalledTimes(1);
+
+    shown.destroy();
+    hidden.destroy();
+  }));
+
+  it('uses visible$ instead of visible when both are set', fakeAsync(() => {
+    const visible$ = new BehaviorSubject(true);
+    const controller = new NgsFormItemController(TestBed.inject(Injector), mockViewContainerRef, {
+      uuid: 'both',
+      type: 'mock-component',
+      config: { visible: false, visible$ },
+    });
+    tick();
+    expect(mockViewContainerRef.createComponent).toHaveBeenCalledTimes(1);
+    controller.destroy();
+  }));
 });

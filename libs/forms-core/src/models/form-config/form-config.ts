@@ -1,5 +1,6 @@
 import { NgsFormsFormItem } from './form-item';
 import { NgsFormsGlobalFormState } from '../global-state.interface';
+import { NgsFormsCommonComponentState } from '../common-component-state.interface';
 
 /**
  * The top level configuration passed to `NgsFormsService.setFormConfig()`.
@@ -21,17 +22,24 @@ export interface NgsFormsFormConfig<T = NgsFormsFormItem<any>> {
    * @remarks Reserved for future use: values currently update on every change.
    */
   inputUpdateDebounce: number;
-  /** Initial state shared by every component in the form. */
+  /**
+   * Initial state shared by every component in the form. Applied each time `setFormConfig()` is called; change it
+   * later with `NgsFormsService.updateGlobalState()`.
+   */
   globalState: NgsFormsGlobalFormState;
   /**
    * The root item, usually an `NgsFormsFormGroupComponent`, whose form group backs the whole form.
    */
   root: T;
   /**
-   * Initial form state.
+   * Initial state for individual components, keyed by item `uuid` or control `name`.
    *
-   * @notImplemented
-   * @remarks Reserved for future use.
+   * @remarks Applied each time `setFormConfig()` is called, together with `globalState`. Same as calling
+   * `NgsFormsService.updateComponentState(key, state)` for each entry before the form renders.
+   * @example
+   * ```ts
+   * initialState: { email: { displayMode: 'input' } }
+   * ```
    */
-  initialState?: any;
+  initialState?: { [componentKey: string]: NgsFormsCommonComponentState & { [key: string]: any } };
 }
