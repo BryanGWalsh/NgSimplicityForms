@@ -27,14 +27,33 @@ describe('FormArrayDemoComponent', () => {
     expect(config.root.config.name).toBe('demoForm');
   });
 
-  it('should log form submission', () => {
-    const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
+  it('should log the values and alert when a valid form is submitted', () => {
+    const logSpy = jest.spyOn(console, 'log').mockImplementation();
+    const alertSpy = jest.spyOn(window, 'alert').mockImplementation();
     const fixture = TestBed.createComponent(FormArrayDemoComponent);
     const component = fixture.componentInstance;
-    
+    jest.spyOn(component, 'isValid', 'get').mockReturnValue(true);
+
     component.onSubmit();
-    
-    expect(consoleSpy).toHaveBeenCalledWith('Form submitted with values:', expect.anything());
-    consoleSpy.mockRestore();
+
+    expect(logSpy).toHaveBeenCalledWith('Form is VALID! Submitted values:', component.ngsFormsService.formValue);
+    expect(alertSpy).toHaveBeenCalled();
+    logSpy.mockRestore();
+    alertSpy.mockRestore();
+  });
+
+  it('should warn and not alert when an invalid form is submitted', () => {
+    const warnSpy = jest.spyOn(console, 'warn').mockImplementation();
+    const alertSpy = jest.spyOn(window, 'alert').mockImplementation();
+    const fixture = TestBed.createComponent(FormArrayDemoComponent);
+    const component = fixture.componentInstance;
+    jest.spyOn(component, 'isValid', 'get').mockReturnValue(false);
+
+    component.onSubmit();
+
+    expect(warnSpy).toHaveBeenCalledWith('Form is INVALID. Please correct errors and try again.');
+    expect(alertSpy).not.toHaveBeenCalled();
+    warnSpy.mockRestore();
+    alertSpy.mockRestore();
   });
 });
