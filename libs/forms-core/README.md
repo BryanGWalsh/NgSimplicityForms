@@ -9,6 +9,7 @@ The core engine package for **NG-Simplicity Forms**. This package manages form s
 This core package is extended by styling integration packages that provide prebuilt themed form components:
 - **[@ng-simplicity/forms-bootstrap](../forms-bootstrap/README.md)**: Dynamic forms pre-styled with Bootstrap form fields and layouts.
 - **[@ng-simplicity/forms-material](../forms-material/README.md)**: Dynamic forms pre-styled with Angular Material inputs and controls.
+- **[@ng-simplicity/forms-tailwind](../forms-tailwind/README.md)**: Dynamic forms styled with Tailwind CSS utility classes, with every class overridable through `provideNgsFormsTailwindClasses()`.
 
 ## Compatibility
 
@@ -25,6 +26,16 @@ Add this package to your Angular application:
 ```bash
 npm install @ng-simplicity/forms-core
 ```
+
+To render prebuilt inputs, add one styling package and register its components:
+
+| Styling | Install | Register |
+|---|---|---|
+| Bootstrap 5 | `npm install @ng-simplicity/forms-bootstrap bootstrap` | `NgsFormsBootstrapModule.registerAllBootStrapComponents(registry)` |
+| Angular Material | `npm install @ng-simplicity/forms-material` (after `ng add @angular/material`) | `NgsFormsMaterialModule.registerAllMaterialComponents(registry)` |
+| Tailwind CSS | `npm install @ng-simplicity/forms-tailwind`, then add `@source '../node_modules/@ng-simplicity/forms-tailwind';` to your Tailwind stylesheet | `NgsFormsTailwindModule.registerAllTailwindComponents(registry)` |
+
+Each `registerAll…` helper also registers the core structural components, so it is the only registration call you need. See each package's README for full setup.
 
 ---
 
@@ -521,6 +532,7 @@ Ensure your custom configuration type extends one of these core interfaces for f
 Fully functional example applications demonstrating the form engine functionality are located in the [`apps/`](../../apps) folder of this monorepo:
 - **`forms-bootstrap-demo`**: Integrates and showcases the `@ng-simplicity/forms-bootstrap` package.
 - **`forms-material-demo`**: Integrates and showcases the `@ng-simplicity/forms-material` package.
+- **`forms-tailwind-demo`**: Integrates and showcases the `@ng-simplicity/forms-tailwind` package.
 
 ---
 
