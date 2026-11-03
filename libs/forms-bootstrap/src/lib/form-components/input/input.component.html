@@ -1,11 +1,11 @@
 @if (!!control) {
   @if (textConfig.labelLocation === 'top') {
     <div class="mb-2">
-      <label [class.text-danger]="!!errorMessage" class="form-label" for="{{id}}-top">{{ textConfig.label }}</label>
+      <label [class.text-danger]="!!errorMessage" class="form-label" for="{{id}}">{{ textConfig.label }}</label>
       <input [class.border-danger]="!!errorMessage" 
              [formControl]="control" 
              class="form-control"
-             id="{{id}}-top" 
+             id="{{id}}" 
              [attr.aria-describedby]="errorMessage ? id + '-error' : null"
              placeholder="{{textConfig.placeholder}}" 
              type="{{textConfig.type}}" />
@@ -19,12 +19,12 @@
   @if (textConfig.labelLocation === 'left') {
     <div class="row mb-2">
       <label [class.text-danger]="!!errorMessage" class="col-sm-2 col-form-label"
-             for="{{id}}-left">{{ textConfig.label }}</label>
+             for="{{id}}">{{ textConfig.label }}</label>
       <div class="col-sm-10">
         <input [class.border-danger]="!!errorMessage" 
                [formControl]="control" 
                class="form-control"
-               id="{{id}}-left" 
+               id="{{id}}" 
                [attr.aria-describedby]="errorMessage ? id + '-error' : null"
                placeholder="{{textConfig.placeholder}}" 
                type="{{textConfig.type}}" />

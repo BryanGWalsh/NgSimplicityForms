@@ -3,7 +3,7 @@
     @if (selectConfig.label) {
       <mat-label>{{ selectConfig.label }}</mat-label>
     }
-    <mat-select [formControl]="control" [attr.aria-label]="selectConfig.label" [errorStateMatcher]="matcher">
+    <mat-select [id]="config.id || ''" [formControl]="control" [attr.aria-label]="selectConfig.label" [errorStateMatcher]="matcher">
       @if (selectConfig.placeholder) {
         <mat-option [disabled]="true" [value]="selectConfig.placeHolderValue || ''">
           {{ selectConfig.placeholder }}

@@ -14,11 +14,4 @@ export interface NgsFormItemArrayRemoveItemConfig extends NgsFormsFormItemConfig
   buttonClass?: string;
   /** Class of an `<i>` icon shown before the label, for example `bi bi-trash`. */
   buttonIcon?: string;
-  /**
-   * Callback after a row is removed.
-   *
-   * @notImplemented
-   * @remarks Reserved for future use.
-   */
-  onRemoveItem?: () => void;
 }

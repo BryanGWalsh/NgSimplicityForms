@@ -44,6 +44,7 @@ export const NAV: NavSection[] = [
       { title: 'Layout and structure', path: 'guides/layout', file: 'guides/layout.md' },
       { title: 'Validation and errors', path: 'guides/validation', file: 'guides/validation.md' },
       { title: 'Values, state and submission', path: 'guides/form-state', file: 'guides/form-state.md' },
+      { title: 'Component state and edit toggle', path: 'guides/component-state', file: 'guides/component-state.md' },
       { title: 'Signals, OnPush and zoneless', path: 'guides/change-detection', file: 'guides/change-detection.md' },
     ],
   },

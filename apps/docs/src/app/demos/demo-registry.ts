@@ -89,6 +89,12 @@ export const DEMOS: Record<string, DemoDefinition> = {
     files: ['form-state/form-state.demo.ts'],
     load: () => import('./form-state/form-state.demo').then((m) => m.FormStateDemoComponent),
   },
+  'component-state': {
+    title: 'Summary and edit toggle',
+    theme: 'custom',
+    files: ['component-state/component-state.demo.ts', 'component-state/compact-field.component.ts'],
+    load: () => import('./component-state/component-state.demo').then((m) => m.ComponentStateDemoComponent),
+  },
   'bootstrap-catalog': {
     title: 'All Bootstrap components',
     theme: 'bootstrap',

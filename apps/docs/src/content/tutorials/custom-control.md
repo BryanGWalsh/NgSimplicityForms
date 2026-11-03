@@ -135,7 +135,7 @@ The rating control reads it in its template:
 }
 ```
 
-> **Note** The built-in Bootstrap and Material components do not read `displayMode` yet. State is a channel for your own components.
+> **Note** The built-in Bootstrap, Material and Tailwind components do not read `displayMode` yet. State is a channel for your own components. [Component state and edit toggle](/guides/component-state) covers the state layers and `toggleDisplayMode()`.
 
 ## Other kinds of custom items
 

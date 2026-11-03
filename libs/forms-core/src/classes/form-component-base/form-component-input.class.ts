@@ -18,17 +18,18 @@ export abstract class NgsFormsBaseClassFormInputComponent<T extends NgsFormsForm
 
   /** Merged state for this component: its own state, then state by name, then global state. */
   readonly commonState: Signal<NgsFormsCommonComponentState> = toSignal(
-    this.internalService.subscribeToState(this.itemData.uuid || '', this.config.name),
+    this.internalService.subscribeToState(this.itemData.uuid || '', this.config.name, this.config.initialState),
     { initialValue: {} as NgsFormsCommonComponentState }
   );
 
   /**
-   * Switches between input and summary display.
-   *
-   * @notImplemented
+   * Switches this component between `input` and `summary` display by updating its own state.
+   * With no argument it flips the current mode.
    */
-  toggleDisplayMode(setTo: 'summary' | 'input'){
-
+  toggleDisplayMode(setTo?: 'summary' | 'input') {
+    const current = this.commonState().displayMode ?? 'input';
+    const displayMode = setTo ?? (current === 'summary' ? 'input' : 'summary');
+    this.internalService.updateComponentState(this.itemData.uuid || this.config.name, { displayMode });
   }
 }
 

@@ -1,6 +1,6 @@
 @if (control) {
   <div class="mb-3">
-    <mat-checkbox [formControl]="control" [aria-describedby]="errorMessage ? id + '-error' : ''">
+    <mat-checkbox [id]="config.id || id" [formControl]="control" [aria-describedby]="errorMessage ? id + '-error' : ''">
       {{ config.label }}
     </mat-checkbox>
     @if (errorMessage) {

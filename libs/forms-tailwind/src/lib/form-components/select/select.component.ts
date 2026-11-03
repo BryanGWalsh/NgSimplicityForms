@@ -26,7 +26,7 @@ export class NgsFormsTailwindFormItemSelectInputComponent extends NgsFormsBaseCl
   /** Whether the label sits to the left of the select. */
   readonly horizontal = this.selectConfig.labelLocation === 'left';
   /** The `id` of the `<select>`. */
-  readonly inputId = this.id + (this.horizontal ? '-left' : '-top');
+  readonly inputId = this.id;
   /** @internal */
   readonly cx = ngsTwClassList;
 

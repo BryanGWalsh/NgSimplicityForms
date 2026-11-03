@@ -14,8 +14,11 @@ import { NgsFormsFormItem, NgsFormsFormItemConfigBase } from '../../models';
 export abstract class NgsFormsBaseClassFormComponent<T extends NgsFormsFormItemConfigBase> extends NgsSubscriber {
   /** Registry key the component is registered under. */
   static key: string;
-  /** Unique id for this component instance, handy for `id` and `for` attributes. */
-  id = uuidv4();
+  /**
+   * Element id for this component, handy for `id` and `for` attributes. The config's `id` when it sets one,
+   * otherwise a generated unique id.
+   */
+  id: string;
   /** The item's configuration. */
   protected config: T;
   /** The full form item: `uuid`, `type` and `config`. */
@@ -24,5 +27,6 @@ export abstract class NgsFormsBaseClassFormComponent<T extends NgsFormsFormItemC
     super();
     this.itemData = inject<NgsFormsFormItem<T>>(NGS_FORMS_ITEM_DATA);
     this.config = this.itemData.config;
+    this.id = (this.config as { id?: string }).id || uuidv4();
   }
 }

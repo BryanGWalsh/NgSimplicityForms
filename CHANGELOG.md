@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.3] - 2026-11-03
+
+### Added
+- `visible: false` keeps an item out of the form. `visible$` still takes precedence when both are set.
+- `disabled` and `disabled$` disable and enable a control. On a group or array they disable everything inside, including rows and fields added later.
+- `value` sets an input's starting value when its control is created.
+- A configured `id` is used as the element id in place of the generated one.
+- `globalState` and the form's `initialState` (keyed by item `uuid` or `name`) seed component state on each `setFormConfig()`. An item's `initialState` seeds its own state when it is first created.
+- `toggleDisplayMode()` on input components switches their own `displayMode` between `input` and `summary`.
+- Docs: a Component state and edit toggle guide with a live demo, and the shared options listed in Core concepts.
+
+### Changed
+- Bootstrap and Tailwind: generated element ids no longer have a `-top` / `-left` suffix.
+- The Bootstrap, Material and Tailwind packages require `@ng-simplicity/forms-core ^1.1.3`.
+- `setFormConfig()` now resets component state as well as values.
+
+### Removed
+- The unused `onAddItem` and `onRemoveItem` options on the form array add and remove buttons.
+
 ## [1.1.2] - 2026-11-01
 
 ### Added

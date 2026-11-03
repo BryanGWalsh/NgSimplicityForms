@@ -14,11 +14,4 @@ export interface NgsFormItemArrayAddItemConfig extends NgsFormsFormItemConfigBas
   buttonClass?: string;
   /** Class of an `<i>` icon shown before the label, for example `bi bi-plus`. */
   buttonIcon?: string;
-  /**
-   * Callback after a row is added.
-   *
-   * @notImplemented
-   * @remarks Reserved for future use.
-   */
-  onAddItem?: () => void;
 }

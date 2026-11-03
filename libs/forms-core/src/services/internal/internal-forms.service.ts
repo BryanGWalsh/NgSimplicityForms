@@ -27,6 +27,9 @@ export class NgsFormsInternalService {
   }
 
   setFormData(formConfig: NgsFormsFormConfig) {
+    const state: { [key: string]: any } = { ...(formConfig.initialState ?? {}) };
+    state['global'] = { ...(formConfig.globalState ?? {}) };
+    this.state.next(state);
     this.formGroup$.next(new UntypedFormGroup({}));
     this.formConfig$.next(formConfig);
     this.isSubmitted$.next(false);
@@ -37,6 +40,11 @@ export class NgsFormsInternalService {
     this.state.value[key] = updated;
     this.state.next(this.state.value);
   }
+  /** Sets a component's state from its config's `initialState`, unless state for `uuid` already exists. */
+  seedComponentState(uuid: string, initialState: any) {
+    if (!uuid || !initialState || this.state.value[uuid]) return;
+    this.mergeState(uuid, initialState);
+  }
   updateGlobalState(state: NgsFormsGlobalFormState) {
     this.mergeState('global', state);
   }
@@ -44,7 +52,12 @@ export class NgsFormsInternalService {
     this.mergeState(componentKey, state);
   }
 
-  subscribeToState(uuid: string, name?: string) {
+  /**
+   * Merged state for one component: its own (by `uuid`), then by `name`, then global.
+   * `initialState` seeds the component's own state unless state for `uuid` already exists.
+   */
+  subscribeToState(uuid: string, name?: string, initialState?: any) {
+    this.seedComponentState(uuid, initialState);
     let last = '';
     return this.state.pipe(
       map((allState) => {

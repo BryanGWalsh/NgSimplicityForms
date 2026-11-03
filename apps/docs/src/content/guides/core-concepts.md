@@ -11,7 +11,7 @@ interface NgsFormsFormConfig {
   root: NgsFormsFormItem<any>;          // the top of the tree, usually a form group
   globalState: NgsFormsGlobalFormState; // initial state shared by every component
   inputUpdateDebounce: number;          // reserved, see "Status and limitations"
-  initialState?: any;                   // reserved
+  initialState?: { [key: string]: any }; // initial state per component, by uuid or name
 }
 ```
 
@@ -48,7 +48,15 @@ NgsFormsBootstrapFormItemInputComponent.create({ name: 'email', label: 'Email' }
 
 ### Shared options
 
-Every item accepts `uuid` and `visible$`. Items that own a control (inputs, groups, arrays) also accept:
+Every item accepts these:
+
+| Option | Purpose |
+| --- | --- |
+| `uuid` | Stable id for the item. Generated when omitted. |
+| `visible$`, `visible` | Show or hide the item. Hidden items are removed from the form. `visible$` wins when both are set. See [Conditional fields](/tutorials/conditional-fields). |
+| `initialState` | Starting [component state](/guides/component-state) for this item. |
+
+Items that own a control (inputs, groups, arrays) also accept:
 
 | Option | Purpose |
 | --- | --- |
@@ -56,6 +64,15 @@ Every item accepts `uuid` and `visible$`. Items that own a control (inputs, grou
 | `validators` | Angular validators for the control. |
 | `validators$` | A stream of validator arrays that replaces the validators on each emission. |
 | `errorMessageMap` | Messages for each error key. |
+| `disabled$`, `disabled` | Disable or enable the control. On a group or array this covers every control inside. `disabled$` wins when both are set. |
+
+Inputs also accept:
+
+| Option | Purpose |
+| --- | --- |
+| `label` | Label text. |
+| `value` | Starting value, applied when the control is created. |
+| `id` | Element id for the input. Generated when omitted. |
 
 Option based inputs add `options` and `options$`. The [API reference](/api) lists every option of every component.
 

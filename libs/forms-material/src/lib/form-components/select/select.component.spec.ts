@@ -104,3 +104,26 @@ describe('NgsFormsMaterialFormItemSelectInputComponent', () => {
     expect(item.uuid).toBeDefined();
   });
 });
+
+describe('NgsFormsMaterialFormItemSelectInputComponent with a configured id', () => {
+  it('passes the id to mat-select and still opens its panel', async () => {
+    TestBed.configureTestingModule({
+      imports: [ReactiveFormsModule, MatFormFieldModule, MatSelectModule, NoopAnimationsModule, NgsFormsMaterialFormItemSelectInputComponent],
+      providers: [
+        {
+          provide: NGS_FORMS_ITEM_DATA,
+          useValue: { config: { name: 'country', label: 'Country', id: 'country-field', options: [{ id: 'nz', label: 'New Zealand' }] } },
+        },
+        { provide: NGS_FORMS_CONTROL_ADD_REMOVE_FN, useValue: { add: jest.fn(), remove: jest.fn() } },
+        { provide: NgsFormsInternalService, useValue: { isSubmitted$: of(false), subscribeToState: jest.fn().mockReturnValue(of({})) } },
+        { provide: NgsFormsService, useValue: {} },
+      ],
+    });
+    const fixture = TestBed.createComponent(NgsFormsMaterialFormItemSelectInputComponent);
+    fixture.detectChanges();
+    expect((fixture.nativeElement as HTMLElement).querySelector('mat-select')!.id).toBe('country-field');
+    const select = await TestbedHarnessEnvironment.loader(fixture).getHarness(MatSelectHarness);
+    await select.open();
+    expect((await select.getOptions()).length).toBe(1);
+  });
+});

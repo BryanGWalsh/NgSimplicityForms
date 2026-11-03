@@ -25,7 +25,7 @@ describe('NgsFormsTailwindFormItemInputComponent', () => {
     const input = el.querySelector('input')!;
     expect(label.textContent?.trim()).toBe('Username');
     expect(label.getAttribute('for')).toBe(input.id);
-    expect(input.id).toMatch(/-top$/);
+    expect(input.id).toBe(fixture.componentInstance.id);
     expect(input.getAttribute('type')).toBe('text');
     expect(input.getAttribute('placeholder')).toBe('Pick one');
     expect(input.className).toContain('rounded-md');
@@ -34,9 +34,20 @@ describe('NgsFormsTailwindFormItemInputComponent', () => {
 
   it('renders the horizontal layout for labelLocation left', () => {
     const el = create({ name: 'username', label: 'Username', labelLocation: 'left', type: 'password' });
-    expect(el.querySelector('input')!.id).toMatch(/-left$/);
+    expect(el.querySelector('input')!.id).toBe(fixture.componentInstance.id);
     expect(el.querySelector('input')!.getAttribute('type')).toBe('password');
     expect(el.firstElementChild!.className).toContain('sm:grid-cols-12');
+  });
+
+  it('uses the configured id on the input and its label', () => {
+    const el = create({ name: 'username', label: 'Username', id: 'username-field' });
+    expect(el.querySelector('input')!.id).toBe('username-field');
+    expect(el.querySelector('label')!.getAttribute('for')).toBe('username-field');
+  });
+
+  it('starts with the configured value', () => {
+    const el = create({ name: 'username', label: 'Username', value: 'ada' });
+    expect(el.querySelector('input')!.value).toBe('ada');
   });
 
   it('shows the mapped error message once submitted', () => {

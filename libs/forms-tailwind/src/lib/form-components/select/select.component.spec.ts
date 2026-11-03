@@ -19,9 +19,9 @@ describe('NgsFormsTailwindFormItemSelectInputComponent', () => {
   }
 
   it('renders the placeholder and options, label on top by default', () => {
-    const { el } = create({ name: 'country', label: 'Country', placeholder: 'Choose', options: OPTIONS });
+    const { el, fixture } = create({ name: 'country', label: 'Country', placeholder: 'Choose', options: OPTIONS });
     const select = el.querySelector('select')!;
-    expect(select.id).toMatch(/-top$/);
+    expect(select.id).toBe(fixture.componentInstance.id);
     const options = el.querySelectorAll('option');
     expect(options.length).toBe(3);
     expect(options[0].textContent?.trim()).toBe('Choose');
