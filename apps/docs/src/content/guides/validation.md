@@ -75,18 +75,9 @@ NgsFormsBootstrapFormItemInputComponent.create({
 }),
 ```
 
-> **Warning** New validators take effect the next time the control's value changes; they are not re-run when they are swapped. To re-validate straight away, patch the field with its current value right after the swap:
->
-> ```ts
-> validators$: accountType$.pipe(
->   map((type) => (type === 'business' ? [Validators.required] : [])),
->   tap(() => queueMicrotask(() =>
->     this.forms.patchValue({ account: { vatNumber: this.forms.formValue?.account?.vatNumber ?? null } })
->   ))
-> ),
-> ```
->
-> If `validators` is also set, it wins and `validators$` is ignored.
+The control is re-validated on each emission, so the new rules apply straight away. (Before 1.1.4 they only applied on the next value change.)
+
+If `validators` is also set, it wins and `validators$` is ignored.
 
 ## Cross-field rules
 

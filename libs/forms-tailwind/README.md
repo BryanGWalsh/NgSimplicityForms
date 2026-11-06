@@ -156,7 +156,7 @@ The defaults include `dark:` variants and follow Tailwind's dark mode setting.
 
 ## Accessibility
 
-Every control has a `<label for>` (radio groups use `role="radiogroup"` with `aria-labelledby`). Error messages are linked with `aria-describedby`, and invalid inputs get `aria-invalid="true"`.
+Every control has a `<label for>` (radio groups use `role="radiogroup"` with `aria-labelledby`). Error messages are linked with `aria-describedby` and announced through a polite live region. Invalid inputs get `aria-invalid="true"`, controls with `Validators.required` get `aria-required="true"`, and the radios in a group share a `name`, so the group is a single tab stop.
 
 ## Documentation
 

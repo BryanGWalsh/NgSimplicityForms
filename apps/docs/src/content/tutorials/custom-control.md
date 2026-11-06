@@ -46,11 +46,6 @@ export class RatingInputComponent extends NgsFormsBaseClassFormInputComponent<Ra
   readonly max = computed(() => this.config.max ?? 5);
   readonly stars = computed(() => Array.from({ length: this.max() }, (_, i) => i + 1));
 
-  override ngOnInit() {
-    super.ngOnInit();
-    this.control!.updateValueAndValidity();
-  }
-
   rate(value: number) {
     this.control!.setValue(value);
     this.control!.markAsDirty();
@@ -59,7 +54,7 @@ export class RatingInputComponent extends NgsFormsBaseClassFormInputComponent<Ra
 }
 ```
 
-> **Important** Always call `super.ngOnInit()`: that is where the control is created and registered. If your template does not bind the control with `[formControl]`, also call `updateValueAndValidity()` afterwards. The base class sets the validators but does not run them; Angular's `[formControl]` directive normally does that, so without it a required field would start out valid.
+> **Important** If you override `ngOnInit()`, always call `super.ngOnInit()`: that is where the control is created, its validators are applied and run, and it is registered with the form. (Before 1.1.4 the validators did not run until the first change, so controls without `[formControl]` had to call `updateValueAndValidity()` themselves.)
 
 ## 3. Write the template
 

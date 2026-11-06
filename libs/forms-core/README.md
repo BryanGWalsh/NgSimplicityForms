@@ -397,8 +397,15 @@ import { NgsFormsFormArrayRemoveItemComponent } from '@ng-simplicity/forms-core'
 const removeContactBtn = NgsFormsFormArrayRemoveItemComponent.create({
   buttonText: 'Delete',
   buttonClass: 'btn btn-danger',
-  buttonIcon: 'trash-icon'
+  buttonIcon: 'trash-icon',
+  // Optional accessible name. Defaults to `${buttonText} item ${index + 1}`, for example "Delete item 2".
+  ariaLabel: (index) => `Delete contact ${index + 1}`,
 });
+```
+
+The button always removes its own row, even after earlier rows have been removed. When the removed row held the focus, focus moves to the Remove button of the row that takes its place. Custom components inside a row can inject `NGS_FORMS_ARRAY_ROW` (the row's `UntypedFormGroup`) and use `formArray.controls.indexOf(row)` to find the row's current index; `NGS_FORMS_ITEM_INDEX` is the index the row had when it was created.
+
+```typescript
 ```
 
 ### 5. Section (`section`)
@@ -413,6 +420,7 @@ import { NgsFormsFormSectionComponent } from '@ng-simplicity/forms-core';
 const personalSection = NgsFormsFormSectionComponent.create({
   title: 'Personal Information',
   titleClass: 'custom-title-class', // Optional, defaults to 'h3'
+  headingLevel: 2, // Optional heading level announced by screen readers, defaults to 3
   subtitle: 'Tell us a bit about yourself',
   subtitleClass: 'custom-subtitle-class', // Optional, defaults to 'lead'
   items: [

@@ -176,7 +176,7 @@ Here is the full list of available Material components along with code examples 
 ### 1. Text Input (`input-text`)
 Uses `NgsFormsMaterialFormItemInputComponent`.
 - **Key**: `input-text`
-- **Config Type**: `NgsFormsFormItemConfigBaseTextInput`
+- **Config Type**: `NgsFormsFormItemConfigMaterialTextInput` (the same fields as `NgsFormsFormItemConfigBaseTextInput`)
 
 ```typescript
 import { NgsFormsMaterialFormItemInputComponent } from '@ng-simplicity/forms-material';
@@ -204,7 +204,7 @@ const emailField = NgsFormsMaterialFormItemInputComponent.create({
 ### 2. Text Area (`input-textarea`)
 Uses `NgsFormsMaterialFormItemTextAreaComponent`.
 - **Key**: `input-textarea`
-- **Config Type**: `any`
+- **Config Type**: `NgsFormsFormItemConfigMaterialTextArea` (the input fields plus `placeholder` and `rows`)
 
 ```typescript
 import { NgsFormsMaterialFormItemTextAreaComponent } from '@ng-simplicity/forms-material';

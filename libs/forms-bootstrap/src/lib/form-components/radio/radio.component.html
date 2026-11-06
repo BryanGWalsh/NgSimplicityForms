@@ -2,6 +2,7 @@
   <div role="radiogroup"
        [attr.aria-labelledby]="radioConfig.label ? id + '-label' : null"
        [attr.aria-describedby]="errorMessage ? id + '-error' : null"
+       [attr.aria-required]="isRequired || null"
        class="mb-3">
     <div [class.d-flex]="radioConfig.alignment==='horizontal'">
       @if (!!radioConfig.label) {
@@ -15,7 +16,9 @@
              class="form-check">
           <input [class.border-danger]="!!errorMessage" 
                  [formControl]="control" 
-                 value="{{option.id}}" 
+                 [value]="option.id"
+                 [attr.name]="id"
+                 [attr.aria-invalid]="errorMessage ? true : null" 
                  class="form-check-input"
                  id="{{id}}{{option.id}}" 
                  type="radio">
@@ -24,11 +27,13 @@
         </div>
       }
     </div>
-    @if (errorMessage) {
-      <div class="text-danger mt-1" id="{{id}}-error" style="font-size: 0.875rem;">
-        {{ errorMessage }}
-      </div>
-    }
+    <div aria-live="polite" aria-atomic="true">
+      @if (errorMessage) {
+        <div class="text-danger mt-1" id="{{id}}-error" style="font-size: 0.875rem;">
+          {{ errorMessage }}
+        </div>
+      }
+    </div>
   </div>
 }
 

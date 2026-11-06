@@ -4,16 +4,20 @@
            [formControl]="control" 
            class="form-check-input" 
            id="{{id}}"
+           [attr.aria-invalid]="errorMessage ? true : null"
            [attr.aria-describedby]="errorMessage ? id + '-error' : null"
+           [attr.aria-required]="isRequired || null"
            type="checkbox">
     <label [class.text-danger]="!!errorMessage" class="form-check-label" for="{{id}}">
       {{ checkboxConfig.label }}
     </label>
-    @if (errorMessage) {
-      <div class="text-danger mt-1" id="{{id}}-error" style="font-size: 0.875rem;">
-        {{ errorMessage }}
-      </div>
-    }
+    <div aria-live="polite" aria-atomic="true">
+      @if (errorMessage) {
+        <div class="text-danger mt-1" id="{{id}}-error" style="font-size: 0.875rem;">
+          {{ errorMessage }}
+        </div>
+      }
+    </div>
   </div>
 }
 

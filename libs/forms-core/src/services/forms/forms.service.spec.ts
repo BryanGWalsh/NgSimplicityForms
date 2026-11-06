@@ -137,7 +137,7 @@ describe('NgsFormsService', () => {
     });
 
     it('should log an error if no form connects within half a second', () => {
-      const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+      const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => undefined);
       service.setFormConfig({ root: {} } as any);
 
       jest.advanceTimersByTime(500);
@@ -147,7 +147,7 @@ describe('NgsFormsService', () => {
     });
 
     it('should not log an error after the service is destroyed', () => {
-      const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+      const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => undefined);
       service.setFormConfig({ root: {} } as any);
       service.ngOnDestroy();
 
