@@ -12,4 +12,6 @@ export interface NgsFormsCommonComponentState {
   displayMode?: 'input' | 'summary';
   /** Whether to show a control that lets the user switch between `summary` and `input`. */
   showEditToggle?: boolean;
+  /** Your own keys. Read them from `commonState()` in custom components. */
+  [key: string]: unknown;
 }

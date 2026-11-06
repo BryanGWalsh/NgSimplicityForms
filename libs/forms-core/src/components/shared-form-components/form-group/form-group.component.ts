@@ -1,8 +1,5 @@
 import { Component, ChangeDetectionStrategy, inject, Injector, OnInit, ViewContainerRef } from '@angular/core';
-import {
-  UntypedFormControl,
-  UntypedFormGroup,
-} from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { v4 } from 'uuid';
 
 import { NgsFormsFormItem, NgsFormsFormGroupConfig } from '../../../models';
@@ -31,7 +28,7 @@ import { NgsFormsFormItemDirective } from '../../core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NgsFormsFormGroupComponent
-  extends NgsFormsFormItemWithVisibleAndValidatorsBase<NgsFormsFormGroupConfig>
+  extends NgsFormsFormItemWithVisibleAndValidatorsBase<NgsFormsFormGroupConfig, UntypedFormGroup>
   implements OnInit
 {
   static override key = 'form-group';
@@ -48,12 +45,12 @@ export class NgsFormsFormGroupComponent
   }
 
   get formGroupControl(): UntypedFormGroup {
-    return this.control as unknown as UntypedFormGroup;
+    return this.control!;
   }
 
   constructor() {
     super();
-    this.control = new UntypedFormGroup({}) as unknown as UntypedFormControl;
+    this.control = new UntypedFormGroup({});
   }
 }
 

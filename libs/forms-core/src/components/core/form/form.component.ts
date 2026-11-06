@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, OnDestroy } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { NgsFormsService } from '../../../services/forms/forms.service';
 import { NgsFormsInternalService } from '../../../services/internal/internal-forms.service';
@@ -20,7 +20,7 @@ import { NgsFormsFormItemDirective } from '../form-item/form-item.component';
   imports: [NgsFormsFormItemDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NgsFormComponent {
+export class NgsFormComponent implements OnDestroy {
   private readonly ngsInternalFormsService = inject(NgsFormsInternalService);
   readonly ngsFormsService = inject(NgsFormsService);
 
@@ -36,6 +36,10 @@ export class NgsFormComponent {
 
   constructor() {
     this.ngsFormsService.setInternalService(this.ngsInternalFormsService);
+  }
+
+  ngOnDestroy(): void {
+    this.ngsFormsService.clearInternalService(this.ngsInternalFormsService);
   }
 }
 

@@ -17,6 +17,8 @@ export class NgsFormsFormArrayInternalService implements OnDestroy {
   readonly formArray = new UntypedFormArray([]);
   /** Emits after a row is added or removed. */
   readonly itemsChanged = new Subject<void>();
+  /** Emits the index of a row right after it is removed. */
+  readonly rowRemoved = new Subject<number>();
 
   constructor() {
     if (this.config.initialItemCount) {
@@ -27,6 +29,8 @@ export class NgsFormsFormArrayInternalService implements OnDestroy {
   }
 
   ngOnDestroy() {
+    this.itemsChanged.complete();
+    this.rowRemoved.complete();
   }
 
   /** Removes the row at `index`, unless that would go below `minItems`. */
@@ -34,10 +38,11 @@ export class NgsFormsFormArrayInternalService implements OnDestroy {
     if (this.config?.minItems && this.formArray.controls.length <= this.config!.minItems!) {
       return;
     }
-    if (!this.formArray.controls.length) {
+    if (index < 0 || index >= this.formArray.controls.length) {
       return;
     }
     this.formArray.removeAt(index);
+    this.rowRemoved.next(index);
     this.itemsChanged.next();
   }
   /** Appends an empty row, unless the array already has `maxItems` rows. */
