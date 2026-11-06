@@ -15,7 +15,6 @@ All notable changes to this project will be documented in this file.
 - `NgsFormsService`: the latest `setFormConfig()` call wins, the config is applied when `<ngs-form>` connects or is re-mounted under the same service, subscriptions and timers are torn down on destroy, and `formValue$` completes. A form whose controls are all disabled counts as valid.
 - `subscribeToState()` gives every subscriber the current state.
 - Bootstrap and Tailwind radios and selects keep numeric option ids as numbers, so a numeric value checks the matching radio.
-- Material input and textarea use the generated id when no `id` is configured.
 
 ### Added
 - `NGS_FORMS_ARRAY_ROW` injection token with the row's form group, for custom components inside form array rows.
