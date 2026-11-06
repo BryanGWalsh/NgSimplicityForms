@@ -6,9 +6,9 @@ Tailwind CSS styled form controls for the [@ng-simplicity/forms-core](https://ww
 
 | Package | Package version | Angular support | Tailwind CSS | Requires |
 |---|---:|---|---|---|
-| `@ng-simplicity/forms-tailwind` | `1.1.3` | `17.x`–`22.x` | v4 (recommended) or v3 | `@ng-simplicity/forms-core ^1.1.3` |
+| `@ng-simplicity/forms-tailwind` | `1.1.4` | `17.x`–`22.x` | v4 (recommended) or v3 | `@ng-simplicity/forms-core ^1.1.4` |
 
-Requires `@ng-simplicity/forms-core` `^1.1.3`. From 1.1.2 every package declares `uuid` as a dependency, so it no longer needs to be installed separately.
+Requires `@ng-simplicity/forms-core` `^1.1.4`. From 1.1.2 every package declares `uuid` as a dependency, so it no longer needs to be installed separately.
 
 ---
 
@@ -156,7 +156,7 @@ The defaults include `dark:` variants and follow Tailwind's dark mode setting.
 
 ## Accessibility
 
-Every control has a `<label for>` (radio groups use `role="radiogroup"` with `aria-labelledby`). Error messages are linked with `aria-describedby`, and invalid inputs get `aria-invalid="true"`.
+Every control has a `<label for>` (radio groups use `role="radiogroup"` with `aria-labelledby`). Error messages are linked with `aria-describedby` and announced through a polite live region. Invalid inputs get `aria-invalid="true"`, controls with `Validators.required` get `aria-required="true"`, and the radios in a group share a `name`, so the group is a single tab stop.
 
 ## Documentation
 

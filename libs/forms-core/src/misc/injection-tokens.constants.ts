@@ -7,8 +7,18 @@ export const NGS_FORMS_ITEM_DATA = new InjectionToken('ngs-forms-item-data');
  * @internal
  */
 export const NGS_FORMS_CONTROL_ADD_REMOVE_FN = new InjectionToken('ngs-form-control-remove-fn');
-/** Injection token for the row index when a component is rendered inside a form array list. */
-export const NGS_FORMS_ITEM_INDEX = new InjectionToken('ngs-forms-item-index');
+/**
+ * Injection token for the row index when a component is rendered inside a form array list.
+ *
+ * @remarks This is the index the row had when the component was created. Rows before it can be removed later,
+ * so to find a row's current position use `NGS_FORMS_ARRAY_ROW` with `formArray.controls.indexOf(row)`.
+ */
+export const NGS_FORMS_ITEM_INDEX = new InjectionToken<number>('ngs-forms-item-index');
+/**
+ * Injection token for the `UntypedFormGroup` of the form array row a component is rendered in. Unlike
+ * `NGS_FORMS_ITEM_INDEX`, it stays correct when earlier rows are removed.
+ */
+export const NGS_FORMS_ARRAY_ROW = new InjectionToken<UntypedFormGroup>('ngs-forms-array-row');
 
 type FormControlAddRemoveFn = (control: AbstractControl, controlName: string) => void;
 
@@ -32,10 +42,12 @@ export const NgsFormsFormControlAddRemoveFunctions: IControlAddRemoveFunctionsBu
     remove: (control, controlName) => formGroup.removeControl(controlName),
   }),
   formArray: (formArray: UntypedFormArray) => ({
-    add: (control, controlName) => formArray.controls.push(control),
-    remove: (control, controlName) => {
+    add: (control) => formArray.push(control),
+    remove: (control) => {
       const index = formArray.controls.indexOf(control);
-      formArray.controls.splice(index, 1);
+      if (index >= 0) {
+        formArray.removeAt(index);
+      }
     },
   }),
 };

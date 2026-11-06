@@ -1,6 +1,6 @@
 import { UntypedFormGroup } from '@angular/forms';
-import { BehaviorSubject, Subject, Subscription } from 'rxjs';
-import { NgsFormsFormConfig } from '../../models';
+import { BehaviorSubject, Subscription, switchMap } from 'rxjs';
+import { NgsFormsCommonComponentState, NgsFormsFormConfig, NgsFormsGlobalFormState } from '../../models';
 import { NgsFormsInternalService } from '../internal/internal-forms.service';
 import { Injectable, OnDestroy } from '@angular/core';
 
@@ -24,10 +24,6 @@ import { Injectable, OnDestroy } from '@angular/core';
 @Injectable()
 export class NgsFormsService implements OnDestroy {
   /**
-   * @internal
-   */
-  attempt = 0;
-  /**
    * Emits the root form group's value every time it changes. Combine with `toSignal()` to read it in a template.
    *
    * @remarks The value is keyed by the root group's `name`, for example `{ profile: { firstName: 'Ada' } }`.
@@ -36,8 +32,12 @@ export class NgsFormsService implements OnDestroy {
   /** The latest value emitted by `formValue$`. */
   formValue: any = {};
   private internalFormService: NgsFormsInternalService | undefined;
-  private formGroupSubscriptions: Array<Subscription> = [];
+  private formGroupBinding: Subscription | undefined;
   private formGroup = new UntypedFormGroup({});
+  /** The config from the latest `setFormConfig()` call, re-applied when `<ngs-form>` (re)connects. */
+  private lastConfig: NgsFormsFormConfig | undefined;
+  private missingFormTimer: ReturnType<typeof setTimeout> | undefined;
+  private destroyed = false;
 
   /** `true` once the user has changed any control in the form. */
   get dirty(): boolean {
@@ -56,28 +56,49 @@ export class NgsFormsService implements OnDestroy {
   /**
    * Renders a form from `formConfig`, replacing any form that is already shown and resetting the submitted state.
    *
-   * @remarks It is safe to call before `<ngs-form>` has initialised (for example in `ngOnInit`): the call is retried
-   * every 25 ms for about half a second until the form component is available.
+   * @remarks It is safe to call before `<ngs-form>` has initialised (for example in `ngOnInit`): the latest config
+   * is kept and applied as soon as the form component connects, and also when it is destroyed and created again
+   * (inside an `@if` or a tab, for example). An error is logged if no form has connected after half a second.
    */
   setFormConfig(formConfig: NgsFormsFormConfig): void {
-    if (!this.internalServiceIsSet) {
-      if (this.attempt > 20) {
-        console.error('Internal form service is unavailable.  Is the ngs-form root tag added to the page?');
-        return;
-      }
-      this.attempt++;
-      setTimeout(() => this.setFormConfig(formConfig), 25);
+    this.lastConfig = formConfig;
+    if (this.internalServiceIsSet) {
+      this.internalFormService!.setFormData(formConfig);
       return;
     }
-    this.internalFormService!.setFormData(formConfig);
+    if (this.missingFormTimer === undefined && !this.destroyed) {
+      this.missingFormTimer = setTimeout(() => {
+        this.missingFormTimer = undefined;
+        if (!this.internalServiceIsSet && !this.destroyed) {
+          console.error('Internal form service is unavailable.  Is the ngs-form root tag added to the page?');
+        }
+      }, 500);
+    }
   }
 
   /**
    * @internal
    */
   setInternalService(internalFormsService: NgsFormsInternalService): void {
+    this.formGroupBinding?.unsubscribe();
     this.internalFormService = internalFormsService;
     this.bindFormGroup();
+    if (this.lastConfig) {
+      internalFormsService.setFormData(this.lastConfig);
+    }
+  }
+
+  /**
+   * @internal
+   * Disconnects `internalFormsService` when its `<ngs-form>` is destroyed. Does nothing if another form has
+   * connected since.
+   */
+  clearInternalService(internalFormsService: NgsFormsInternalService): void {
+    if (this.internalFormService !== internalFormsService) return;
+    this.formGroupBinding?.unsubscribe();
+    this.formGroupBinding = undefined;
+    this.internalFormService = undefined;
+    this.formGroup = new UntypedFormGroup({});
   }
 
   /**
@@ -90,31 +111,35 @@ export class NgsFormsService implements OnDestroy {
   }
 
   private bindFormGroup(): void {
-    this.internalFormService!.formGroup$.subscribe((fg) => {
-      this.formGroup = fg;
-      this.formGroupSubscriptions.forEach((subscription) => subscription.unsubscribe());
-
-      this.formGroupSubscriptions.push(
-        this.formGroup.valueChanges.subscribe((v) => {
-          this.formValue = v;
-          this.formValue$.next(v);
+    this.formGroupBinding = this.internalFormService!.formGroup$
+      .pipe(
+        switchMap((fg) => {
+          this.formGroup = fg;
+          return fg.valueChanges;
         })
-      );
-    });
+      )
+      .subscribe((v) => {
+        this.formValue = v;
+        this.formValue$.next(v);
+      });
   }
   /**
    * Merges `state` into the state of one component, identified by its `uuid` or control `name`.
    * Components read the merged result through `commonState`.
    */
-  updateComponentState(componentKey: string, state: any): void {
+  updateComponentState(componentKey: string, state: Partial<NgsFormsCommonComponentState>): void {
     this.internalFormService?.updateComponentState(componentKey, state);
   }
   /** Merges `state` into the state shared by every component in the form. */
-  updateGlobalState(state: any): void {
+  updateGlobalState(state: Partial<NgsFormsGlobalFormState>): void {
     this.internalFormService?.updateGlobalState(state);
   }
   ngOnDestroy() {
-    this.formGroupSubscriptions.forEach((subscription) => subscription.unsubscribe());
+    this.destroyed = true;
+    clearTimeout(this.missingFormTimer);
+    this.missingFormTimer = undefined;
+    this.formGroupBinding?.unsubscribe();
+    this.formValue$.complete();
   }
 
   /**

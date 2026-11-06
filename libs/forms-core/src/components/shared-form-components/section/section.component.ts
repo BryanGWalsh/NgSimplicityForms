@@ -11,7 +11,8 @@ import { NgsFormsFormItem } from '../../../models';
  * parent group.
  *
  * @remarks Registry key: `section`. Config: `title`, `subtitle`, `titleClass` (default `h3`),
- * `subtitleClass` (default `lead`) and `items`.
+ * `headingLevel` (default 3), `subtitleClass` (default `lead`) and `items`. The section is exposed to assistive
+ * technology as a group named by its title.
  */
 @Component({
   selector: 'ngs-forms-form-section',
@@ -21,6 +22,8 @@ import { NgsFormsFormItem } from '../../../models';
 })
 export class NgsFormsFormSectionComponent extends NgsFormsBaseClassItemsContainerBase<NgsFormsFormSectionConfig> implements OnInit {
   static override key = 'section';
+  /** Element id of the title, used to name the section's group. */
+  readonly titleId = `${this.itemData.uuid || v4()}-section-title`;
 
   /** Creates a `section` item. */
   static create(config: NgsFormsFormSectionConfig): NgsFormsFormItem<NgsFormsFormSectionConfig> {

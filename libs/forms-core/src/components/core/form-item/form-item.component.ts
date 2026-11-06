@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Directive, inject, Injector, Input, OnDestroy, OnInit, ViewContainerRef } from '@angular/core';
+import { ChangeDetectorRef, Directive, inject, Injector, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewContainerRef } from '@angular/core';
 import { UntypedFormArray, UntypedFormGroup } from '@angular/forms';
 import { NgsFormItemController } from '../../../controllers';
 import { INgsFormsFormControlAddRemove, NgsFormsFormControlAddRemoveFunctions } from '../../../misc';
@@ -16,7 +16,7 @@ import { NgsFormsFormItem } from '../../../models';
   //templateUrl: "./form-item.component.html",
 })
 
-export class NgsFormsFormItemDirective implements OnInit, OnDestroy {
+export class NgsFormsFormItemDirective implements OnInit, OnChanges, OnDestroy {
   /** The item to render. */
   @Input('ngs-form-item')
   itemData: NgsFormsFormItem<any> | undefined = undefined;
@@ -30,7 +30,8 @@ export class NgsFormsFormItemDirective implements OnInit, OnDestroy {
   formArray?: UntypedFormArray;
 
   /**
-   * Index of the item inside a form array row, provided to children as `NGS_FORMS_ITEM_INDEX`.
+   * Index of the item inside a form array row, provided to children as `NGS_FORMS_ITEM_INDEX`. When it is set, the
+   * `ngs-form-group` is also provided to children as `NGS_FORMS_ARRAY_ROW`.
    */
   @Input('ngs-form-index')
   index?: number;
@@ -43,7 +44,27 @@ export class NgsFormsFormItemDirective implements OnInit, OnDestroy {
 
   private readonly formComponentRegistryService = inject(NgsFormsComponentRegistryService);
 
+  private initialized = false;
+
   ngOnInit(): void {
+    this.initialized = true;
+    this.build();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (!this.initialized) {
+      return;
+    }
+    // A new item, group or array means a different control, so the component is rebuilt. An index change on its own
+    // keeps the component: the row it belongs to is still the same, and `NGS_FORMS_ARRAY_ROW` follows it.
+    if (changes['itemData'] || changes['formGroup'] || changes['formArray']) {
+      this.controller?.destroy();
+      this.controller = undefined;
+      this.build();
+    }
+  }
+
+  private build(): void {
     if (!this.itemData) {
       return console.error('Form item without form data');
     }
@@ -60,7 +81,8 @@ export class NgsFormsFormItemDirective implements OnInit, OnDestroy {
       this.itemData,
       addRemoveFn,
       this.index,
-      this.changeDetectorRef
+      this.changeDetectorRef,
+      this.index !== undefined ? this.formGroup : undefined
     );
   }
 

@@ -2,7 +2,8 @@
   <div role="radiogroup"
        [class]="classes.radioGroup"
        [attr.aria-labelledby]="radioConfig.label ? id + '-label' : null"
-       [attr.aria-describedby]="errorMessage ? id + '-error' : null">
+       [attr.aria-describedby]="errorMessage ? id + '-error' : null"
+       [attr.aria-required]="isRequired || null">
     <div [class]="radioConfig.alignment === 'horizontal' ? classes.radioOptionsHorizontal : classes.radioOptions">
       @if (!!radioConfig.label) {
         <div [class]="cx(classes.radioGroupLabel, errorMessage ? classes.labelInvalid : classes.labelValid)" id="{{id}}-label">
@@ -13,7 +14,9 @@
         <div [class]="classes.choice">
           <input [class]="cx(classes.choiceInput, errorMessage && classes.choiceInputInvalid)"
                  [formControl]="control"
-                 value="{{option.id}}"
+                 [value]="option.id"
+                 [attr.name]="id"
+                 [attr.aria-invalid]="errorMessage ? true : null"
                  id="{{id}}{{option.id}}"
                  type="radio">
           <label [class]="cx(classes.choiceLabel, errorMessage ? classes.labelInvalid : classes.labelValid)"
@@ -21,8 +24,10 @@
         </div>
       }
     </div>
-    @if (errorMessage) {
-      <p [class]="classes.error" id="{{id}}-error">{{ errorMessage }}</p>
-    }
+    <div aria-live="polite" aria-atomic="true">
+      @if (errorMessage) {
+        <p [class]="classes.error" id="{{id}}-error">{{ errorMessage }}</p>
+      }
+    </div>
   </div>
 }

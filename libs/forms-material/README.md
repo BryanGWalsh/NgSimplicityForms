@@ -10,9 +10,9 @@ An integration package containing pre-styled Angular Material inputs, form field
 
 | Package | Package version | Angular support | Angular Material support | Requires |
 |---|---:|---|---|---|
-| `@ng-simplicity/forms-material` | `1.1.3` | `17.x`–`22.x` | `17.x`–`22.x` (use the matching Angular major) | `@ng-simplicity/forms-core ^1.1.3` |
+| `@ng-simplicity/forms-material` | `1.1.4` | `17.x`–`22.x` | `17.x`–`22.x` (use the matching Angular major) | `@ng-simplicity/forms-core ^1.1.4` |
 
-Requires `@ng-simplicity/forms-core` `^1.1.3`. From 1.1.2 every package declares `uuid` as a dependency, so it no longer needs to be installed separately.
+Requires `@ng-simplicity/forms-core` `^1.1.4`. From 1.1.2 every package declares `uuid` as a dependency, so it no longer needs to be installed separately.
 
 ---
 
@@ -176,7 +176,7 @@ Here is the full list of available Material components along with code examples 
 ### 1. Text Input (`input-text`)
 Uses `NgsFormsMaterialFormItemInputComponent`.
 - **Key**: `input-text`
-- **Config Type**: `NgsFormsFormItemConfigBaseTextInput`
+- **Config Type**: `NgsFormsFormItemConfigMaterialTextInput` (the same fields as `NgsFormsFormItemConfigBaseTextInput`)
 
 ```typescript
 import { NgsFormsMaterialFormItemInputComponent } from '@ng-simplicity/forms-material';
@@ -204,7 +204,7 @@ const emailField = NgsFormsMaterialFormItemInputComponent.create({
 ### 2. Text Area (`input-textarea`)
 Uses `NgsFormsMaterialFormItemTextAreaComponent`.
 - **Key**: `input-textarea`
-- **Config Type**: `any`
+- **Config Type**: `NgsFormsFormItemConfigMaterialTextArea` (the input fields plus `placeholder` and `rows`)
 
 ```typescript
 import { NgsFormsMaterialFormItemTextAreaComponent } from '@ng-simplicity/forms-material';

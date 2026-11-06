@@ -6,13 +6,16 @@
              id="{{id}}"
              [attr.aria-invalid]="errorMessage ? true : null"
              [attr.aria-describedby]="errorMessage ? id + '-error' : null"
+             [attr.aria-required]="isRequired || null"
              type="checkbox">
       <label [class]="cx(classes.choiceLabel, errorMessage ? classes.labelInvalid : classes.labelValid)" for="{{id}}">
         {{ checkboxConfig.label }}
       </label>
     </div>
-    @if (errorMessage) {
-      <p [class]="classes.error" id="{{id}}-error">{{ errorMessage }}</p>
-    }
+    <div aria-live="polite" aria-atomic="true">
+      @if (errorMessage) {
+        <p [class]="classes.error" id="{{id}}-error">{{ errorMessage }}</p>
+      }
+    </div>
   </div>
 }

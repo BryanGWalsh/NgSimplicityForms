@@ -68,7 +68,7 @@ NgsFormsBootstrapModule.registerAllBootStrapComponents(registry);
 
 ## Accessibility
 
-Every control has a `<label for>` (or `aria-labelledby` for radio groups), and error messages are linked with `aria-describedby`. Invalid controls get the `border-danger` class and their labels `text-danger`.
+Every control has a `<label for>` (or `aria-labelledby` for radio groups), and error messages are linked with `aria-describedby` and announced through a polite live region. Invalid controls get `aria-invalid="true"`, the `border-danger` class and a `text-danger` label. Controls with `Validators.required` get `aria-required="true"`, and the radios in a group share a `name`, so the group is a single tab stop.
 
 ## Styling tips
 

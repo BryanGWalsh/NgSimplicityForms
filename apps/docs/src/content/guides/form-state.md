@@ -75,4 +75,6 @@ State merges: a component sees its own state first, then state for its `name`, t
 ## Lifecycle
 
 - The service lives as long as the component that provides it.
-- `setFormConfig()` may be called before `<ngs-form>` renders; the call is retried for about half a second until the form connects. If `<ngs-form>` never appears, an error is logged.
+- `setFormConfig()` may be called before `<ngs-form>` renders. The latest config is kept and applied when the form connects. If `<ngs-form>` has not appeared after half a second, an error is logged.
+- If `<ngs-form>` is destroyed and created again under the same service (inside an `@if` or a tab, for example), the latest config is applied to the new form.
+- `isValid` is `true` when no rendered control fails its validators, including when every control is disabled.
