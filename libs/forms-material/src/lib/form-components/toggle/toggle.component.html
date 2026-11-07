@@ -1,0 +1,12 @@
+@if (control) {
+  <div class="mb-3">
+    <mat-slide-toggle [id]="toggleId" [formControl]="control" [required]="isRequired" [aria-describedby]="errorMessage ? id + '-error' : ''">
+      {{ config.label }}
+    </mat-slide-toggle>
+    <div aria-live="polite" aria-atomic="true">
+      @if (errorMessage) {
+        <div class="mt-1" id="{{id}}-error" style="font-size: 0.75rem; color: #f44336;">{{ errorMessage }}</div>
+      }
+    </div>
+  </div>
+}

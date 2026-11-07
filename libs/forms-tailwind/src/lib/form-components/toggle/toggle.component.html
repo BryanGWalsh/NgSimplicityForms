@@ -1,0 +1,21 @@
+@if (control) {
+  <div [class]="classes.checkboxField">
+    <label [class]="classes.toggleLabel" for="{{id}}">
+      <input [class]="classes.toggleInput"
+             [formControl]="control"
+             id="{{id}}"
+             role="switch"
+             type="checkbox"
+             [attr.aria-invalid]="errorMessage ? true : null"
+             [attr.aria-describedby]="errorMessage ? id + '-error' : null"
+             [attr.aria-required]="isRequired || null">
+      <span aria-hidden="true" [class]="cx(classes.toggleTrack, errorMessage && classes.toggleTrackInvalid)"></span>
+      <span [class]="cx(classes.choiceLabel, errorMessage ? classes.labelInvalid : classes.labelValid)">{{ config.label }}</span>
+    </label>
+    <div aria-live="polite" aria-atomic="true">
+      @if (errorMessage) {
+        <p [class]="classes.error" id="{{id}}-error">{{ errorMessage }}</p>
+      }
+    </div>
+  </div>
+}

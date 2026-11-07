@@ -66,6 +66,48 @@ NgsFormsBootstrapModule.registerAllBootStrapComponents(registry);
 
 [API reference](/api/forms-bootstrap/NgsFormsBootstrapFormsItemCheckboxComponent)
 
+## Toggle switch · `toggle`
+
+`NgsFormsBootstrapFormItemToggleComponent` renders a `.form-check.form-switch` with `role="switch"`. Its value is `true` or `false`, or `null` until the first click. Use `Validators.requiredTrue` when it must be on; the error key is `required`.
+
+[API reference](/api/forms-bootstrap/NgsFormsBootstrapFormItemToggleComponent)
+
+## Button group · `button-group`
+
+`NgsFormsBootstrapFormItemButtonGroupComponent` renders a `.btn-group` of `.btn-check` radios (or checkboxes with `multiple`). With one choice the value is the chosen option's `id`; with `multiple: true` it is an array of the chosen ids, in option order. `Validators.required` requires a choice (and rejects an empty array).
+
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `options`, `options$` | | | As for select. |
+| `multiple` | `boolean` | `false` | Allow more than one choice. |
+| `buttonClass` | `string` | `'btn-outline-primary'` | Button variant on every option. |
+| `size` | `'sm' \| 'lg'` | | Button group size. |
+
+[API reference](/api/forms-bootstrap/NgsFormsBootstrapFormItemButtonGroupComponent)
+
+## Range slider · `range`
+
+`NgsFormsBootstrapFormItemRangeComponent` renders a `.form-range` with the current value in an `<output>`. Its value is a number; a control without a value starts at `min`.
+
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `min`, `max`, `step` | `number` | `0`, `100`, `1` | |
+| `showValue` | `boolean` | `true` | Show the current value next to the label. |
+| `valueSuffix` | `string` | | Text after the value, such as `'%'`. Also used for `aria-valuetext`. |
+
+[API reference](/api/forms-bootstrap/NgsFormsBootstrapFormItemRangeComponent)
+
+## Typeahead · `typeahead`
+
+`NgsFormsBootstrapFormItemTypeaheadComponent` renders a `.form-control` with a `<datalist>`, so the browser shows and filters the suggestions. The options' labels are the suggestions, and the value is the text in the input, whether the user picked a suggestion or typed something else. Use `options$` to load suggestions as the user types.
+
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `options`, `options$` | | | The suggestions. Disabled options are left out. |
+| `placeholder` | `string` | | Placeholder text. |
+
+[API reference](/api/forms-bootstrap/NgsFormsBootstrapFormItemTypeaheadComponent)
+
 ## Accessibility
 
 Every control has a `<label for>` (or `aria-labelledby` for radio groups), and error messages are linked with `aria-describedby` and announced through a polite live region. Invalid controls get `aria-invalid="true"`, the `border-danger` class and a `text-danger` label. Controls with `Validators.required` get `aria-required="true"`, and the radios in a group share a `name`, so the group is a single tab stop.

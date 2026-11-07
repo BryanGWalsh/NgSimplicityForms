@@ -1,0 +1,28 @@
+@if (control) {
+  <div class="mb-3">
+    <div class="d-flex justify-content-between align-items-baseline">
+      <label [class.text-danger]="!!errorMessage" class="form-label" for="{{id}}">{{ rangeConfig.label }}</label>
+      @if (rangeConfig.showValue !== false) {
+        <output class="text-muted small" [attr.for]="id" id="{{id}}-value">{{ control.value }}{{ rangeConfig.valueSuffix }}</output>
+      }
+    </div>
+    <input [formControl]="control"
+           class="form-range"
+           id="{{id}}"
+           type="range"
+           [min]="min"
+           [max]="max"
+           [step]="step"
+           [attr.aria-valuetext]="rangeConfig.valueSuffix ? control.value + rangeConfig.valueSuffix : null"
+           [attr.aria-invalid]="errorMessage ? true : null"
+             [attr.aria-describedby]="errorMessage ? id + '-error' : null"
+             [attr.aria-required]="isRequired || null">
+    <div aria-live="polite" aria-atomic="true">
+      @if (errorMessage) {
+        <div class="text-danger mt-1" id="{{id}}-error" style="font-size: 0.875rem;">
+          {{ errorMessage }}
+        </div>
+      }
+    </div>
+  </div>
+}

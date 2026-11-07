@@ -1,0 +1,21 @@
+@if (control) {
+  <mat-form-field class="w-100 mb-2" appearance="outline">
+    @if (config.label) {
+      <mat-label>{{ config.label }}</mat-label>
+    }
+    <input matInput
+           [id]="config.id || ''"
+           [formControl]="control"
+           [matAutocomplete]="auto"
+           [placeholder]="typeaheadConfig.placeholder || ''"
+           [errorStateMatcher]="matcher" />
+    <mat-autocomplete #auto="matAutocomplete">
+      @for (option of suggestions(); track option.id) {
+        <mat-option [value]="option.label" [disabled]="!!option.disabled">{{ option.label }}</mat-option>
+      }
+    </mat-autocomplete>
+    @if (errorMessage) {
+      <mat-error>{{ errorMessage }}</mat-error>
+    }
+  </mat-form-field>
+}

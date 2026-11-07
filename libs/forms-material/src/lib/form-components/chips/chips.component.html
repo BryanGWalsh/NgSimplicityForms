@@ -1,0 +1,24 @@
+@if (control) {
+  <mat-form-field class="w-100 mb-2" appearance="outline">
+    @if (config.label) {
+      <mat-label>{{ config.label }}</mat-label>
+    }
+    <mat-chip-grid #chipGrid [formControl]="control" [required]="isRequired" [errorStateMatcher]="matcher" [attr.aria-label]="config.label">
+      @for (chip of values(); track $index) {
+        <mat-chip-row (removed)="remove($index)">
+          {{ chip }}
+          <button matChipRemove type="button" [attr.aria-label]="'Remove ' + chip">&times;</button>
+        </mat-chip-row>
+      }
+    </mat-chip-grid>
+    <input [id]="config.id || id"
+           [placeholder]="chipsConfig.placeholder || ''"
+           [matChipInputFor]="chipGrid"
+           [matChipInputSeparatorKeyCodes]="separatorKeys"
+           [matChipInputAddOnBlur]="true"
+           (matChipInputTokenEnd)="add($event)" />
+    @if (errorMessage) {
+      <mat-error>{{ errorMessage }}</mat-error>
+    }
+  </mat-form-field>
+}

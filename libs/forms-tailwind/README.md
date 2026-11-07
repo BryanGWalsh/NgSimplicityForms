@@ -123,6 +123,10 @@ export class ProfileFormComponent implements OnInit {
 | `select` | `NgsFormsTailwindFormItemSelectInputComponent` | `NgsFormsFormItemConfigTailwindSelectInput` | `options`, `options$`, `placeholder`, `placeHolderValue`, `labelLocation`, `inputCssClass` |
 | `radio` | `NgsFormsTailwindRadioInputComponent` | `NgsFormsFormItemConfigTailwindRadio` | `options`, `options$`, `alignment` (`vertical` / `horizontal`) |
 | `checkbox` | `NgsFormsTailwindFormItemCheckboxComponent` | `NgsFormsFormItemConfigTailwindCheckbox` | Use `Validators.requiredTrue` for consent boxes |
+| `toggle` | `NgsFormsTailwindFormItemToggleComponent` | `NgsFormsFormItemConfigTailwindToggle` | A switch; value `true` / `false` |
+| `button-group` | `NgsFormsTailwindFormItemButtonGroupComponent` | `NgsFormsFormItemConfigTailwindButtonGroup` | `options`, `options$`, `multiple` (value becomes an array of ids) |
+| `range` | `NgsFormsTailwindFormItemRangeComponent` | `NgsFormsFormItemConfigTailwindRange` | `min`, `max`, `step`, `showValue`, `valueSuffix` |
+| `typeahead` | `NgsFormsTailwindFormItemTypeaheadComponent` | `NgsFormsFormItemConfigTailwindTypeahead` | `options`, `options$` (labels are the suggestions), `placeholder`; value is the typed text |
 
 All of them also take the shared core options (`visible$`, `disabled`, `validators`, `validators$`, `errorMessageMap`, ...). See the [forms-core README](https://www.npmjs.com/package/@ng-simplicity/forms-core).
 

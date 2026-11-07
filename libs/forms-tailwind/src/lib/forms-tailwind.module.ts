@@ -8,6 +8,10 @@ import {
   NgsFormsTailwindFormItemSelectInputComponent,
   NgsFormsTailwindFormItemTextAreaComponent,
   NgsFormsTailwindRadioInputComponent,
+  NgsFormsTailwindFormItemToggleComponent,
+  NgsFormsTailwindFormItemButtonGroupComponent,
+  NgsFormsTailwindFormItemRangeComponent,
+  NgsFormsTailwindFormItemTypeaheadComponent,
 } from './form-components';
 
 /** Registration helper for the Tailwind CSS components. */
@@ -17,7 +21,7 @@ import {
 export class NgsFormsTailwindModule {
   /**
    * Registers the core structural components plus the Tailwind `input-text`, `input-textarea`, `checkbox`,
-   * `radio` and `select` components.
+   * `radio`, `select`, `toggle`, `button-group`, `range` and `typeahead` components.
    *
    * @example
    * ```ts
@@ -33,5 +37,9 @@ export class NgsFormsTailwindModule {
     registryService.register(NgsFormsTailwindRadioInputComponent.key, NgsFormsTailwindRadioInputComponent);
     registryService.register(NgsFormsTailwindFormItemSelectInputComponent.key, NgsFormsTailwindFormItemSelectInputComponent);
     registryService.register(NgsFormsTailwindFormItemTextAreaComponent.key, NgsFormsTailwindFormItemTextAreaComponent);
+    registryService.register(NgsFormsTailwindFormItemToggleComponent.key, NgsFormsTailwindFormItemToggleComponent);
+    registryService.register(NgsFormsTailwindFormItemButtonGroupComponent.key, NgsFormsTailwindFormItemButtonGroupComponent);
+    registryService.register(NgsFormsTailwindFormItemRangeComponent.key, NgsFormsTailwindFormItemRangeComponent);
+    registryService.register(NgsFormsTailwindFormItemTypeaheadComponent.key, NgsFormsTailwindFormItemTypeaheadComponent);
   }
 }

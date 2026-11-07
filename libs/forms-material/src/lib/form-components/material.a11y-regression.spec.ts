@@ -9,6 +9,10 @@ import { NgsFormsMaterialFormItemSelectInputComponent } from './select/select.co
 import { NgsFormsMaterialFormItemTextAreaComponent } from './text-area/text-area.component';
 import { NgsFormsMaterialFormItemCheckboxComponent } from './checkbox/checkbox.component';
 import { NgsFormsMaterialRadioInputComponent } from './radio/radio.component';
+import { NgsFormsMaterialFormItemTypeaheadComponent } from './typeahead';
+import { NgsFormsMaterialFormItemDatepickerComponent } from './datepicker';
+import { NgsFormsMaterialFormItemChipsComponent } from './chips';
+import { NgsFormsMaterialFormItemButtonGroupComponent } from './button-group';
 
 function create(cmp: Type<unknown>, config: object) {
   const submitted$ = new BehaviorSubject(false);
@@ -33,6 +37,9 @@ describe('material a11y regressions', () => {
     ['input', NgsFormsMaterialFormItemInputComponent, 'input'],
     ['textarea', NgsFormsMaterialFormItemTextAreaComponent, 'textarea'],
     ['select', NgsFormsMaterialFormItemSelectInputComponent, 'mat-select'],
+    ['typeahead', NgsFormsMaterialFormItemTypeaheadComponent, 'input'],
+    ['datepicker', NgsFormsMaterialFormItemDatepickerComponent, 'input'],
+    ['chips', NgsFormsMaterialFormItemChipsComponent, 'input'],
   ])('[%s] sanity: aria-required + live error', (_n, cmp, sel) => {
     const { el, fixture, submitted$ } = create(cmp as Type<unknown>, { ...required, options: OPTIONS });
     submitted$.next(true);
@@ -41,6 +48,17 @@ describe('material a11y regressions', () => {
     // matInput intentionally omits aria-invalid for empty+required, so only check required/live here
     expect(c.getAttribute('aria-required')).toBe('true');
     expect(el.querySelector('mat-error')!.closest('[aria-live]')).not.toBeNull();
+  });
+
+  it('[button-group] required group exposes aria-required, aria-invalid and a live error', () => {
+    const { el, fixture, submitted$ } = create(NgsFormsMaterialFormItemButtonGroupComponent, { ...required, options: OPTIONS });
+    submitted$.next(true);
+    fixture.detectChanges();
+    const group = el.querySelector('mat-button-toggle-group')!;
+    expect(group.getAttribute('aria-required')).toBe('true');
+    expect(group.getAttribute('aria-invalid')).toBe('true');
+    expect(el.querySelector('[id$="-error"]')!.closest('[aria-live]')).not.toBeNull();
+    expect(el.textContent).toContain('Required!');
   });
 
   it('[checkbox] invalid checkbox exposes aria-invalid="true" on the native input', () => {

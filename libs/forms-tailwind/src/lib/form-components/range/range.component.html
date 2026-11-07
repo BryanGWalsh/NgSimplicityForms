@@ -1,0 +1,26 @@
+@if (control) {
+  <div [class]="classes.field">
+    <div [class]="classes.rangeHeader">
+      <label [class]="cx(classes.label, errorMessage ? classes.labelInvalid : classes.labelValid)" for="{{id}}">{{ rangeConfig.label }}</label>
+      @if (rangeConfig.showValue !== false) {
+        <output [class]="classes.rangeValue" [attr.for]="id" id="{{id}}-value">{{ control.value }}{{ rangeConfig.valueSuffix }}</output>
+      }
+    </div>
+    <input [class]="classes.range"
+           [formControl]="control"
+           id="{{id}}"
+           type="range"
+           [min]="min"
+           [max]="max"
+           [step]="step"
+           [attr.aria-valuetext]="rangeConfig.valueSuffix ? control.value + rangeConfig.valueSuffix : null"
+           [attr.aria-invalid]="errorMessage ? true : null"
+           [attr.aria-describedby]="errorMessage ? id + '-error' : null"
+           [attr.aria-required]="isRequired || null">
+    <div aria-live="polite" aria-atomic="true">
+      @if (errorMessage) {
+        <p [class]="classes.error" id="{{id}}-error">{{ errorMessage }}</p>
+      }
+    </div>
+  </div>
+}

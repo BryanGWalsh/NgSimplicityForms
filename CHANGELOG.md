@@ -5,9 +5,20 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 ### Added
+- New controls in all three themes, under the same registry keys so a config works with any theme:
+  - `toggle`: a toggle switch (Bootstrap `.form-switch`, Material `mat-slide-toggle`, a Tailwind switch).
+  - `button-group`: one or several choices as buttons (Bootstrap `.btn-group`, Material `mat-button-toggle-group`, Tailwind segmented buttons). With `multiple: true` the value is an array of option ids.
+  - `range`: a range slider with the current value shown (Bootstrap `.form-range`, Material `mat-slider`, a Tailwind range).
+  - `typeahead`: a text input with suggestions from `options` / `options$` (a `datalist` in Bootstrap and Tailwind, `mat-autocomplete` in Material).
+- Material only: `datepicker` (`mat-datepicker`) and `chips` (`mat-chip-grid`).
+- Tailwind: new class slots `toggleLabel`, `toggleInput`, `toggleTrack`, `toggleTrackInvalid`, `buttonGroup`, `buttonGroupButton`, `buttonGroupButtonInvalid`, `rangeHeader`, `rangeValue` and `range`.
+- The demos have a "More Controls" section with the new controls.
 - Server errors: `NgsFormsService.setServerErrorMessages()` takes an object shaped like the form value whose leaves are error keys, for example `{ registration: { userName: 'taken', contacts: [{}, {}, { phone: 'invalidPhone' }] } }`. Each key is looked up in the field's `errorMessageMap`, and a key with no entry is shown as the message text. An error clears when its field's value changes. The call returns the paths that matched no control. `clearServerErrorMessages()` removes them all, and they are also cleared by `setFormConfig()` and when form array rows are added or removed.
 - `constructServerErrorMessageObject()` builds that object from a list of `{ jsonPath, validator }` pairs, such as `registration.contacts[2].phone`.
 - Exports: `NgsFormsServerErrors`, `NgsFormsServerErrorGroup`, `NgsFormsServerErrorArray`, `NgsFormsServerErrorPath` and `NGS_FORMS_SERVER_ERROR`.
+
+### Changed
+- `@ng-simplicity/forms-material` lists `@angular/cdk` as a peer dependency (Angular Material already needs it).
 
 ## [1.1.4] - 2026-11-06
 

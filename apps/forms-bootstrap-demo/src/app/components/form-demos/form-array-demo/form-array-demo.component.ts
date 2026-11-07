@@ -24,7 +24,11 @@ import {
   NgsFormsBootstrapFormsItemCheckboxComponent,
   NgsFormsBootstrapRadioInputComponent,
   NgsFormsBootstrapFormItemSelectInputComponent,
-  NgsFormsBootstrapFormsItemTextAreaComponent
+  NgsFormsBootstrapFormsItemTextAreaComponent,
+  NgsFormsBootstrapFormItemToggleComponent,
+  NgsFormsBootstrapFormItemButtonGroupComponent,
+  NgsFormsBootstrapFormItemRangeComponent,
+  NgsFormsBootstrapFormItemTypeaheadComponent
 } from '@ng-simplicity/forms-bootstrap';
 
 @Component({
@@ -262,6 +266,51 @@ export class FormArrayDemoComponent implements OnInit {
                   })
                 ]
               })
+            ]
+          }),
+          // Section 5: Theme specific controls
+          NgsFormsFormSectionComponent.create({
+            title: '5. More Controls',
+            subtitle: 'Toggle switch, button groups, range slider and typeahead.',
+            items: [
+              NgsFormsBootstrapFormItemToggleComponent.create({
+                name: 'productUpdates',
+                label: 'Send me product updates',
+              }),
+              NgsFormsBootstrapFormItemButtonGroupComponent.create({
+                name: 'plan',
+                label: 'Plan',
+                options: [
+                  { id: 'basic', label: 'Basic' },
+                  { id: 'pro', label: 'Pro' },
+                  { id: 'enterprise', label: 'Enterprise' },
+                ],
+                validators: [Validators.required],
+                errorMessageMap: { required: 'Choose a plan.' },
+              }),
+              NgsFormsBootstrapFormItemButtonGroupComponent.create({
+                name: 'interests',
+                label: 'Interests',
+                multiple: true,
+                options: [
+                  { id: 'frontend', label: 'Frontend' },
+                  { id: 'backend', label: 'Backend' },
+                  { id: 'design', label: 'Design' },
+                ],
+              }),
+              NgsFormsBootstrapFormItemRangeComponent.create({
+                name: 'experience',
+                label: 'Years of Experience',
+                min: 0,
+                max: 40,
+                valueSuffix: ' yrs',
+              }),
+              NgsFormsBootstrapFormItemTypeaheadComponent.create({
+                name: 'city',
+                label: 'City',
+                placeholder: 'Start typing a city',
+                options: ['Auckland', 'Austin', 'Berlin', 'Boston', 'London', 'Lisbon', 'Paris', 'Tokyo'].map((city) => ({ id: city, label: city })),
+              }),
             ]
           })
         ]
