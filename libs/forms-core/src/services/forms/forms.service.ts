@@ -1,6 +1,7 @@
 import { UntypedFormGroup } from '@angular/forms';
 import { BehaviorSubject, Subscription, switchMap } from 'rxjs';
 import { NgsFormsCommonComponentState, NgsFormsFormConfig, NgsFormsGlobalFormState } from '../../models';
+import { NgsFormsServerErrors } from '../../misc/server-errors';
 import { NgsFormsInternalService } from '../internal/internal-forms.service';
 import { Injectable, OnDestroy } from '@angular/core';
 
@@ -140,6 +141,33 @@ export class NgsFormsService implements OnDestroy {
     this.missingFormTimer = undefined;
     this.formGroupBinding?.unsubscribe();
     this.formValue$.complete();
+  }
+
+  /**
+   * Shows errors from the server on the matching controls, replacing any server errors shown before.
+   *
+   * @param errors - An object shaped like the form value (including the root group name) whose leaves are error
+   * keys, for example `{ registration: { userName: 'taken', contacts: [{}, {}, { phone: 'invalid' }] } }`. Each key
+   * is looked up in that control's `errorMessageMap`; when it has no entry the key itself is shown, so the server
+   * can also send the message text. Use `constructServerErrorMessageObject()` to build it from a list of paths.
+   * @returns The paths that matched no rendered control (a hidden item or a missing array row, for example), so you
+   * can show those errors elsewhere.
+   *
+   * @remarks The controls are marked as touched so the messages show at once, and they stay invalid until their
+   * value changes. All server errors are cleared by the next call, by `clearServerErrorMessages()`, by
+   * `setFormConfig()`, and when rows are added to or removed from a form array, because rows are matched by index.
+   */
+  setServerErrorMessages(errors: NgsFormsServerErrors): string[] {
+    if (!this.internalFormService) {
+      console.error('setServerErrorMessages() was called before <ngs-form> connected.');
+      return [];
+    }
+    return this.internalFormService.serverErrors.set(this.formGroup, errors);
+  }
+
+  /** Removes every error set with `setServerErrorMessages()`. */
+  clearServerErrorMessages(): void {
+    this.internalFormService?.serverErrors.clear();
   }
 
   /**

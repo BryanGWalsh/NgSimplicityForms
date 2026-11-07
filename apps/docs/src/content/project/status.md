@@ -12,7 +12,7 @@ These options exist in the configuration types so that configurations can be wri
 | `itemContainerClass` | form array | Ignored. Use `containerClass` on the list. |
 | `sanitize` | `content-html` | HTML is always sanitized. |
 | `NgsFormItemVisibilityFn`, `NgsFormValidatorArrayBuilderFn`, `NgsFormDisableFn` | types | Not consumed. |
-| `NgsServerSideValidationErrorObjectType` | type | Not consumed. |
+| `NgsServerSideValidationErrorObjectType` | type | Not consumed. Use `NgsFormsServerErrors` with `NgsFormsService.setServerErrorMessages()`, see [Server-side errors](/guides/validation#server-side-errors). |
 | `displayMode`, `showEditToggle` state | component state | Not read by the built-in components yet. Custom controls can use them, see [Component state and edit toggle](/guides/component-state). |
 
 ## Behaviour to know about

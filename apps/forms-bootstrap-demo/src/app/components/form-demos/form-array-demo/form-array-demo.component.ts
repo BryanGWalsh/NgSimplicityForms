@@ -15,7 +15,8 @@ import {
   NgsFormsFormArrayAddItemComponent,
   NgsFormsFormArrayRemoveItemComponent,
   NgsFormsRowComponent,
-  NgsFormsFormArrayListComponent
+  NgsFormsFormArrayListComponent,
+  constructServerErrorMessageObject
 } from '@ng-simplicity/forms-core';
 import {
   NgsFormsBootstrapModule,
@@ -92,7 +93,8 @@ export class FormArrayDemoComponent implements OnInit {
                     validators: [Validators.required, Validators.minLength(2)],
                     errorMessageMap: {
                       required: 'First name is highly recommended and required.',
-                      minlength: 'First name must contain at least 2 letters.'
+                      minlength: 'First name must contain at least 2 letters.',
+                      taken: 'That first name is already registered.'
                     }
                   }),
                   NgsFormsBootstrapFormItemInputComponent.create({
@@ -284,6 +286,21 @@ export class FormArrayDemoComponent implements OnInit {
     this.isSubmitted.set(false);
     this.ngsFormsService.setIsSubmitted(false);
     this.setupComprehensiveDemoForm();
+  }
+
+  /** Shows how errors returned by a server are mapped onto the form. */
+  onSimulateServerErrors() {
+    const unmatched = this.ngsFormsService.setServerErrorMessages(
+      constructServerErrorMessageObject([
+        // `taken` is looked up in the field's errorMessageMap.
+        { jsonPath: 'demoForm.firstName', validator: 'taken' },
+        // No map entry, so the server's text is shown as is.
+        { jsonPath: 'demoForm.contacts[0].contactPhone', validator: 'The server could not reach this number.' },
+      ])
+    );
+    if (unmatched.length) {
+      console.warn('Server errors without a matching field:', unmatched);
+    }
   }
 
   onLoadSampleData() {

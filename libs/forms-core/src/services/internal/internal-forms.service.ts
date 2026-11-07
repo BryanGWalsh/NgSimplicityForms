@@ -4,6 +4,7 @@ import { NgsFormsCommonComponentState, NgsFormsFormConfig } from '../../models';
 import { Injectable } from '@angular/core';
 import { NgsFormsGlobalFormState } from '../../models/global-state.interface';
 import { ngsDefaults } from '../../misc/defaults';
+import { NgsFormsServerErrorRegistry } from '../../misc/server-errors';
 
 /**
  * Per form state holder that connects `<ngs-form>`, its items and `NgsFormsService`.
@@ -17,6 +18,8 @@ export class NgsFormsInternalService {
   formConfig$ = new BehaviorSubject<NgsFormsFormConfig | undefined>(undefined);
   isSubmitted$ = new BehaviorSubject<boolean>(false);
   state = new BehaviorSubject<{ [key: string]: any }>({});
+  /** Server errors set with `NgsFormsService.setServerErrorMessages()`. */
+  readonly serverErrors = new NgsFormsServerErrorRegistry();
   setIsSubmitted(isSubmitted: boolean): void {
     this.isSubmitted$.next(isSubmitted);
   }
@@ -32,6 +35,7 @@ export class NgsFormsInternalService {
     const state: { [key: string]: any } = { ...(formConfig.initialState ?? {}) };
     state['global'] = { ...(formConfig.globalState ?? {}) };
     this.state.next(state);
+    this.serverErrors.reset();
     this.formGroup$.next(new UntypedFormGroup({}));
     this.formConfig$.next(formConfig);
     this.isSubmitted$.next(false);

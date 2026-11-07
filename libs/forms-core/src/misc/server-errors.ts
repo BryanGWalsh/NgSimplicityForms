@@ -99,6 +99,12 @@ function parseJsonPath(jsonPath: string): Array<string | number> {
   return segments;
 }
 
+/**
+ * Marker on the error value of a server error (`control.errors[key][NGS_FORMS_SERVER_ERROR] === true`). When the
+ * key has no entry in `errorMessageMap`, the key itself is shown as the message, so servers can send message text.
+ */
+export const NGS_FORMS_SERVER_ERROR = 'ngsServerError';
+
 interface ServerErrorEntry {
   keys: string[];
   /** The value the control had when the server rejected it. The error goes away once the value changes. */
@@ -112,7 +118,16 @@ interface ServerErrorEntry {
  */
 export class NgsFormsServerErrorRegistry {
   private readonly entries = new Map<AbstractControl, ServerErrorEntry>();
-  private readonly validators = new WeakMap<AbstractControl, ValidatorFn>();
+  /**
+   * Validator that reports a control's server errors. Form items include it whenever they set their validators,
+   * so the errors survive re-validation until the control's value changes.
+   */
+  readonly validator: ValidatorFn = (control) => this.validate(control);
+
+  /** `true` while at least one server error is set. */
+  get hasErrors(): boolean {
+    return this.entries.size > 0;
+  }
 
   /** Replaces every server error with `errors`. Returns the paths that matched no control. */
   set(root: AbstractControl, errors: NgsFormsServerErrors | null | undefined): string[] {
@@ -124,9 +139,15 @@ export class NgsFormsServerErrorRegistry {
 
   /** Removes every server error. */
   clear(): void {
+    if (!this.entries.size) return;
     const controls = Array.from(this.entries.keys());
     this.entries.clear();
     controls.forEach((control) => control.updateValueAndValidity());
+  }
+
+  /** Forgets every server error without re-validating, for when the controls are being thrown away. */
+  reset(): void {
+    this.entries.clear();
   }
 
   private apply(control: AbstractControl, errors: NgsFormsServerErrors | null | undefined, path: string, unmatched: string[]) {
@@ -170,10 +191,8 @@ export class NgsFormsServerErrorRegistry {
 
   private applyKeys(control: AbstractControl, keys: string[]) {
     this.entries.set(control, { keys, value: control.value });
-    if (!this.validators.has(control)) {
-      const validator: ValidatorFn = (c) => this.validate(c);
-      this.validators.set(control, validator);
-      control.addValidators(validator);
+    if (!control.hasValidator(this.validator)) {
+      control.addValidators(this.validator);
     }
     // Show the message straight away, without waiting for the user to touch the field.
     control.markAsTouched();
@@ -187,7 +206,7 @@ export class NgsFormsServerErrorRegistry {
       this.entries.delete(control);
       return null;
     }
-    return Object.fromEntries(entry.keys.map((key) => [key, true]));
+    return Object.fromEntries(entry.keys.map((key) => [key, { [NGS_FORMS_SERVER_ERROR]: true }]));
   }
 }
 
