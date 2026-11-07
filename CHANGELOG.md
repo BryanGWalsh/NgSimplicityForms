@@ -18,7 +18,11 @@ All notable changes to this project will be documented in this file.
 - Exports: `NgsFormsServerErrors`, `NgsFormsServerErrorGroup`, `NgsFormsServerErrorArray`, `NgsFormsServerErrorPath` and `NGS_FORMS_SERVER_ERROR`.
 
 ### Changed
+- `NgsFormsService.patchValue()` can be called straight after `setFormConfig()`, or before `<ngs-form>` connects. The patch is applied at once, kept, and applied again each time new controls appear until the form stops changing, so fields that render later, or that the patched values reveal through `visible$`, are filled in too. `setFormConfig()` drops patches still pending for the previous form.
 - `@ng-simplicity/forms-material` lists `@angular/cdk` as a peer dependency (Angular Material already needs it).
+
+### Fixed
+- Tailwind: the toggle's label lines up with the switch even when other CSS (such as Bootstrap's reboot) styles `label` elements, and a left (`labelLocation: 'left'`) label lines up with the text in its input.
 
 ## [1.1.4] - 2026-11-06
 

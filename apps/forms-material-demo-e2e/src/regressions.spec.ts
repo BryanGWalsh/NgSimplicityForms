@@ -69,4 +69,12 @@ test.describe('NG-Simplicity Forms Material Demo regressions', () => {
     await page.getByRole('option', { name: 'Weekly (Every Friday)' }).click();
     await expect(page.locator('pre')).toContainText('"frequency": "weekly"');
   });
+
+  test('Load Sample Data also fills the fields the sample data reveals', async ({ page }) => {
+    await page.getByRole('button', { name: /Load Sample Data/ }).click();
+    // The newsletter group only appears once subscribeToNewsletter is patched, and is filled by the same patch.
+    await expect(page.getByLabel('I agree to the promotional email terms and conditions')).toBeChecked();
+    await expect(page.getByLabel('Preferred Email Address')).toHaveValue('jane.doe@example.com');
+    await expect(page.locator('pre')).toContainText('"agreeToTerms": true');
+  });
 });

@@ -1,6 +1,7 @@
 @if (control) {
   <div [class]="classes.checkboxField">
-    <label [class]="classes.toggleLabel" for="{{id}}">
+    <!-- The flex row is a div, not the label, so CSS that styles labels (such as Bootstrap's reboot) cannot break it. -->
+    <div [class]="classes.toggleLabel">
       <input [class]="classes.toggleInput"
              [formControl]="control"
              id="{{id}}"
@@ -9,9 +10,10 @@
              [attr.aria-invalid]="errorMessage ? true : null"
              [attr.aria-describedby]="errorMessage ? id + '-error' : null"
              [attr.aria-required]="isRequired || null">
-      <span aria-hidden="true" [class]="cx(classes.toggleTrack, errorMessage && classes.toggleTrackInvalid)"></span>
-      <span [class]="cx(classes.choiceLabel, errorMessage ? classes.labelInvalid : classes.labelValid)">{{ config.label }}</span>
-    </label>
+      <!-- The track is a second label for the input, so clicking it toggles the switch. It has no text, so the accessible name is the label below. -->
+      <label for="{{id}}" aria-hidden="true" [class]="cx(classes.toggleTrack, errorMessage && classes.toggleTrackInvalid)"></label>
+      <label for="{{id}}" [class]="cx(classes.choiceLabel, 'cursor-pointer', errorMessage ? classes.labelInvalid : classes.labelValid)">{{ config.label }}</label>
+    </div>
     <div aria-live="polite" aria-atomic="true">
       @if (errorMessage) {
         <p [class]="classes.error" id="{{id}}-error">{{ errorMessage }}</p>

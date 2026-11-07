@@ -51,9 +51,6 @@ const CUSTOMERS: Record<string, Customer> = {
 /** Stand-in for an HTTP request. */
 const fetchCustomer = (id: string) => of(CUSTOMERS[id]).pipe(delay(300));
 
-/** Resolves after the current render pass, once newly created controls have joined the form. */
-const nextRender = () => new Promise((resolve) => setTimeout(resolve));
-
 @Component({
   selector: 'docs-editing-data-demo',
   imports: [NgsFormComponent, FormStatePanelComponent],
@@ -92,15 +89,10 @@ export class EditingDataDemoComponent implements OnInit {
 
     // 1. Rebuild the form with one array row per contact, so the array has somewhere to put each value.
     this.forms.setFormConfig(this.buildConfig(customer.contacts.length));
-    await nextRender();
 
-    // 2. Patch the values. The shape matches formValue$, including the root group name.
+    // 2. Patch the values. The shape matches formValue$, including the root group name. The patch is applied
+    //    again as the new form renders, including accountManager, which only appears once vip is set.
     this.forms.patchValue({ customer });
-
-    // 3. Fields behind visible$ are only created once the value that shows them is set,
-    //    so patch once more for them.
-    await nextRender();
-    this.forms.patchValue({ customer: { accountManager: customer.accountManager } });
     this.loading.set(false);
   }
 

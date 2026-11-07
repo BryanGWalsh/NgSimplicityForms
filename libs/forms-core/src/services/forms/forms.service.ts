@@ -1,4 +1,4 @@
-import { UntypedFormGroup } from '@angular/forms';
+import { AbstractControl, FormArray, FormGroup, UntypedFormGroup } from '@angular/forms';
 import { BehaviorSubject, Subscription, switchMap } from 'rxjs';
 import { NgsFormsCommonComponentState, NgsFormsFormConfig, NgsFormsGlobalFormState } from '../../models';
 import { NgsFormsServerErrors } from '../../misc/server-errors';
@@ -39,6 +39,14 @@ export class NgsFormsService implements OnDestroy {
   private lastConfig: NgsFormsFormConfig | undefined;
   private missingFormTimer: ReturnType<typeof setTimeout> | undefined;
   private destroyed = false;
+  /** Patches still being applied while the form renders, in call order. */
+  private pendingPatches: Array<{ [key: string]: any }> = [];
+  private patchTimer: ReturnType<typeof setTimeout> | undefined;
+  /** The controls that existed when the pending patches were last applied. */
+  private patchedStructure: string | undefined;
+  private patchRounds = 0;
+  /** Render passes in a row in which no control was added or removed. */
+  private stablePatchRounds = 0;
 
   /** `true` once the user has changed any control in the form. */
   get dirty(): boolean {
@@ -63,6 +71,8 @@ export class NgsFormsService implements OnDestroy {
    */
   setFormConfig(formConfig: NgsFormsFormConfig): void {
     this.lastConfig = formConfig;
+    // Patches made for the previous form do not carry over. Patches made after this call are kept until it renders.
+    this.cancelPendingPatches();
     if (this.internalServiceIsSet) {
       this.internalFormService!.setFormData(formConfig);
       return;
@@ -86,6 +96,9 @@ export class NgsFormsService implements OnDestroy {
     this.bindFormGroup();
     if (this.lastConfig) {
       internalFormsService.setFormData(this.lastConfig);
+    }
+    if (this.pendingPatches.length) {
+      this.schedulePatchRound();
     }
   }
 
@@ -139,6 +152,7 @@ export class NgsFormsService implements OnDestroy {
     this.destroyed = true;
     clearTimeout(this.missingFormTimer);
     this.missingFormTimer = undefined;
+    this.cancelPendingPatches();
     this.formGroupBinding?.unsubscribe();
     this.formValue$.complete();
   }
@@ -173,10 +187,85 @@ export class NgsFormsService implements OnDestroy {
   /**
    * Patches values into the form, using the same shape as `formValue$` (including the root group name).
    *
-   * @remarks Only controls that are currently rendered receive values. Patch again after a conditional item becomes
-   * visible, and make sure a form array has enough rows (see `initialItemCount`) before patching array values.
+   * @remarks It is safe to call straight after `setFormConfig()`, or before `<ngs-form>` has connected. The values
+   * are applied at once to the controls that exist, kept, and applied again each time new controls appear, until
+   * the form stops changing. That covers items that render later and items behind `visible$` that the patched values
+   * themselves reveal (and anything those reveal in turn). Later calls are applied after earlier ones. A form array
+   * only receives values for rows it has, so give it enough rows with `initialItemCount`. `setFormConfig()` drops
+   * patches that are still being applied to the previous form.
    */
   patchValue(entityData: any) {
-    this.formGroup.patchValue(entityData);
+    this.pendingPatches.push(entityData);
+    this.applyPendingPatches();
+    this.patchRounds = 0;
+    this.stablePatchRounds = 0;
+    this.schedulePatchRound();
   }
+
+  /** Maximum number of render passes a patch waits for new controls before it is dropped. */
+  private static readonly MAX_PATCH_ROUNDS = 20;
+
+  private applyPendingPatches() {
+    for (const patch of this.pendingPatches) {
+      this.formGroup.patchValue(patch);
+    }
+    this.patchedStructure = this.internalServiceIsSet ? controlStructure(this.formGroup) : undefined;
+  }
+
+  /**
+   * Waits one render pass, then re-applies the pending patches if controls were added or removed. Stops once two
+   * passes in a row change nothing (rendering can take a pass to start), or after `MAX_PATCH_ROUNDS` passes. Waits
+   * without counting while no form is connected.
+   */
+  private schedulePatchRound() {
+    clearTimeout(this.patchTimer);
+    if (this.destroyed || !this.pendingPatches.length) return;
+    if (!this.internalServiceIsSet) {
+      // `setInternalService()` starts the rounds once <ngs-form> connects.
+      this.patchTimer = undefined;
+      return;
+    }
+    this.patchTimer = setTimeout(() => {
+      this.patchTimer = undefined;
+      if (this.destroyed || !this.internalServiceIsSet) return;
+      const structure = controlStructure(this.formGroup);
+      if (structure === this.patchedStructure) {
+        if (++this.stablePatchRounds >= 2) {
+          this.cancelPendingPatches();
+          return;
+        }
+        this.schedulePatchRound();
+        return;
+      }
+      this.stablePatchRounds = 0;
+      this.applyPendingPatches();
+      if (++this.patchRounds >= NgsFormsService.MAX_PATCH_ROUNDS) {
+        this.cancelPendingPatches();
+        return;
+      }
+      this.schedulePatchRound();
+    });
+  }
+
+  private cancelPendingPatches() {
+    clearTimeout(this.patchTimer);
+    this.patchTimer = undefined;
+    this.pendingPatches = [];
+    this.patchedStructure = undefined;
+    this.patchRounds = 0;
+    this.stablePatchRounds = 0;
+  }
+}
+
+/** A string listing the paths of every control under `control`, so a change in the form's controls can be seen. */
+function controlStructure(control: AbstractControl, path = ''): string {
+  if (control instanceof FormGroup) {
+    return Object.keys(control.controls)
+      .map((name) => controlStructure(control.controls[name], `${path}.${name}`))
+      .join('|') + `|${path}{}`;
+  }
+  if (control instanceof FormArray) {
+    return control.controls.map((row, i) => controlStructure(row, `${path}[${i}]`)).join('|') + `|${path}[]`;
+  }
+  return path;
 }
