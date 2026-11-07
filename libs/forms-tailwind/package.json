@@ -1,20 +1,30 @@
 {
   "name": "@ng-simplicity/forms-tailwind",
   "version": "1.1.5",
-  "license": "MIT",
   "description": "Tailwind CSS styled form controls for @ng-simplicity/forms-core.",
   "keywords": [
     "angular",
     "forms",
     "dynamic-forms",
     "reactive-forms",
+    "form-builder",
+    "json-forms",
+    "validation",
+    "typescript",
     "tailwind",
-    "tailwindcss"
+    "tailwindcss",
+    "ui-components"
   ],
+  "author": "BryanGWalsh",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/BryanGWalsh/NgSimplicityForms.git",
     "directory": "libs/forms-tailwind"
+  },
+  "homepage": "https://github.com/BryanGWalsh/NgSimplicityForms/tree/main/libs/forms-tailwind#readme",
+  "bugs": {
+    "url": "https://github.com/BryanGWalsh/NgSimplicityForms/issues"
   },
   "publishConfig": {
     "access": "public"

@@ -21,6 +21,7 @@ All notable changes to this project will be documented in this file.
 - `NgsFormsService.patchValue()` can be called straight after `setFormConfig()`, or before `<ngs-form>` connects. The patch is applied at once, kept, and applied again each time new controls appear until the form stops changing, so fields that render later, or that the patched values reveal through `visible$`, are filled in too. `setFormConfig()` drops patches still pending for the previous form.
 - `@ng-simplicity/forms-material` lists `@angular/cdk` as a peer dependency (Angular Material already needs it).
 - `@ng-simplicity/forms-bootstrap`, `forms-material` and `forms-tailwind` now require `@ng-simplicity/forms-core ^1.1.5`.
+- Every package now has a `description`, `keywords`, `homepage`, `bugs` and `author` in its `package.json`, so it shows up in npm search and its npm page links back to the repository.
 
 ### Fixed
 - Docs: the Bootstrap range track shows in the demos, and Bootstrap is loaded in a cascade layer below Tailwind so its base styles no longer override the Tailwind demos' classes.

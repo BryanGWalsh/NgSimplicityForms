@@ -1,11 +1,30 @@
 {
   "name": "@ng-simplicity/forms-bootstrap",
   "version": "1.1.5",
+  "description": "Bootstrap 5 styled form controls for @ng-simplicity/forms-core.",
+  "keywords": [
+    "angular",
+    "forms",
+    "dynamic-forms",
+    "reactive-forms",
+    "form-builder",
+    "json-forms",
+    "validation",
+    "typescript",
+    "bootstrap",
+    "bootstrap5",
+    "ui-components"
+  ],
+  "author": "BryanGWalsh",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/BryanGWalsh/NgSimplicityForms.git",
     "directory": "libs/forms-bootstrap"
+  },
+  "homepage": "https://github.com/BryanGWalsh/NgSimplicityForms/tree/main/libs/forms-bootstrap#readme",
+  "bugs": {
+    "url": "https://github.com/BryanGWalsh/NgSimplicityForms/issues"
   },
   "publishConfig": {
     "access": "public"

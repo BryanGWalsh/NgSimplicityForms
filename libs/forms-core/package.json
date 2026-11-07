@@ -1,11 +1,31 @@
 {
   "name": "@ng-simplicity/forms-core",
   "version": "1.1.5",
+  "description": "Config-driven dynamic forms for Angular: build reactive forms from a typed configuration with groups, arrays, conditional fields, validation and server errors.",
+  "keywords": [
+    "angular",
+    "forms",
+    "dynamic-forms",
+    "reactive-forms",
+    "form-builder",
+    "json-forms",
+    "validation",
+    "typescript",
+    "form-generator",
+    "form-array",
+    "conditional-fields",
+    "server-errors"
+  ],
+  "author": "BryanGWalsh",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/BryanGWalsh/NgSimplicityForms.git",
     "directory": "libs/forms-core"
+  },
+  "homepage": "https://github.com/BryanGWalsh/NgSimplicityForms/tree/main/libs/forms-core#readme",
+  "bugs": {
+    "url": "https://github.com/BryanGWalsh/NgSimplicityForms/issues"
   },
   "publishConfig": {
     "access": "public"
