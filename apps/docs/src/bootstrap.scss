@@ -1,0 +1,13 @@
+/*
+ * Bootstrap for the docs, in a cascade layer below Tailwind's. Unlayered Bootstrap would beat every layered Tailwind
+ * utility, so its reboot (`label { display: inline-block }`, `input { font-size: inherit; line-height: inherit }`, ...)
+ * would undo the Tailwind demos' classes. Bootstrap's `!important` utilities still win, as they do in any app that
+ * loads both. (A CSS `@import ... layer()` is not used because the build drops the layer when it inlines the file.)
+ */
+@use 'sass:meta';
+
+@layer bootstrap, theme, base, components, utilities;
+
+@layer bootstrap {
+  @include meta.load-css('bootstrap/dist/css/bootstrap.min');
+}

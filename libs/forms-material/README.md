@@ -10,9 +10,9 @@ An integration package containing pre-styled Angular Material inputs, form field
 
 | Package | Package version | Angular support | Angular Material support | Requires |
 |---|---:|---|---|---|
-| `@ng-simplicity/forms-material` | `1.1.4` | `17.x`–`22.x` | `17.x`–`22.x` (use the matching Angular major) | `@ng-simplicity/forms-core ^1.1.4` |
+| `@ng-simplicity/forms-material` | `1.1.5` | `17.x`–`22.x` | `17.x`–`22.x` (use the matching Angular major) | `@ng-simplicity/forms-core ^1.1.5` |
 
-Requires `@ng-simplicity/forms-core` `^1.1.4`. From 1.1.2 every package declares `uuid` as a dependency, so it no longer needs to be installed separately.
+Requires `@ng-simplicity/forms-core` `^1.1.5`. From 1.1.2 every package declares `uuid` as a dependency, so it no longer needs to be installed separately.
 
 ---
 

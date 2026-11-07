@@ -869,3 +869,11 @@ body {
 .docs-hero-code pre {
   font-size: 0.78rem;
 }
+
+/*
+ * Bootstrap draws the range track in --bs-secondary-bg, which the docs set to the demo panel colour, so the track
+ * would vanish. Give it the border colour instead.
+ */
+.docs-demo .form-range {
+  --bs-secondary-bg: var(--docs-border);
+}

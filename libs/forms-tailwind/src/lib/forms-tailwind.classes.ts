@@ -51,7 +51,7 @@ export interface NgsFormsTailwindClasses {
   radioGroupLabel: string;
   /** Validation message under a control. */
   error: string;
-  /** Label that wraps a toggle switch, its track and its text. */
+  /** Row holding a toggle switch's hidden input, its track and its label. */
   toggleLabel: string;
   /** The visually hidden checkbox or radio inside a toggle switch or a button group button. */
   toggleInput: string;
@@ -78,7 +78,7 @@ export const NGS_FORMS_TAILWIND_DEFAULT_CLASSES: NgsFormsTailwindClasses = {
   field: 'mb-4',
   fieldHorizontal: 'mb-4 sm:grid sm:grid-cols-12 sm:items-start sm:gap-x-4',
   label: 'block mb-1 text-sm font-medium',
-  labelHorizontal: 'block mb-1 text-sm font-medium sm:col-span-2 sm:mb-0 sm:pt-2',
+  labelHorizontal: 'block mb-1 text-sm font-medium sm:col-span-2 sm:mb-0 sm:pt-[9px]',
   labelValid: 'text-gray-700 dark:text-gray-200',
   labelInvalid: 'text-red-600 dark:text-red-400',
   controlWrapperHorizontal: 'sm:col-span-10',
@@ -100,10 +100,10 @@ export const NGS_FORMS_TAILWIND_DEFAULT_CLASSES: NgsFormsTailwindClasses = {
   radioOptionsHorizontal: 'flex flex-wrap items-center gap-x-6 gap-y-2',
   radioGroupLabel: 'text-sm font-medium',
   error: 'mt-1 text-sm text-red-600 dark:text-red-400',
-  toggleLabel: 'relative inline-flex cursor-pointer items-center gap-3',
+  toggleLabel: 'relative inline-flex items-center gap-3',
   toggleInput: 'peer sr-only',
   toggleTrack:
-    "relative inline-block h-6 w-11 shrink-0 rounded-full bg-gray-300 transition-colors after:absolute after:left-0.5 after:top-0.5 after:h-5 after:w-5 after:rounded-full after:bg-white after:shadow after:transition-transform after:content-[''] " +
+    "relative inline-block h-6 w-11 shrink-0 cursor-pointer rounded-full bg-gray-300 transition-colors after:absolute after:left-0.5 after:top-0.5 after:h-5 after:w-5 after:rounded-full after:bg-white after:shadow after:transition-transform after:content-[''] " +
     'peer-checked:bg-blue-600 peer-checked:after:translate-x-5 peer-focus-visible:ring-2 peer-focus-visible:ring-blue-500/40 ' +
     'peer-disabled:cursor-not-allowed peer-disabled:opacity-50 dark:bg-gray-600',
   toggleTrackInvalid: 'ring-2 ring-red-500',

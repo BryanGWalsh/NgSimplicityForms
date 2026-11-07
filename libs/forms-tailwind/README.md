@@ -6,9 +6,9 @@ Tailwind CSS styled form controls for the [@ng-simplicity/forms-core](https://ww
 
 | Package | Package version | Angular support | Tailwind CSS | Requires |
 |---|---:|---|---|---|
-| `@ng-simplicity/forms-tailwind` | `1.1.4` | `17.x`–`22.x` | v4 (recommended) or v3 | `@ng-simplicity/forms-core ^1.1.4` |
+| `@ng-simplicity/forms-tailwind` | `1.1.5` | `17.x`–`22.x` | v4 (recommended) or v3 | `@ng-simplicity/forms-core ^1.1.5` |
 
-Requires `@ng-simplicity/forms-core` `^1.1.4`. From 1.1.2 every package declares `uuid` as a dependency, so it no longer needs to be installed separately.
+Requires `@ng-simplicity/forms-core` `^1.1.5`. From 1.1.2 every package declares `uuid` as a dependency, so it no longer needs to be installed separately.
 
 ---
 

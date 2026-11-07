@@ -15,7 +15,7 @@ This core package is extended by styling integration packages that provide prebu
 
 | Package | Package version | Angular support |
 |---|---:|---|
-| `@ng-simplicity/forms-core` | `1.1.4` | `17.x`–`22.x` |
+| `@ng-simplicity/forms-core` | `1.1.5` | `17.x`–`22.x` |
 
 ---
 
@@ -47,6 +47,7 @@ Each `registerAll…` helper also registers the core structural components, so i
 - Injected by the user's component page.
 - Exposes form values and statuses through Signals and observables (e.g. `formValue$`, `dirty`, `isValid`).
 - Provides entry methods like `setFormConfig(config)`, `patchValue(data)` and `setServerErrorMessages(errors)`.
+- `patchValue(data)` can be called straight after `setFormConfig()`: it keeps the patch and re-applies it as controls render, including fields that the patched values reveal through `visible$`, until the form settles. Form arrays need enough rows (`initialItemCount`).
 - Implements a retry loading mechanism in case child elements compile asynchronously.
 
 ### 2. The Internal Coordinator: `NgsFormsInternalService`

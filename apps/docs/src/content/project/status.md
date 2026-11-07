@@ -17,7 +17,7 @@ These options exist in the configuration types so that configurations can be wri
 
 ## Behaviour to know about
 
-- **Patching needs rendered controls.** Wait a tick after `setFormConfig()`, give arrays enough rows with `initialItemCount`, and patch conditional fields after they appear. For fixed defaults, set `value` on the input instead. See [Editing existing data](/tutorials/editing-data).
+- **Patching arrays needs enough rows.** `patchValue()` waits for the form to render and fills fields that the patch reveals, but a form array only receives values for the rows it has, so set `initialItemCount`. In version `1.1.4` and earlier, also wait a tick after `setFormConfig()` and patch conditional fields again after they appear. See [Editing existing data](/tutorials/editing-data).
 - **Disabled controls are left out of the form value.** That is how Angular reactive forms work, and it means they also skip validation.
 - **Set ids must be unique.** An input with a fixed `id` inside a form array row repeats that id on every row.
 - **One theme per page.** The registry is platform wide and the theme packages share keys.

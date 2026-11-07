@@ -30,11 +30,18 @@ describe('Tailwind toggle', () => {
     const { el, cmp, fixture } = create(NgsFormsTailwindFormItemToggleComponent, { name: 't', label: 'Dark mode' });
     const input = el.querySelector('input')!;
     expect(input.getAttribute('role')).toBe('switch');
-    expect(el.querySelector('label')!.textContent!.trim()).toBe('Dark mode');
-    expect(el.querySelector('label')!.getAttribute('for')).toBe(input.id);
+    const labels = Array.from(el.querySelectorAll('label'));
+    expect(labels.map((l) => l.getAttribute('for'))).toEqual([input.id, input.id]);
+    expect(labels[0].getAttribute('aria-hidden')).toBe('true');
+    expect(labels[1].textContent!.trim()).toBe('Dark mode');
+    // The layout row is not a label, so label styles from other CSS cannot break it.
+    expect(input.parentElement!.tagName).toBe('DIV');
     input.click();
     fixture.detectChanges();
     expect(cmp.control.value).toBe(true);
+    labels[0].click();
+    fixture.detectChanges();
+    expect(cmp.control.value).toBe(false);
   });
 
   it('create() uses the toggle key', () => {
