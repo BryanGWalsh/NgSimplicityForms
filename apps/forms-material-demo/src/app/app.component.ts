@@ -26,6 +26,12 @@ import {
   NgsFormsMaterialFormItemTextAreaComponent,
   NgsFormsMaterialModule,
   NgsFormsMaterialRadioInputComponent,
+  NgsFormsMaterialFormItemToggleComponent,
+  NgsFormsMaterialFormItemButtonGroupComponent,
+  NgsFormsMaterialFormItemRangeComponent,
+  NgsFormsMaterialFormItemTypeaheadComponent,
+  NgsFormsMaterialFormItemDatepickerComponent,
+  NgsFormsMaterialFormItemChipsComponent,
 } from '@ng-simplicity/forms-material';
 
 @Component({
@@ -253,6 +259,66 @@ export class AppComponent implements OnInit {
                     ],
                   }),
                 ],
+              }),
+            ],
+          }),
+          // Section 5: Theme specific controls
+          NgsFormsFormSectionComponent.create({
+            title: '5. More Controls',
+            subtitle: 'Toggle switch, button groups, range slider and typeahead plus Material datepicker and chips.',
+            items: [
+              NgsFormsMaterialFormItemToggleComponent.create({
+                name: 'productUpdates',
+                label: 'Send me product updates',
+              }),
+              NgsFormsMaterialFormItemButtonGroupComponent.create({
+                name: 'plan',
+                label: 'Plan',
+                options: [
+                  { id: 'basic', label: 'Basic' },
+                  { id: 'pro', label: 'Pro' },
+                  { id: 'enterprise', label: 'Enterprise' },
+                ],
+                validators: [Validators.required],
+                errorMessageMap: { required: 'Choose a plan.' },
+              }),
+              NgsFormsMaterialFormItemButtonGroupComponent.create({
+                name: 'interests',
+                label: 'Interests',
+                multiple: true,
+                options: [
+                  { id: 'frontend', label: 'Frontend' },
+                  { id: 'backend', label: 'Backend' },
+                  { id: 'design', label: 'Design' },
+                ],
+              }),
+              NgsFormsMaterialFormItemRangeComponent.create({
+                name: 'experience',
+                label: 'Years of Experience',
+                min: 0,
+                max: 40,
+                valueSuffix: ' yrs',
+              }),
+              NgsFormsMaterialFormItemTypeaheadComponent.create({
+                name: 'city',
+                label: 'City',
+                placeholder: 'Start typing a city',
+                options: ['Auckland', 'Austin', 'Berlin', 'Boston', 'London', 'Lisbon', 'Paris', 'Tokyo'].map((city) => ({ id: city, label: city })),
+              }),
+              NgsFormsMaterialFormItemDatepickerComponent.create({
+                name: 'startDate',
+                label: 'Available From',
+                hint: 'MM/DD/YYYY',
+                min: new Date(2020, 0, 1),
+                errorMessageMap: {
+                  matDatepickerParse: 'Enter a valid date.',
+                  matDatepickerMin: 'Choose a date from 2020 onwards.',
+                },
+              }),
+              NgsFormsMaterialFormItemChipsComponent.create({
+                name: 'skills',
+                label: 'Skills',
+                placeholder: 'Type a skill and press Enter',
               }),
             ],
           }),

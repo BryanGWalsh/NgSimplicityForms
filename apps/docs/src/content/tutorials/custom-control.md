@@ -136,4 +136,4 @@ The rating control reads it in its template:
 
 - **Content without a control** (a banner, a help panel): extend `NgsFormsBaseClassFormComponent`. You get `config` but no control.
 - **Containers** that render children: extend `NgsFormsBaseClassItemsContainerBase` and render each child with `<ng-container [ngs-form-item]="item"></ng-container>` (import `NgsFormsFormItemDirective`).
-- **A whole design system**: implement one component per key (`input-text`, `input-textarea`, `checkbox`, `radio`, `select`) and write a `registerAll…` helper like the theme packages do. Existing configurations then render with your components.
+- **A whole design system**: implement one component per key (`input-text`, `input-textarea`, `checkbox`, `radio`, `select`, `toggle`, `button-group`, `range`, `typeahead`) and write a `registerAll…` helper like the theme packages do. Existing configurations then render with your components.

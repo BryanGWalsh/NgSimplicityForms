@@ -14,6 +14,10 @@ import {
   NgsFormsBootstrapFormsItemTextAreaComponent,
   NgsFormsBootstrapModule,
   NgsFormsBootstrapRadioInputComponent,
+  NgsFormsBootstrapFormItemToggleComponent,
+  NgsFormsBootstrapFormItemButtonGroupComponent,
+  NgsFormsBootstrapFormItemRangeComponent,
+  NgsFormsBootstrapFormItemTypeaheadComponent,
 } from '@ng-simplicity/forms-bootstrap';
 import { FormStatePanelComponent } from '../shared/form-state-panel.component';
 
@@ -108,6 +112,42 @@ export class BootstrapCatalogDemoComponent implements OnInit {
                 label: 'I agree (Validators.requiredTrue)',
                 validators: [Validators.requiredTrue],
                 errorMessageMap: { required: 'Please agree to continue.' },
+              }),
+            ],
+          }),
+          NgsFormsFormSectionComponent.create({
+            title: 'toggle',
+            subtitle: 'NgsFormsBootstrapFormItemToggleComponent',
+            items: [NgsFormsBootstrapFormItemToggleComponent.create({ name: 'notifications', label: 'Email notifications' })],
+          }),
+          NgsFormsFormSectionComponent.create({
+            title: 'button-group',
+            subtitle: 'NgsFormsBootstrapFormItemButtonGroupComponent',
+            items: [
+              NgsFormsBootstrapFormItemButtonGroupComponent.create({
+                name: 'buttonSize',
+                label: 'One choice',
+                options: OPTIONS,
+                validators: required,
+                errorMessageMap: { required: 'Choose a size.' },
+              }),
+              NgsFormsBootstrapFormItemButtonGroupComponent.create({ name: 'buttonSizes', label: 'Multiple choice (multiple: true)', multiple: true, options: OPTIONS }),
+            ],
+          }),
+          NgsFormsFormSectionComponent.create({
+            title: 'range',
+            subtitle: 'NgsFormsBootstrapFormItemRangeComponent',
+            items: [NgsFormsBootstrapFormItemRangeComponent.create({ name: 'volume', label: 'Volume', min: 0, max: 100, step: 5, value: 40, valueSuffix: '%' })],
+          }),
+          NgsFormsFormSectionComponent.create({
+            title: 'typeahead',
+            subtitle: 'NgsFormsBootstrapFormItemTypeaheadComponent',
+            items: [
+              NgsFormsBootstrapFormItemTypeaheadComponent.create({
+                name: 'fruit',
+                label: 'Fruit',
+                placeholder: 'Start typing',
+                options: ['Apple', 'Apricot', 'Banana', 'Blueberry', 'Cherry', 'Grape', 'Mango'].map((f) => ({ id: f, label: f })),
               }),
             ],
           }),

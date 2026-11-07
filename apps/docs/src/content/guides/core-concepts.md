@@ -97,6 +97,12 @@ The theme packages register their components under the same keys:
 | `checkbox` | | `NgsFormsBootstrapFormsItemCheckboxComponent` | `NgsFormsMaterialFormItemCheckboxComponent` | `NgsFormsTailwindFormItemCheckboxComponent` |
 | `radio` | | `NgsFormsBootstrapRadioInputComponent` | `NgsFormsMaterialRadioInputComponent` | `NgsFormsTailwindRadioInputComponent` |
 | `select` | | `NgsFormsBootstrapFormItemSelectInputComponent` | `NgsFormsMaterialFormItemSelectInputComponent` | `NgsFormsTailwindFormItemSelectInputComponent` |
+| `toggle` | | `NgsFormsBootstrapFormItemToggleComponent` | `NgsFormsMaterialFormItemToggleComponent` | `NgsFormsTailwindFormItemToggleComponent` |
+| `button-group` | | `NgsFormsBootstrapFormItemButtonGroupComponent` | `NgsFormsMaterialFormItemButtonGroupComponent` | `NgsFormsTailwindFormItemButtonGroupComponent` |
+| `range` | | `NgsFormsBootstrapFormItemRangeComponent` | `NgsFormsMaterialFormItemRangeComponent` | `NgsFormsTailwindFormItemRangeComponent` |
+| `typeahead` | | `NgsFormsBootstrapFormItemTypeaheadComponent` | `NgsFormsMaterialFormItemTypeaheadComponent` | `NgsFormsTailwindFormItemTypeaheadComponent` |
+| `datepicker` | | | `NgsFormsMaterialFormItemDatepickerComponent` | |
+| `chips` | | | `NgsFormsMaterialFormItemChipsComponent` | |
 
 Because the keys match, a configuration built with Bootstrap `create()` helpers renders with Material or Tailwind components if one of those is registered instead. The `create()` helper only decides the key and the config type.
 

@@ -7,7 +7,11 @@ import {
   NgsFormsBootstrapFormsItemTextAreaComponent,
   NgsFormsBootstrapFormsItemCheckboxComponent,
   NgsFormsBootstrapRadioInputComponent,
-  NgsFormsBootstrapFormItemSelectInputComponent
+  NgsFormsBootstrapFormItemSelectInputComponent,
+  NgsFormsBootstrapFormItemToggleComponent,
+  NgsFormsBootstrapFormItemButtonGroupComponent,
+  NgsFormsBootstrapFormItemRangeComponent,
+  NgsFormsBootstrapFormItemTypeaheadComponent
 } from './form-components';
 
 /** Registration helper for the Bootstrap components. */
@@ -17,7 +21,7 @@ import {
 export class NgsFormsBootstrapModule {
   /**
    * Registers the core structural components plus the Bootstrap `input-text`, `input-textarea`, `checkbox`,
-   * `radio` and `select` components.
+   * `radio`, `select`, `toggle`, `button-group`, `range` and `typeahead` components.
    *
    * @example
    * ```ts
@@ -33,5 +37,9 @@ export class NgsFormsBootstrapModule {
     registryService.register(NgsFormsBootstrapRadioInputComponent.key, NgsFormsBootstrapRadioInputComponent);
     registryService.register(NgsFormsBootstrapFormItemSelectInputComponent.key, NgsFormsBootstrapFormItemSelectInputComponent);
     registryService.register(NgsFormsBootstrapFormsItemTextAreaComponent.key, NgsFormsBootstrapFormsItemTextAreaComponent);
+    registryService.register(NgsFormsBootstrapFormItemToggleComponent.key, NgsFormsBootstrapFormItemToggleComponent);
+    registryService.register(NgsFormsBootstrapFormItemButtonGroupComponent.key, NgsFormsBootstrapFormItemButtonGroupComponent);
+    registryService.register(NgsFormsBootstrapFormItemRangeComponent.key, NgsFormsBootstrapFormItemRangeComponent);
+    registryService.register(NgsFormsBootstrapFormItemTypeaheadComponent.key, NgsFormsBootstrapFormItemTypeaheadComponent);
   }
 }

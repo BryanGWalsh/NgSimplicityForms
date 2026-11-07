@@ -8,6 +8,9 @@ import { NgsFormsTailwindFormItemSelectInputComponent } from './select/select.co
 import { NgsFormsTailwindFormItemTextAreaComponent } from './text-area/text-area.component';
 import { NgsFormsTailwindFormItemCheckboxComponent } from './checkbox/checkbox.component';
 import { NgsFormsTailwindRadioInputComponent } from './radio/radio.component';
+import { NgsFormsTailwindFormItemToggleComponent } from './toggle';
+import { NgsFormsTailwindFormItemButtonGroupComponent } from './button-group';
+import { NgsFormsTailwindFormItemTypeaheadComponent } from './typeahead';
 
 function create(cmp: Type<unknown>, config: object) {
   const submitted$ = new BehaviorSubject(false);
@@ -30,6 +33,10 @@ const cases: Array<[string, Type<unknown>, string, object]> = [
   ['textarea', NgsFormsTailwindFormItemTextAreaComponent, 'textarea', {}],
   ['checkbox', NgsFormsTailwindFormItemCheckboxComponent, 'input[type=checkbox]', {}],
   ['radio', NgsFormsTailwindRadioInputComponent, 'input[type=radio]', { options: OPTIONS }],
+  ['toggle', NgsFormsTailwindFormItemToggleComponent, 'input[role=switch]', {}],
+  ['button-group', NgsFormsTailwindFormItemButtonGroupComponent, 'input', { options: OPTIONS }],
+  ['button-group multiple', NgsFormsTailwindFormItemButtonGroupComponent, 'input', { options: OPTIONS, multiple: true }],
+  ['typeahead', NgsFormsTailwindFormItemTypeaheadComponent, 'input[list]', { options: OPTIONS }],
 ];
 
 describe('tailwind a11y regressions', () => {
@@ -47,7 +54,7 @@ describe('tailwind a11y regressions', () => {
     it(`[${name}] required control exposes required / aria-required`, () => {
       const { el } = create(cmp, { name: 'f', label: 'Field', validators: [Validators.required], ...extra });
       const c = el.querySelector(sel)!;
-      const group = el.querySelector('[role=radiogroup]');
+      const group = el.querySelector('[role=radiogroup],[role=group]');
       const flagged = c.hasAttribute('required') || c.getAttribute('aria-required') === 'true' || group?.getAttribute('aria-required') === 'true';
       expect(flagged).toBe(true);
     });

@@ -8,6 +8,9 @@ import { NgsFormsBootstrapFormItemSelectInputComponent } from './select/select.c
 import { NgsFormsBootstrapFormsItemTextAreaComponent } from './text-area/text-area.component';
 import { NgsFormsBootstrapFormsItemCheckboxComponent } from './checkbox/checkbox.component';
 import { NgsFormsBootstrapRadioInputComponent } from './radio/radio.component';
+import { NgsFormsBootstrapFormItemToggleComponent } from './toggle';
+import { NgsFormsBootstrapFormItemButtonGroupComponent } from './button-group';
+import { NgsFormsBootstrapFormItemTypeaheadComponent } from './typeahead';
 
 function create(cmp: Type<unknown>, config: object) {
   const submitted$ = new BehaviorSubject(false);
@@ -30,6 +33,10 @@ const cases: Array<[string, Type<unknown>, string, object]> = [
   ['textarea', NgsFormsBootstrapFormsItemTextAreaComponent, 'textarea', {}],
   ['checkbox', NgsFormsBootstrapFormsItemCheckboxComponent, 'input[type=checkbox]', {}],
   ['radio', NgsFormsBootstrapRadioInputComponent, 'input[type=radio]', { options: OPTIONS }],
+  ['toggle', NgsFormsBootstrapFormItemToggleComponent, 'input[role=switch]', {}],
+  ['button-group', NgsFormsBootstrapFormItemButtonGroupComponent, 'input.btn-check', { options: OPTIONS }],
+  ['button-group multiple', NgsFormsBootstrapFormItemButtonGroupComponent, 'input.btn-check', { options: OPTIONS, multiple: true }],
+  ['typeahead', NgsFormsBootstrapFormItemTypeaheadComponent, 'input[list]', { options: OPTIONS }],
 ];
 
 describe('bootstrap a11y regressions', () => {
@@ -47,7 +54,7 @@ describe('bootstrap a11y regressions', () => {
     it(`[${name}] required control exposes required / aria-required`, () => {
       const { el } = create(cmp, { name: 'f', label: 'Field', validators: [Validators.required], ...extra });
       const c = el.querySelector(sel)!;
-      const group = el.querySelector('[role=radiogroup]');
+      const group = el.querySelector('[role=radiogroup],[role=group]');
       const flagged = c.hasAttribute('required') || c.getAttribute('aria-required') === 'true' || group?.getAttribute('aria-required') === 'true';
       expect(flagged).toBe(true);
     });

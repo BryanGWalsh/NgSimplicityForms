@@ -23,7 +23,11 @@ import {
   NgsFormsTailwindFormItemCheckboxComponent,
   NgsFormsTailwindRadioInputComponent,
   NgsFormsTailwindFormItemSelectInputComponent,
-  NgsFormsTailwindFormItemTextAreaComponent
+  NgsFormsTailwindFormItemTextAreaComponent,
+  NgsFormsTailwindFormItemToggleComponent,
+  NgsFormsTailwindFormItemButtonGroupComponent,
+  NgsFormsTailwindFormItemRangeComponent,
+  NgsFormsTailwindFormItemTypeaheadComponent
 } from '@ng-simplicity/forms-tailwind';
 
 @Component({
@@ -255,6 +259,51 @@ export class FormArrayDemoComponent implements OnInit {
                   })
                 ]
               })
+            ]
+          }),
+          // Section 5: Theme specific controls
+          NgsFormsFormSectionComponent.create({
+            title: '5. More Controls',
+            subtitle: 'Toggle switch, button groups, range slider and typeahead.',
+            items: [
+              NgsFormsTailwindFormItemToggleComponent.create({
+                name: 'productUpdates',
+                label: 'Send me product updates',
+              }),
+              NgsFormsTailwindFormItemButtonGroupComponent.create({
+                name: 'plan',
+                label: 'Plan',
+                options: [
+                  { id: 'basic', label: 'Basic' },
+                  { id: 'pro', label: 'Pro' },
+                  { id: 'enterprise', label: 'Enterprise' },
+                ],
+                validators: [Validators.required],
+                errorMessageMap: { required: 'Choose a plan.' },
+              }),
+              NgsFormsTailwindFormItemButtonGroupComponent.create({
+                name: 'interests',
+                label: 'Interests',
+                multiple: true,
+                options: [
+                  { id: 'frontend', label: 'Frontend' },
+                  { id: 'backend', label: 'Backend' },
+                  { id: 'design', label: 'Design' },
+                ],
+              }),
+              NgsFormsTailwindFormItemRangeComponent.create({
+                name: 'experience',
+                label: 'Years of Experience',
+                min: 0,
+                max: 40,
+                valueSuffix: ' yrs',
+              }),
+              NgsFormsTailwindFormItemTypeaheadComponent.create({
+                name: 'city',
+                label: 'City',
+                placeholder: 'Start typing a city',
+                options: ['Auckland', 'Austin', 'Berlin', 'Boston', 'London', 'Lisbon', 'Paris', 'Tokyo'].map((city) => ({ id: city, label: city })),
+              }),
             ]
           })
         ]

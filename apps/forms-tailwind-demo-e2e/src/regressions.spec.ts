@@ -51,7 +51,7 @@ test.describe('NG-Simplicity Forms Tailwind Demo regressions', () => {
   });
 
   test('radios in a group share one name', async ({ page }) => {
-    const radios = page.getByRole('radio');
+    const radios = page.getByRole('radiogroup', { name: 'Preferred Contact Method' }).getByRole('radio');
     await expect(radios).toHaveCount(3);
     const names = await radios.evaluateAll((els) => els.map((el) => (el as HTMLInputElement).name));
     expect(names[0]).toBeTruthy();

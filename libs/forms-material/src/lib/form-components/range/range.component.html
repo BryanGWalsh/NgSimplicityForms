@@ -1,0 +1,29 @@
+@if (control) {
+  <div class="mb-3">
+    <div style="display: flex; justify-content: space-between; align-items: baseline;">
+      <label for="{{id}}" [style.color]="errorMessage ? '#f44336' : null">{{ rangeConfig.label }}</label>
+      @if (rangeConfig.showValue !== false) {
+        <output [attr.for]="id" id="{{id}}-value" style="opacity: 0.7;">{{ displayWith(control.value) }}</output>
+      }
+    </div>
+    <mat-slider class="w-100"
+                [min]="min"
+                [max]="max"
+                [step]="step"
+                [discrete]="!!rangeConfig.discrete"
+                [showTickMarks]="!!rangeConfig.showTickMarks"
+                [displayWith]="displayWith">
+      <input matSliderThumb
+             [formControl]="control"
+             id="{{id}}"
+             [attr.aria-invalid]="errorMessage ? true : null"
+             [attr.aria-describedby]="errorMessage ? id + '-error' : null"
+             [attr.aria-required]="isRequired || null" />
+    </mat-slider>
+    <div aria-live="polite" aria-atomic="true">
+      @if (errorMessage) {
+        <div class="mt-1" id="{{id}}-error" style="font-size: 0.75rem; color: #f44336;">{{ errorMessage }}</div>
+      }
+    </div>
+  </div>
+}

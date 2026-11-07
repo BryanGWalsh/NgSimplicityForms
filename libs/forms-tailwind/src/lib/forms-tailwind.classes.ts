@@ -51,6 +51,26 @@ export interface NgsFormsTailwindClasses {
   radioGroupLabel: string;
   /** Validation message under a control. */
   error: string;
+  /** Label that wraps a toggle switch, its track and its text. */
+  toggleLabel: string;
+  /** The visually hidden checkbox or radio inside a toggle switch or a button group button. */
+  toggleInput: string;
+  /** The drawn track and knob of a toggle switch. Style the checked state with `peer-checked:`. */
+  toggleTrack: string;
+  /** Added to the toggle track while the control shows an error. */
+  toggleTrackInvalid: string;
+  /** Wrapper of the buttons of a button group. */
+  buttonGroup: string;
+  /** One button of a button group. Style the chosen state with `has-[:checked]:`. */
+  buttonGroupButton: string;
+  /** Added to every button of a button group while the control shows an error. */
+  buttonGroupButtonInvalid: string;
+  /** Row holding a range slider's label and current value. */
+  rangeHeader: string;
+  /** The range slider's current value. */
+  rangeValue: string;
+  /** The range input. */
+  range: string;
 }
 
 /** The classes the Tailwind components use unless you override them. */
@@ -80,6 +100,22 @@ export const NGS_FORMS_TAILWIND_DEFAULT_CLASSES: NgsFormsTailwindClasses = {
   radioOptionsHorizontal: 'flex flex-wrap items-center gap-x-6 gap-y-2',
   radioGroupLabel: 'text-sm font-medium',
   error: 'mt-1 text-sm text-red-600 dark:text-red-400',
+  toggleLabel: 'relative inline-flex cursor-pointer items-center gap-3',
+  toggleInput: 'peer sr-only',
+  toggleTrack:
+    "relative inline-block h-6 w-11 shrink-0 rounded-full bg-gray-300 transition-colors after:absolute after:left-0.5 after:top-0.5 after:h-5 after:w-5 after:rounded-full after:bg-white after:shadow after:transition-transform after:content-[''] " +
+    'peer-checked:bg-blue-600 peer-checked:after:translate-x-5 peer-focus-visible:ring-2 peer-focus-visible:ring-blue-500/40 ' +
+    'peer-disabled:cursor-not-allowed peer-disabled:opacity-50 dark:bg-gray-600',
+  toggleTrackInvalid: 'ring-2 ring-red-500',
+  buttonGroup: 'inline-flex flex-wrap rounded-md shadow-sm',
+  buttonGroupButton:
+    'relative -ml-px cursor-pointer border-[1px] border-solid border-gray-300 bg-[white] px-4 py-2 text-sm font-medium text-gray-700 first:ml-0 first:rounded-l-md last:rounded-r-md hover:bg-gray-50 ' +
+    'has-[:checked]:z-10 has-[:checked]:border-blue-600 has-[:checked]:bg-blue-600 has-[:checked]:text-white has-[:focus-visible]:z-10 has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-blue-500/40 ' +
+    'has-[:disabled]:cursor-not-allowed has-[:disabled]:opacity-50 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-200',
+  buttonGroupButtonInvalid: 'border-red-500 dark:border-red-400',
+  rangeHeader: 'flex items-baseline justify-between',
+  rangeValue: 'text-sm text-gray-500 dark:text-gray-400',
+  range: 'block w-full cursor-pointer accent-blue-600 disabled:cursor-not-allowed',
 };
 
 /**

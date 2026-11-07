@@ -1,0 +1,23 @@
+@if (control) {
+  <mat-form-field class="w-100 mb-2" appearance="outline">
+    @if (config.label) {
+      <mat-label>{{ config.label }}</mat-label>
+    }
+    <input matInput
+           [id]="config.id || ''"
+           [formControl]="control"
+           [matDatepicker]="picker"
+           [min]="dateConfig.min ?? null"
+           [max]="dateConfig.max ?? null"
+           [placeholder]="dateConfig.placeholder || ''"
+           [errorStateMatcher]="matcher" />
+    @if (dateConfig.hint) {
+      <mat-hint>{{ dateConfig.hint }}</mat-hint>
+    }
+    <mat-datepicker-toggle matIconSuffix [for]="picker" />
+    <mat-datepicker #picker [startView]="dateConfig.startView || 'month'" />
+    @if (errorMessage) {
+      <mat-error>{{ errorMessage }}</mat-error>
+    }
+  </mat-form-field>
+}

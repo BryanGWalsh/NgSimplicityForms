@@ -16,6 +16,12 @@ import {
   NgsFormsMaterialFormItemTextAreaComponent,
   NgsFormsMaterialModule,
   NgsFormsMaterialRadioInputComponent,
+  NgsFormsMaterialFormItemToggleComponent,
+  NgsFormsMaterialFormItemButtonGroupComponent,
+  NgsFormsMaterialFormItemRangeComponent,
+  NgsFormsMaterialFormItemTypeaheadComponent,
+  NgsFormsMaterialFormItemDatepickerComponent,
+  NgsFormsMaterialFormItemChipsComponent,
 } from '@ng-simplicity/forms-material';
 import { FormStatePanelComponent } from '../shared/form-state-panel.component';
 
@@ -112,6 +118,60 @@ export class MaterialCatalogDemoComponent implements OnInit {
                 errorMessageMap: { required: 'Please agree to continue.' },
               }),
             ],
+          }),
+          NgsFormsFormSectionComponent.create({
+            title: 'toggle',
+            subtitle: 'NgsFormsMaterialFormItemToggleComponent',
+            items: [NgsFormsMaterialFormItemToggleComponent.create({ name: 'notifications', label: 'Email notifications' })],
+          }),
+          NgsFormsFormSectionComponent.create({
+            title: 'button-group',
+            subtitle: 'NgsFormsMaterialFormItemButtonGroupComponent',
+            items: [
+              NgsFormsMaterialFormItemButtonGroupComponent.create({
+                name: 'buttonSize',
+                label: 'One choice',
+                options: OPTIONS,
+                validators: required,
+                errorMessageMap: { required: 'Choose a size.' },
+              }),
+              NgsFormsMaterialFormItemButtonGroupComponent.create({ name: 'buttonSizes', label: 'Multiple choice (multiple: true)', multiple: true, options: OPTIONS }),
+            ],
+          }),
+          NgsFormsFormSectionComponent.create({
+            title: 'range',
+            subtitle: 'NgsFormsMaterialFormItemRangeComponent',
+            items: [NgsFormsMaterialFormItemRangeComponent.create({ name: 'volume', label: 'Volume', min: 0, max: 100, step: 5, value: 40, valueSuffix: '%' })],
+          }),
+          NgsFormsFormSectionComponent.create({
+            title: 'typeahead',
+            subtitle: 'NgsFormsMaterialFormItemTypeaheadComponent',
+            items: [
+              NgsFormsMaterialFormItemTypeaheadComponent.create({
+                name: 'fruit',
+                label: 'Fruit',
+                placeholder: 'Start typing',
+                options: ['Apple', 'Apricot', 'Banana', 'Blueberry', 'Cherry', 'Grape', 'Mango'].map((f) => ({ id: f, label: f })),
+              }),
+            ],
+          }),
+          NgsFormsFormSectionComponent.create({
+            title: 'datepicker',
+            subtitle: 'NgsFormsMaterialFormItemDatepickerComponent',
+            items: [
+              NgsFormsMaterialFormItemDatepickerComponent.create({
+                name: 'startDate',
+                label: 'Start date',
+                min: new Date(2020, 0, 1),
+                validators: required,
+                errorMessageMap: { required: 'Pick a date.', matDatepickerParse: 'Enter a valid date.', matDatepickerMin: 'From 2020 onwards.' },
+              }),
+            ],
+          }),
+          NgsFormsFormSectionComponent.create({
+            title: 'chips',
+            subtitle: 'NgsFormsMaterialFormItemChipsComponent',
+            items: [NgsFormsMaterialFormItemChipsComponent.create({ name: 'tags', label: 'Tags', placeholder: 'Type and press Enter', value: ['angular'] })],
           }),
         ],
       }),

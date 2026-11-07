@@ -319,6 +319,61 @@ const notificationPrefField = NgsFormsBootstrapRadioInputComponent.create({
 });
 ```
 
+### 6. Toggle Switch (`toggle`)
+Uses `NgsFormsBootstrapFormItemToggleComponent`. Value: `true` / `false`.
+
+```typescript
+const updatesField = NgsFormsBootstrapFormItemToggleComponent.create({
+  name: 'productUpdates',
+  label: 'Send me product updates',
+  value: false,
+});
+```
+
+### 7. Button Group (`button-group`)
+Uses `NgsFormsBootstrapFormItemButtonGroupComponent`. Value: the chosen option `id`, or an array of ids with `multiple: true`.
+
+```typescript
+const planField = NgsFormsBootstrapFormItemButtonGroupComponent.create({
+  name: 'plan',
+  label: 'Plan',
+  multiple: false, // true allows several choices
+  options: [
+    { id: 'basic', label: 'Basic' },
+    { id: 'pro', label: 'Pro' },
+  ],
+  validators: [Validators.required],
+  errorMessageMap: { required: 'Choose a plan.' },
+});
+```
+
+### 8. Range Slider (`range`)
+Uses `NgsFormsBootstrapFormItemRangeComponent`. Value: a number, starting at `min`.
+
+```typescript
+const experienceField = NgsFormsBootstrapFormItemRangeComponent.create({
+  name: 'experience',
+  label: 'Years of Experience',
+  min: 0,
+  max: 40,
+  step: 1,
+  valueSuffix: ' yrs', // shown after the value
+});
+```
+
+### 9. Typeahead (`typeahead`)
+Uses `NgsFormsBootstrapFormItemTypeaheadComponent`. The option labels are the suggestions; the value is the text in the input.
+
+```typescript
+const cityField = NgsFormsBootstrapFormItemTypeaheadComponent.create({
+  name: 'city',
+  label: 'City',
+  placeholder: 'Start typing a city',
+  options: [{ id: 'berlin', label: 'Berlin' }, { id: 'boston', label: 'Boston' }],
+  // options$: load suggestions from a server as the user types
+});
+```
+
 ---
 
 ## Unit Testing

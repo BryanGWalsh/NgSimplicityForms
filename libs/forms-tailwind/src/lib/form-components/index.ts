@@ -3,3 +3,7 @@ export * from './input';
 export * from './radio';
 export * from './select';
 export * from './text-area';
+export * from './button-group';
+export * from './range';
+export * from './toggle';
+export * from './typeahead';
