@@ -1,7 +1,7 @@
 import { Directive, inject, OnDestroy, OnInit, Signal, ChangeDetectorRef } from '@angular/core';
 import { AbstractControl, FormArray, FormControl, FormGroup, UntypedFormControl, ValidatorFn, Validators } from '@angular/forms';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { INgsFormsFormControlAddRemove, NGS_FORMS_CONTROL_ADD_REMOVE_FN } from '../../misc';
+import { INgsFormsFormControlAddRemove, NGS_FORMS_CONTROL_ADD_REMOVE_FN, NGS_FORMS_SERVER_ERROR } from '../../misc';
 import { NgsFormsInternalService } from '../../services';
 import { NgsFormsFormItemConfigBaseItemWithNameAndValidators } from '../../models/item-config-bases/';
 import { NgsFormsBaseClassFormComponent } from './form-component.class';
@@ -86,7 +86,9 @@ export class NgsFormsFormItemWithVisibleAndValidatorsBase<
     }
     const firstErrorKey = Object.keys(errors)[0];
     const map = this.config.errorMessageMap;
-    this.errorMessage = map?.[firstErrorKey] || `Field is invalid: ${firstErrorKey}`;
+    const isServerError = errors[firstErrorKey]?.[NGS_FORMS_SERVER_ERROR] === true;
+    // A server error without a mapped message shows the server's text.
+    this.errorMessage = map?.[firstErrorKey] || (isServerError ? firstErrorKey : `Field is invalid: ${firstErrorKey}`);
   }
 
   override ngOnDestroy() {
@@ -95,17 +97,23 @@ export class NgsFormsFormItemWithVisibleAndValidatorsBase<
   }
 
   private bindValidators() {
-    if (!this.config.validators && !this.config.validators$) return;
     const control = this.control!;
+    // The server error validator is always kept, so server errors survive until the control's value changes.
+    // Optional so that tests which stub `NgsFormsInternalService` keep working.
+    const serverValidators: ValidatorFn[] = this.privateService.serverErrors ? [this.privateService.serverErrors.validator] : [];
+    if (!this.config.validators && !this.config.validators$) {
+      control.addValidators(serverValidators);
+      return;
+    }
     if (this.config.validators) {
-      control.setValidators(this.config.validators);
+      control.setValidators([...this.config.validators, ...serverValidators]);
       // A group or array computed its status when it was created, before these validators were set.
       control.updateValueAndValidity({ emitEvent: false });
       return;
     }
     if (this.config.validators$) {
       this.subscribe(this.config.validators$!, (validators: Array<ValidatorFn>) => {
-        control.setValidators(validators);
+        control.setValidators([...validators, ...serverValidators]);
         control.updateValueAndValidity();
       });
     }

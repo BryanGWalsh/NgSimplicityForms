@@ -46,7 +46,7 @@ Each `registerAll…` helper also registers the core structural components, so i
 ### 1. The Public Boundary: `NgsFormsService`
 - Injected by the user's component page.
 - Exposes form values and statuses through Signals and observables (e.g. `formValue$`, `dirty`, `isValid`).
-- Provides entry methods like `setFormConfig(config)` and `patchValue(data)`.
+- Provides entry methods like `setFormConfig(config)`, `patchValue(data)` and `setServerErrorMessages(errors)`.
 - Implements a retry loading mechanism in case child elements compile asynchronously.
 
 ### 2. The Internal Coordinator: `NgsFormsInternalService`
@@ -217,6 +217,18 @@ Each form control component that extends `NgsFormsFormItemWithVisibleAndValidato
    }
    ```
 3. **Displaying Errors**: Within your custom component template, bind your error display element to the `errorMessage` property inherited from the base class. The core engine dynamically updates `errorMessage` based on whether the control is invalid, touched, dirty, or if the form has been submitted.
+4. **Server Errors**: Pass the server's errors to `NgsFormsService.setServerErrorMessages()` in the same shape as the form value. Each leaf is a key looked up in that field's `errorMessageMap` (a key with no entry is shown as text), and form array rows are matched by index. Each error clears when its field changes, and the call returns the paths that matched no control. `constructServerErrorMessageObject()` builds the object from a list of `{ jsonPath, validator }` pairs:
+   ```typescript
+   errorMessageMap: { taken: 'User Name Not Available' }
+
+   this.formsService.setServerErrorMessages({ registration: { userName: 'taken', contacts: [{}, {}, { phone: 'invalidPhone' }] } });
+
+   // Same thing from a flat list:
+   this.formsService.setServerErrorMessages(constructServerErrorMessageObject([
+     { jsonPath: 'registration.userName', validator: 'taken' },
+     { jsonPath: 'registration.contacts[2].phone', validator: 'invalidPhone' },
+   ]));
+   ```
 
 ---
 

@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [Unreleased]
+
+### Added
+- Server errors: `NgsFormsService.setServerErrorMessages()` takes an object shaped like the form value whose leaves are error keys, for example `{ registration: { userName: 'taken', contacts: [{}, {}, { phone: 'invalidPhone' }] } }`. Each key is looked up in the field's `errorMessageMap`, and a key with no entry is shown as the message text. An error clears when its field's value changes. The call returns the paths that matched no control. `clearServerErrorMessages()` removes them all, and they are also cleared by `setFormConfig()` and when form array rows are added or removed.
+- `constructServerErrorMessageObject()` builds that object from a list of `{ jsonPath, validator }` pairs, such as `registration.contacts[2].phone`.
+- Exports: `NgsFormsServerErrors`, `NgsFormsServerErrorGroup`, `NgsFormsServerErrorArray`, `NgsFormsServerErrorPath` and `NGS_FORMS_SERVER_ERROR`.
+
 ## [1.1.4] - 2026-11-06
 
 ### Fixed

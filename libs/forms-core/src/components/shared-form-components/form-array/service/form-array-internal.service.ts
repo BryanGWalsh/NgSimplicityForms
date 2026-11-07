@@ -4,6 +4,7 @@ import { NgsFormItemArrayConfig } from '../container';
 import { NGS_FORMS_ITEM_DATA } from '../../../../misc';
 import { NgsFormsFormItem } from '../../../../models/index';
 import { Subject } from 'rxjs';
+import { NgsFormsInternalService } from '../../../../services/internal/internal-forms.service';
 
 /**
  * Holds the `UntypedFormArray` of one `NgsFormsFormArrayContainerComponent` and is shared with its list and buttons.
@@ -15,6 +16,7 @@ export class NgsFormsFormArrayInternalService implements OnDestroy {
   config = inject<NgsFormsFormItem<NgsFormItemArrayConfig>>(NGS_FORMS_ITEM_DATA).config;
 
   readonly formArray = new UntypedFormArray([]);
+  private readonly formsInternalService = inject(NgsFormsInternalService, { optional: true });
   /** Emits after a row is added or removed. */
   readonly itemsChanged = new Subject<void>();
   /** Emits the index of a row right after it is removed. */
@@ -41,6 +43,8 @@ export class NgsFormsFormArrayInternalService implements OnDestroy {
     if (index < 0 || index >= this.formArray.controls.length) {
       return;
     }
+    // Server errors for rows are matched by index, so they are cleared once the rows move.
+    this.formsInternalService?.serverErrors?.clear();
     this.formArray.removeAt(index);
     this.rowRemoved.next(index);
     this.itemsChanged.next();
@@ -50,6 +54,7 @@ export class NgsFormsFormArrayInternalService implements OnDestroy {
     if (this.config?.maxItems && this.formArray.controls.length >= this.config!.maxItems) {
       return;
     }
+    this.formsInternalService?.serverErrors?.clear();
     this.formArray.push(new UntypedFormGroup({}));
     this.itemsChanged.next();
   }

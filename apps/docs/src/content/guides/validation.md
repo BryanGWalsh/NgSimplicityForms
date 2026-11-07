@@ -85,4 +85,61 @@ A validator receives the control, and `control.parent` is the group it lives in,
 
 ## Server-side errors
 
-The core package declares `NgsServerSideValidationErrorObjectType` for nested server errors, but nothing consumes it yet. Until then, map server errors to a custom validator or show them outside the form.
+When the server rejects a submission, pass its errors to `NgsFormsService.setServerErrorMessages()`. The object has the same shape as the form value, including the root group name, and each leaf is an error key. The key is looked up in that field's `errorMessageMap`, just like a client-side validator's key:
+
+```ts
+NgsFormsBootstrapFormItemInputComponent.create({
+  name: 'userName',
+  label: 'User name',
+  validators: [Validators.required],
+  errorMessageMap: {
+    required: 'Pick a user name.',
+    taken: 'User Name Not Available',
+  },
+}),
+
+// Later, when the server answers:
+this.forms.setServerErrorMessages({ registration: { userName: 'taken' } });
+```
+
+Form array rows are matched by index. Use `{}` (or `null`) for rows without errors, so this marks only the third row's phone:
+
+```ts
+this.forms.setServerErrorMessages({
+  registration: { contacts: [{}, {}, { phone: 'invalidPhone' }, {}] },
+});
+```
+
+A leaf can also be an array of keys, and a key can be set on a group or array as well as on an input.
+
+How server errors behave:
+
+- **They show at once.** The control is marked as touched, so the message appears without waiting for the user.
+- **They clear when the field changes.** Each error stays until that control's value changes, even when other validation runs in between. Changing the value back does not bring it back.
+- **Unknown keys show as text.** A key with no entry in `errorMessageMap` is shown as the message itself, so the server can send ready-made text such as `'That name is reserved'`.
+- **Unmatched paths are returned.** `setServerErrorMessages()` returns the paths that matched no rendered control, for example a hidden field or a missing array row, so you can show those errors elsewhere.
+- **They are cleared all at once** by the next `setServerErrorMessages()` call, by `clearServerErrorMessages()`, by `setFormConfig()`, and when a form array row is added or removed (rows are matched by index, so an error could otherwise land on the wrong row).
+
+Server errors are for fields. Show errors that belong to the whole form, such as "The service is unavailable", outside the form.
+
+Server errors make the form invalid like any other error. Read `control.errors[key].ngsServerError` (`NGS_FORMS_SERVER_ERROR`) in a custom component to tell them apart.
+
+### Building the object from a list of paths
+
+Many APIs return errors as a flat list. `constructServerErrorMessageObject()` turns a list of `{ jsonPath, validator }` pairs into the object above:
+
+```ts
+import { constructServerErrorMessageObject } from '@ng-simplicity/forms-core';
+
+const errors = constructServerErrorMessageObject([
+  { jsonPath: 'registration.userName', validator: 'taken' },
+  { jsonPath: 'registration.contacts[2].phone', validator: 'invalidPhone' },
+]);
+// { registration: { userName: 'taken', contacts: [{}, {}, { phone: 'invalidPhone' }] } }
+
+this.forms.setServerErrorMessages(errors);
+```
+
+Paths use dots for groups and `[n]` for array rows. A leading `$` or `$.` is ignored, and keys with spaces can be written as `['user name']`. Other JSONPath features, such as wildcards and filters, are not supported. Two errors on the same path become an array of keys.
+
+`setServerErrorMessages()`, `clearServerErrorMessages()` and `constructServerErrorMessageObject()` are not available in version `1.1.4` and earlier.

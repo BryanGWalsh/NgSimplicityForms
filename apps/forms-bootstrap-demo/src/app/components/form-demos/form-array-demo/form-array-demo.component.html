@@ -36,9 +36,14 @@
                 <i class="bi bi-arrow-counterclockwise me-1"></i> Reset Form
               </button>
             </div>
-            <button type="button" class="btn btn-outline-success" (click)="onLoadSampleData()">
-              <i class="bi bi-cloud-arrow-down-fill me-1"></i> Load Sample Data
-            </button>
+            <div class="d-flex gap-2">
+              <button type="button" class="btn btn-outline-danger" (click)="onSimulateServerErrors()">
+                <i class="bi bi-cloud-slash-fill me-1"></i> Simulate Server Errors
+              </button>
+              <button type="button" class="btn btn-outline-success" (click)="onLoadSampleData()">
+                <i class="bi bi-cloud-arrow-down-fill me-1"></i> Load Sample Data
+              </button>
+            </div>
           </div>
         </div>
       </div>
