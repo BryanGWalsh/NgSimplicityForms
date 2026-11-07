@@ -1,6 +1,6 @@
 {
   "name": "@ng-simplicity/forms-tailwind",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "license": "MIT",
   "description": "Tailwind CSS styled form controls for @ng-simplicity/forms-core.",
   "keywords": [

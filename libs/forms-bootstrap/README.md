@@ -10,7 +10,7 @@ A package containing pre-styled Bootstrap form inputs, containers, and templates
 
 | Package | Package version | Angular support | Requires |
 |---|---:|---|---|
-| `@ng-simplicity/forms-bootstrap` | `1.1.4` | `17.x`–`22.x` | `@ng-simplicity/forms-core ^1.1.4` |
+| `@ng-simplicity/forms-bootstrap` | `1.1.5` | `17.x`–`22.x` | `@ng-simplicity/forms-core ^1.1.4` |
 
 Requires `@ng-simplicity/forms-core` `^1.1.4`. From 1.1.2 every package declares `uuid` as a dependency, so it no longer needs to be installed separately.
 

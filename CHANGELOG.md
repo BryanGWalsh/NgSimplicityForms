@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
+## [1.1.5] - 2026-11-07
 
 ### Added
 - New controls in all three themes, under the same registry keys so a config works with any theme:
@@ -22,6 +22,7 @@ All notable changes to this project will be documented in this file.
 - `@ng-simplicity/forms-material` lists `@angular/cdk` as a peer dependency (Angular Material already needs it).
 
 ### Fixed
+- Docs: the Bootstrap range track shows in the demos, and Bootstrap is loaded in a cascade layer below Tailwind so its base styles no longer override the Tailwind demos' classes.
 - Tailwind: the toggle's label lines up with the switch even when other CSS (such as Bootstrap's reboot) styles `label` elements, and a left (`labelLocation: 'left'`) label lines up with the text in its input.
 
 ## [1.1.4] - 2026-11-06
