@@ -1,5 +1,5 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { NgsFormsMaterialFormItemInputComponent } from './input.component';
+import { NgsFormsFormItemConfigMaterialTextInput, NgsFormsMaterialFormItemInputComponent } from './input.component';
 import { NGS_FORMS_ITEM_DATA, NGS_FORMS_CONTROL_ADD_REMOVE_FN, NgsFormsInternalService, NgsFormsService } from '@ng-simplicity/forms-core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
@@ -89,7 +89,7 @@ describe('NgsFormsMaterialFormItemInputComponent', () => {
   });
 
   it('should static create a form item correctly', () => {
-    const config = {
+    const config: NgsFormsFormItemConfigMaterialTextInput = {
       name: 'dynamicInput',
       label: 'Dynamic',
       placeholder: '',

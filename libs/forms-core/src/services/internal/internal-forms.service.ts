@@ -1,6 +1,6 @@
-import { BehaviorSubject, filter, map } from 'rxjs';
+import { BehaviorSubject, defer, distinctUntilChanged, map, Observable } from 'rxjs';
 import { FormGroup, UntypedFormGroup } from '@angular/forms';
-import { NgsFormsFormConfig } from '../../models';
+import { NgsFormsCommonComponentState, NgsFormsFormConfig } from '../../models';
 import { Injectable } from '@angular/core';
 import { NgsFormsGlobalFormState } from '../../models/global-state.interface';
 import { ngsDefaults } from '../../misc/defaults';
@@ -21,9 +21,11 @@ export class NgsFormsInternalService {
     this.isSubmitted$.next(isSubmitted);
   }
 
+  /** `true` when no rendered control fails its validators. A form whose controls are all disabled counts as valid. */
   checkIsValid(): boolean {
-    if (!this.formGroup$.value) return false;
-    return this.formGroup$.value.valid;
+    const formGroup = this.formGroup$.value;
+    if (!formGroup) return false;
+    return formGroup.valid || formGroup.disabled === true;
   }
 
   setFormData(formConfig: NgsFormsFormConfig) {
@@ -45,10 +47,10 @@ export class NgsFormsInternalService {
     if (!uuid || !initialState || this.state.value[uuid]) return;
     this.mergeState(uuid, initialState);
   }
-  updateGlobalState(state: NgsFormsGlobalFormState) {
+  updateGlobalState(state: Partial<NgsFormsGlobalFormState>) {
     this.mergeState('global', state);
   }
-  updateComponentState(componentKey: string, state: any) {
+  updateComponentState(componentKey: string, state: Partial<NgsFormsCommonComponentState>) {
     this.mergeState(componentKey, state);
   }
 
@@ -56,22 +58,19 @@ export class NgsFormsInternalService {
    * Merged state for one component: its own (by `uuid`), then by `name`, then global.
    * `initialState` seeds the component's own state unless state for `uuid` already exists.
    */
-  subscribeToState(uuid: string, name?: string, initialState?: any) {
+  subscribeToState(uuid: string, name?: string, initialState?: any): Observable<NgsFormsCommonComponentState> {
     this.seedComponentState(uuid, initialState);
-    let last = '';
-    return this.state.pipe(
-      map((allState) => {
-        const stateByUuid = allState[uuid] || {};
-        const stateByName = name ? (allState[name] || {}) : {};
-        const globalState = allState['global'] || {};
-        return ngsDefaults(stateByUuid, ngsDefaults(stateByName, globalState));
-      }),
-      filter((currentState) => {
-        const stringifiedState = JSON.stringify(currentState);
-        const isUpdated = stringifiedState !== last;
-        last = stringifiedState;
-        return isUpdated;
-      })
+    // `defer` gives every subscriber its own comparison, so each one receives the current state first.
+    return defer(() =>
+      this.state.pipe(
+        map((allState) => {
+          const stateByUuid = allState[uuid] || {};
+          const stateByName = name ? (allState[name] || {}) : {};
+          const globalState = allState['global'] || {};
+          return ngsDefaults(stateByUuid, ngsDefaults(stateByName, globalState)) as NgsFormsCommonComponentState;
+        }),
+        distinctUntilChanged((previous, current) => JSON.stringify(previous) === JSON.stringify(current))
+      )
     );
   }
 }

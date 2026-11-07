@@ -8,10 +8,13 @@
                 [id]="inputId"
                 [attr.aria-invalid]="errorMessage ? true : null"
                 [attr.aria-describedby]="errorMessage ? id + '-error' : null"
+                [attr.aria-required]="isRequired || null"
                 [attr.placeholder]="textAreaConfig.placeholder || null"></textarea>
-      @if (errorMessage) {
-        <p [class]="classes.error" id="{{id}}-error">{{ errorMessage }}</p>
-      }
+      <div aria-live="polite" aria-atomic="true">
+        @if (errorMessage) {
+          <p [class]="classes.error" id="{{id}}-error">{{ errorMessage }}</p>
+        }
+      </div>
     </div>
   </div>
 }

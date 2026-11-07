@@ -113,30 +113,47 @@ describe('NgsFormsService', () => {
       expect(setFormDataSpy).toHaveBeenCalledWith(mockConfig);
     });
 
-    it('should retry setting configuration if internal service is not set', () => {
+    it('should apply a config set before the internal service connects once it connects', () => {
       const mockConfig: any = { root: {} };
-      service.setFormConfig(mockConfig);
-
-      expect(service.attempt).toBe(1);
-
-      // Now set internal service and advance timers
-      service.setInternalService(mockInternalService);
       const setFormDataSpy = jest.spyOn(mockInternalService, 'setFormData');
+      service.setFormConfig(mockConfig);
+      expect(setFormDataSpy).not.toHaveBeenCalled();
 
-      jest.advanceTimersByTime(25);
+      service.setInternalService(mockInternalService);
 
       expect(setFormDataSpy).toHaveBeenCalledWith(mockConfig);
     });
 
-    it('should error out and stop retrying after 20 attempts', () => {
-      const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
-      const mockConfig: any = { root: {} };
+    it('should apply only the latest config set before the internal service connects', () => {
+      const first: any = { root: { a: 1 } };
+      const second: any = { root: { b: 2 } };
+      const setFormDataSpy = jest.spyOn(mockInternalService, 'setFormData');
+      service.setFormConfig(first);
+      service.setFormConfig(second);
+      service.setInternalService(mockInternalService);
 
-      // Set attempt to 21
-      service.attempt = 21;
-      service.setFormConfig(mockConfig);
+      expect(setFormDataSpy).toHaveBeenCalledTimes(1);
+      expect(setFormDataSpy).toHaveBeenCalledWith(second);
+    });
+
+    it('should log an error if no form connects within half a second', () => {
+      const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => undefined);
+      service.setFormConfig({ root: {} } as any);
+
+      jest.advanceTimersByTime(500);
 
       expect(consoleErrorSpy).toHaveBeenCalledWith('Internal form service is unavailable.  Is the ngs-form root tag added to the page?');
+      consoleErrorSpy.mockRestore();
+    });
+
+    it('should not log an error after the service is destroyed', () => {
+      const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => undefined);
+      service.setFormConfig({ root: {} } as any);
+      service.ngOnDestroy();
+
+      jest.advanceTimersByTime(1000);
+
+      expect(consoleErrorSpy).not.toHaveBeenCalled();
       consoleErrorSpy.mockRestore();
     });
   });

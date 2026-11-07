@@ -1,6 +1,7 @@
 <button
   (click)="removeItem()"
   [class]="config.buttonClass || 'btn btn-outline-danger btn-sm'"
+  [attr.aria-label]="ariaLabel"
   type="button">
   @if (config.buttonIcon) {
     <i [class]="config.buttonIcon" aria-hidden="true"></i>

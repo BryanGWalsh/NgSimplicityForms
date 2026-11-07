@@ -1,9 +1,20 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { NgsFormsBaseClassFormInputComponent, NgsFormsFormItem } from '@ng-simplicity/forms-core';
+import { NgsFormsBaseClassFormInputComponent, NgsFormsFormItem, NgsFormsFormItemConfigBaseInput } from '@ng-simplicity/forms-core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { v4 } from 'uuid';
+
+/** Configuration for `NgsFormsMaterialFormItemTextAreaComponent`. */
+export interface NgsFormsFormItemConfigMaterialTextArea extends NgsFormsFormItemConfigBaseInput {
+  /** Placeholder text shown while the text area is empty. */
+  placeholder?: string;
+  /**
+   * Number of visible text lines.
+   * @defaultValue 3
+   */
+  rows?: number;
+}
 
 /**
  * Angular Material text area in an outlined `mat-form-field`.
@@ -16,7 +27,7 @@ import { v4 } from 'uuid';
   templateUrl: './text-area.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NgsFormsMaterialFormItemTextAreaComponent extends NgsFormsBaseClassFormInputComponent<any> {
+export class NgsFormsMaterialFormItemTextAreaComponent extends NgsFormsBaseClassFormInputComponent<NgsFormsFormItemConfigMaterialTextArea> {
   static override key = 'input-textarea';
 
   /** Error state matcher that also shows errors after the form is submitted. */
@@ -27,7 +38,7 @@ export class NgsFormsMaterialFormItemTextAreaComponent extends NgsFormsBaseClass
   };
 
   /** Creates an `input-textarea` item. */
-  static create(config: any): NgsFormsFormItem<any> {
+  static create(config: NgsFormsFormItemConfigMaterialTextArea): NgsFormsFormItem<NgsFormsFormItemConfigMaterialTextArea> {
     return {
       uuid: config.uuid || v4(),
       type: NgsFormsMaterialFormItemTextAreaComponent.key,

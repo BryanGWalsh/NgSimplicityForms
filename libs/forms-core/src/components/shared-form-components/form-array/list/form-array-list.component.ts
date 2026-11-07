@@ -1,4 +1,4 @@
-import { Component, inject, ChangeDetectionStrategy, ChangeDetectorRef, OnInit } from '@angular/core';
+import { afterNextRender, Component, inject, ChangeDetectionStrategy, ChangeDetectorRef, ElementRef, Injector, OnInit } from '@angular/core';
 import { NgsFormsFormArrayInternalService } from '../service';
 import { AbstractControl, FormArray, UntypedFormGroup } from '@angular/forms';
 
@@ -27,11 +27,40 @@ export class NgsFormsFormArrayListComponent extends NgsFormsBaseClassFormCompone
   );
   public myFormArray: FormArray<any> = this.internalArrayService.formArray;
   private changeDetectorRef = inject(ChangeDetectorRef);
+  private elementRef = inject(ElementRef);
+  private injector = inject(Injector);
 
   ngOnInit() {
     this.subscribe(this.internalArrayService.itemsChanged, () => {
       this.changeDetectorRef.markForCheck();
     });
+    this.subscribe(this.internalArrayService.rowRemoved, (index) => this.restoreFocusAfterRemove(index));
+  }
+
+  /**
+   * When the focused element (usually the row's Remove button) was removed with its row, moves focus to the
+   * same kind of control in the row that took its place, so keyboard users are not sent back to the top of the page.
+   */
+  private restoreFocusAfterRemove(index: number) {
+    afterNextRender(
+      () => {
+        const active = document.activeElement;
+        if (active && active !== document.body) {
+          return;
+        }
+        const host = this.elementRef.nativeElement as HTMLElement;
+        const rows = Array.from(host.querySelectorAll<HTMLElement>(':scope > [data-index]'));
+        const row = rows[Math.min(index, rows.length - 1)];
+        const focusable =
+          'button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])';
+        const target =
+          row?.querySelector<HTMLElement>('ngs-forms-form-array-remove-item button:not([disabled])') ??
+          row?.querySelector<HTMLElement>(focusable) ??
+          host.closest('ngs-forms-form-array')?.querySelector<HTMLElement>(focusable);
+        target?.focus();
+      },
+      { injector: this.injector }
+    );
   }
 
   /** Creates a `form-array-list` item. */

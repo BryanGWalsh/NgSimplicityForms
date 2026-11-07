@@ -78,8 +78,15 @@ describe('NgsFormsBootstrapFormItemSelectInputComponent', () => {
     // Placeholder + 2 options = 3 options
     expect(options.length).toBe(3);
     expect(options[0].textContent?.trim()).toBe('Select country');
-    expect(options[1].getAttribute('value')).toBe('us');
-    expect(options[2].getAttribute('value')).toBe('ca');
+    expect(options[1].textContent?.trim()).toBe('United States');
+    expect(options[2].textContent?.trim()).toBe('Canada');
+  });
+
+  it('should write the chosen option id to the control', () => {
+    const select = (fixture.nativeElement as HTMLElement).querySelector('select')!;
+    select.selectedIndex = 2;
+    select.dispatchEvent(new Event('change'));
+    expect(component.control!.value).toBe('ca');
   });
 
   it('should static create a form item correctly', () => {

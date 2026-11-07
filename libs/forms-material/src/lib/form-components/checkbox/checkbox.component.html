@@ -1,10 +1,12 @@
 @if (control) {
   <div class="mb-3">
-    <mat-checkbox [id]="config.id || id" [formControl]="control" [aria-describedby]="errorMessage ? id + '-error' : ''">
+    <mat-checkbox [id]="config.id || id" [formControl]="control" [required]="isRequired" [aria-describedby]="errorMessage ? id + '-error' : ''">
       {{ config.label }}
     </mat-checkbox>
-    @if (errorMessage) {
-      <div class="mt-1 ms-4" id="{{id}}-error" style="font-size: 0.75rem; color: #f44336;">{{ errorMessage }}</div>
-    }
+    <div aria-live="polite" aria-atomic="true">
+      @if (errorMessage) {
+        <div class="mt-1 ms-4" id="{{id}}-error" style="font-size: 0.75rem; color: #f44336;">{{ errorMessage }}</div>
+      }
+    </div>
   </div>
 }

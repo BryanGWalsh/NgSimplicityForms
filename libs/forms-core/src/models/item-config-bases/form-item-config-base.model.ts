@@ -93,10 +93,7 @@ export interface NgsFormsFormItemConfigBaseItemWithNameAndValidators extends Ngs
   validators?: Array<ValidatorFn>;
   /**
    * Stream of validator arrays. Each emission replaces the control's validators, which lets rules depend on other
-   * values in the form. Ignored when `validators` is also set.
-   *
-   * @remarks The control's validity is recalculated on its next value change, so call `updateValueAndValidity()`
-   * yourself if you need the new rules to apply immediately.
+   * values in the form. The control is re-validated on each emission. Ignored when `validators` is also set.
    */
   validators$? :Observable<Array<ValidatorFn>>;
 }

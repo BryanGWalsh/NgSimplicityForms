@@ -17,8 +17,6 @@ These options exist in the configuration types so that configurations can be wri
 
 ## Behaviour to know about
 
-- **Swapped validators apply on the next change.** `validators$` replaces a control's validators without re-running them. See the workaround in [Validation and errors](/guides/validation#changing-validators-at-runtime).
-- **Custom controls without `[formControl]`** need to call `control.updateValueAndValidity()` after `super.ngOnInit()` so their validators run once. See [Building a custom control](/tutorials/custom-control#2-extend-the-input-base-class).
 - **Patching needs rendered controls.** Wait a tick after `setFormConfig()`, give arrays enough rows with `initialItemCount`, and patch conditional fields after they appear. For fixed defaults, set `value` on the input instead. See [Editing existing data](/tutorials/editing-data).
 - **Disabled controls are left out of the form value.** That is how Angular reactive forms work, and it means they also skip validation.
 - **Set ids must be unique.** An input with a fixed `id` inside a form array row repeats that id on every row.
@@ -26,7 +24,7 @@ These options exist in the configuration types so that configurations can be wri
 - **`uuid` is not declared in version `1.1.1` and earlier.** From `1.1.2` every package declares it. On older versions, install it in your application.
 - **`content-html` is not registered in version `1.1.1` and earlier.** From `1.1.2` the `registerAll…` helpers register it. On older versions, call `registry.register(NgsFormsHtmlContentComponent.key, NgsFormsHtmlContentComponent)` yourself.
 - **The Material package relies on a few utility classes** (`w-100`, `mb-2`, `mb-3`) and application styles for radio layout. See the [Material quick start](/getting-started/material#4-add-the-supporting-styles).
-- **Section and text config interfaces** (`NgsFormsFormSectionConfig`, `NgsFormsTextDivConfig`) are not exported from the package entry point, so you cannot import them by name yet. The `create()` helpers are fully typed regardless.
+- **Section and text config interfaces** (`NgsFormsFormSectionConfig`, `NgsFormsTextDivConfig`) are exported from the package entry point from version `1.1.4`. On older versions, rely on the typed `create()` helpers.
 
 ## Reporting issues
 
