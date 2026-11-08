@@ -14,9 +14,11 @@
         <div [class.form-check-inline]="radioConfig.alignment==='horizontal'"
              [class.me-2]="radioConfig.alignment==='horizontal'"
              class="form-check">
+          <!-- [name] gives each control its own Angular radio group; without it every radio in the app is one group. -->
           <input [class.border-danger]="!!errorMessage" 
                  [formControl]="control" 
                  [value]="option.id"
+                 [name]="id"
                  [attr.name]="id"
                  [attr.aria-invalid]="errorMessage ? true : null" 
                  class="form-check-input"

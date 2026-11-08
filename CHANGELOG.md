@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.6] - 2026-11-08
+
+### Fixed
+- Tailwind and Bootstrap: several `radio` controls in one app no longer interfere. Choosing an option in one group used to show that same option as checked in every other group (the form values were right). The radio inputs only set the HTML `name` attribute, so Angular's radio registry put every radio in the app in one group; they now also bind Angular's `name` input. Material radios were not affected.
+
+### Changed
+- All packages are at 1.1.6, and the theme packages require `@ng-simplicity/forms-core ^1.1.6`.
+
+### Documentation
+- Tailwind: the README and docs explain that the default `dark:` classes follow the device's dark mode in Tailwind v4, and how an app without a dark theme keeps the controls light (`@custom-variant dark (&:where(.dark, .dark *));`).
+
 ## [1.1.5] - 2026-11-07
 
 ### Added

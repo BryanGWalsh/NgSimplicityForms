@@ -1,6 +1,6 @@
 {
   "name": "@ng-simplicity/forms-material",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "description": "Angular Material styled form controls for @ng-simplicity/forms-core.",
   "keywords": [
     "angular",
@@ -36,7 +36,7 @@
     "@angular/forms": "^17.0.0 || ^18.0.0 || ^19.0.0 || ^20.0.0 || ^21.0.0 || ^22.0.0",
     "@angular/cdk": "^17.0.0 || ^18.0.0 || ^19.0.0 || ^20.0.0 || ^21.0.0 || ^22.0.0",
     "@angular/material": "^17.0.0 || ^18.0.0 || ^19.0.0 || ^20.0.0 || ^21.0.0 || ^22.0.0",
-    "@ng-simplicity/forms-core": "^1.1.5"
+    "@ng-simplicity/forms-core": "^1.1.6"
   },
   "dependencies": {
     "uuid": "^11.0.5"

@@ -12,9 +12,11 @@
       }
       @for (option of options(); track option.id) {
         <div [class]="classes.choice">
+          <!-- [name] gives each control its own Angular radio group; without it every radio in the app is one group. -->
           <input [class]="cx(classes.choiceInput, errorMessage && classes.choiceInputInvalid)"
                  [formControl]="control"
                  [value]="option.id"
+                 [name]="id"
                  [attr.name]="id"
                  [attr.aria-invalid]="errorMessage ? true : null"
                  id="{{id}}{{option.id}}"

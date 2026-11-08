@@ -142,7 +142,15 @@ providers: [
 
 ## Dark mode
 
-The default classes include `dark:` variants, so the controls follow Tailwind's dark mode. By default that is the operating system setting; use `@custom-variant dark (...)` in your stylesheet to tie it to a class or attribute instead.
+The default classes include `dark:` variants, so the controls follow Tailwind's dark mode. By default that is the device's `prefers-color-scheme`, so an app without a dark theme gets light label text on its white page when the device is in dark mode.
+
+If your app has no dark theme, tie `dark:` to a class you never set, in the stylesheet that imports Tailwind:
+
+```css
+@custom-variant dark (&:where(.dark, .dark *));
+```
+
+The controls then stay light until an element has the `dark` class, and adding that class is how you turn dark mode on later. With Tailwind v3, set `darkMode: 'class'` in `tailwind.config.js` instead.
 
 ## Accessibility
 

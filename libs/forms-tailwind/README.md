@@ -6,9 +6,9 @@ Tailwind CSS styled form controls for the [@ng-simplicity/forms-core](https://ww
 
 | Package | Package version | Angular support | Tailwind CSS | Requires |
 |---|---:|---|---|---|
-| `@ng-simplicity/forms-tailwind` | `1.1.5` | `17.x`–`22.x` | v4 (recommended) or v3 | `@ng-simplicity/forms-core ^1.1.5` |
+| `@ng-simplicity/forms-tailwind` | `1.1.6` | `17.x`–`22.x` | v4 (recommended) or v3 | `@ng-simplicity/forms-core ^1.1.6` |
 
-Requires `@ng-simplicity/forms-core` `^1.1.5`. From 1.1.2 every package declares `uuid` as a dependency, so it no longer needs to be installed separately.
+Requires `@ng-simplicity/forms-core` `^1.1.6`. From 1.1.2 every package declares `uuid` as a dependency, so it no longer needs to be installed separately.
 
 ---
 
@@ -154,7 +154,15 @@ Provide it in a component's `providers` instead to restyle only the forms inside
 
 The slots are `field`, `fieldHorizontal`, `label`, `labelHorizontal`, `labelValid`, `labelInvalid`, `controlWrapperHorizontal`, `control`, `controlValid`, `controlInvalid`, `textarea`, `checkboxField`, `choice`, `choiceInput`, `choiceInputInvalid`, `choiceLabel`, `radioGroup`, `radioOptions`, `radioOptionsHorizontal`, `radioGroupLabel` and `error`. The `*Valid` / `*Invalid` pairs are swapped when a field shows an error, so keep colours there and layout in the base slot.
 
-The defaults include `dark:` variants and follow Tailwind's dark mode setting.
+### Dark mode
+
+The default classes include `dark:` variants (light label text, dark control backgrounds). In Tailwind v4, `dark:` follows the device's `prefers-color-scheme` by default, so **an app without a dark theme gets light labels on its white page when the device is in dark mode**. If your app has no dark theme, tie `dark:` to a class you never set, in the stylesheet that imports Tailwind:
+
+```css
+@custom-variant dark (&:where(.dark, .dark *));
+```
+
+The controls then stay light until an element has the `dark` class. With Tailwind v3, set `darkMode: 'class'` (or `'selector'`) in `tailwind.config.js` instead, which does the same.
 
 ---
 
