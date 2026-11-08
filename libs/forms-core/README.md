@@ -15,7 +15,7 @@ This core package is extended by styling integration packages that provide prebu
 
 | Package | Package version | Angular support |
 |---|---:|---|
-| `@ng-simplicity/forms-core` | `1.1.5` | `17.x`–`22.x` |
+| `@ng-simplicity/forms-core` | `1.1.6` | `17.x`–`22.x` |
 
 ---
 
